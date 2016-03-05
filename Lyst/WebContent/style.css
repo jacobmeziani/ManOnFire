@@ -1,0 +1,154 @@
+.logoImage {
+ 	height: 40%;
+ 	width: 40%; 
+}
+
+.center_div{
+    margin: 0 auto;
+    width:100% /* value of your choice which suits your alignment */
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important;
+}
+
+.bottom-column
+{
+    float: none;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+.rightAlign {
+	text-align: right;
+}
+
+.centerAlign {
+	text-align: center;
+}
+
+html * {
+	font-family: Arial;*/
+}
+
+
+.myrow {
+    font-size: 0;
+}
+.myrow > * {
+    float: none;
+    display: inline-block;
+    font-size: 14px; /* if using LESS it's quicker to just use @font-size-base */
+}
+.myrow > *:last-child {
+    vertical-align: center;
+}
+
+.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+}
+
+.navbar .navbar-collapse {
+    text-align: center;
+}
+
+.navbar-default {
+  background-color: #0c6ff4;
+  border-color: #ffffff;
+  font-size: 22px;
+}
+.navbar-default .navbar-brand {
+  color: #ffffff;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #040404;
+}
+.navbar-default .navbar-text {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #040404;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #040404;
+  background-color: #ffffff;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #040404;
+  background-color: #ffffff;
+}
+.navbar-default .navbar-toggle {
+  border-color: #ffffff;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ffffff;
+}
+.navbar-default .navbar-link {
+  color: #ffffff;
+}
+.navbar-default .navbar-link:hover {
+  color: #040404;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #040404;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #040404;
+    background-color: #ffffff;
+  }
+}
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+     color: black;
+     font-size: 22px;
+}
+
+.table-left>tbody>tr:nth-child(odd)>td, 
+.table-left>tbody>tr:nth-child(odd)>th {
+    background-color: #AFC1DE;
+}
+
+.table-right>tbody>tr:nth-child(even)>td, 
+.table-right>tbody>tr:nth-child(even)>th {
+    background-color: #AFC1DE;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #AFC1DE;
+}
+
+.sortable tr {
+    cursor: hand;
+}
