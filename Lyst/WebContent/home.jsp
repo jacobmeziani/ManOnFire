@@ -19,6 +19,7 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="vsStyle.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
 <body>
@@ -74,33 +75,30 @@
 				<!-- /.navbar-collapse --> </nav>
 			</div>
 		</div>
-		<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
-		<div
-			class="col-xs-6 col-sm-6 col-md-4 col-lg-4 centerAlign marginTop3">
-			<table class="table table-hover">
-				<tbody>
-					<c:forEach begin="0" end="2" var="loop">
-						<tr>
-						<td><img src ="${sessionScope.lysts[loop].imagePath}" class="img-circle" height="70%" width="70%"></img></td>
-							<td><c:out value="${sessionScope.lysts[loop].listName}"></c:out></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-		<div
-			class="col-xs-6 col-sm-6 col-md-4 col-lg-4 centerAlign marginTop3">
-			<table class="table table-hover">
-				<tbody>
-					<c:forEach begin="3" end="5" var="loop">
-						<tr>
-						<td><img src ="${sessionScope.lysts[loop].imagePath}" class="img-circle" height="170" width="260"></img></td>
-							<td><c:out value="${sessionScope.lysts[loop].listName}"></c:out></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+		<div class="row">
+		<div class=" col-xs-0 col-sm-0 col-md-0 col-lg-1"></div>
+			<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4">
+				<img src="imageservlet/leb.png" class="img-responsive center-block"></img>
+			</div>
+			<div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2 centerAlign">
+			<div class="row"> <h1><c:out value="${sessionScope.leftItem.belongingList}"></c:out></h1></div>
+			<div class="row"><button class="btn btn-lg btn-danger btn-red verticalALign"><h2>VS</h2></button></div>
+			</div>
+			<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4">
+				 <img
+					src="imageservlet/dicaps.png" class="img-responsive center-block"></img>
+			</div>
+			</div>
+			<div class="row">
+			<div class=" col-xs-0 col-sm-0 col-md-0 col-lg-1"></div>
+				<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4 centerAlign">
+					<h1><c:out value="${sessionScope.leftItem.name}"></c:out></h1>
+				</div>
+				<div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+				<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4 centerAlign">
+					<h1><c:out value="${sessionScope.rightItem.name}"></c:out></h1>
+				</div>
+			</div>
 	</div>
 </body>
 </html>
