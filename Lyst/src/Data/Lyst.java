@@ -23,15 +23,15 @@ public class Lyst implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String listName;
 	private String categories;
-	private ArrayList<String> members;
+	private int size;
 	private String imagePath;
 
-	public Lyst(String listName, String categories, ArrayList<String> members,
+	public Lyst(String listName, String categories, int members,
 			String imagePath) {
 
 		this.listName = listName;
 		this.categories = categories;
-		this.members = members;
+		this.size = members;
 		this.imagePath = imagePath;
 	}
 
@@ -59,12 +59,12 @@ public class Lyst implements Serializable {
 		imagePath = image;
 	}
 
-	public ArrayList<String> getMembers() {
-		return members;
+	public int getSize() {
+		return size;
 	}
 
-	public void setMembers(ArrayList<String> members) {
-		this.members = members;
+	public void setSize(int members) {
+		this.size = members;
 	}
 
 }
