@@ -79,20 +79,20 @@
 		</div>
 		<div class="row">
 		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-		<button type="button" class="btn btn-circle btn-xl center-block"><span class="glyphicon glyphicon-repeat"></span></button>
+		<button type="button" class="btn btn-circle btn-xl center-block"><span class="glyphicon glyphicon-th"></span></button>
 		</div>
 		<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-		<button type="button" class="btn btn-circle btn-xl center-block"><span class="glyphicon glyphicon-th"></span></button>
+		<button type="button" class="btn btn-circle btn-xl center-block"><span class="glyphicon glyphicon-repeat"></span></button>
 		</div>
 		</div>
 		<div class="row row-buffer">
 		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-		<h4 class="centerAlign">Random</h4>
+		<h4 class="centerAlign">Everything</h4>
 		</div>
 		<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-		<h4 class="centerAlign">Everything</h4>
+		<h4 class="centerAlign">Random</h4>
 		</div>
 		</div>
 		<div class="row">

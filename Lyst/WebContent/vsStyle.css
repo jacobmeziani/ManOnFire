@@ -137,9 +137,10 @@ h2 {
   line-height: 1.428571429;
   border-radius: 30px;
   background:#E53030;
+    color:white;
 }
 .btn-circle:hover {
-  color:black
+	color:black;
 }
 
 .btn-circle.btn-xl {
@@ -153,7 +154,6 @@ h2 {
   diplay:block;
   position:relative;
   box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
-  color:white;
   
 }
 .glyphicon-repeat{
