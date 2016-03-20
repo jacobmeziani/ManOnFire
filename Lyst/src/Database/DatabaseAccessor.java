@@ -49,7 +49,7 @@ public class DatabaseAccessor {
 				String categories = (String) item.get("Categories");
 				int size = item.getInt("ListSize");
 				String picPath = (String) item.get("PicPath");
-				Lyst lyst = new Lyst(name, categories, members.size(), picPath);
+				Lyst lyst = new Lyst(name, categories, size, picPath);
 				lysts.add(lyst);
 			}
 		return lysts;
