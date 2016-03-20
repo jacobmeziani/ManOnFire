@@ -15,6 +15,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="jquery.validate.min.js"></script>
+<script src="homescripts.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,7 +109,7 @@
 		</div>
 		<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-		<button type="button" class="btn btn-circle btn-xl center-block"><span class="glyphicon glyphicon-repeat"></span></button>
+		<button type="button" id="randomButton" class="btn btn-circle btn-xl center-block"><span class="glyphicon glyphicon-repeat"></span></button>
 		</div>
 		</div>
 		<div class="row row-buffer">
@@ -122,7 +123,7 @@
 		</div>
 		<div class="row">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<img src="imageservlet/leb.png" class="img-responsive center-block"></img>
+				<img src="${sessionScope.leftItem.picPath}" class="img-responsive center-block"></img>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
 			<div class="row"> <h3><c:out value="${sessionScope.leftItem.belongingList}"></c:out></h3></div>
@@ -130,7 +131,7 @@
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				 <img
-					src="imageservlet/dicaps.png" class="img-responsive center-block"></img>
+					src="${sessionScope.rightItem.picPath}" class="img-responsive center-block"></img>
 			</div>
 			</div>
 			<div class="row">
