@@ -11,7 +11,7 @@ public class HtmlWriter {
 	public ArrayList<Lyst> LoadListsMainPage(){
 		
 		DatabaseAccessor dbAccessor = new DatabaseAccessor();
-		ArrayList<Lyst> lysts = dbAccessor.getHomeLists(6);
+		ArrayList<Lyst> lysts = dbAccessor.getRandomLists(6);
 		return lysts;
 	}
 

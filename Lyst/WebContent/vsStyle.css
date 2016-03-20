@@ -2,36 +2,185 @@
 	text-align: center;
 }
 
-.verticalAlign{
-	vertical-align:bottom;
+.verticalAlign {
+	vertical-align: bottom;
+}
+
+/* set a max-width for horizontal fluid layout and make it centered */
+.container-fluid {
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 1200px; /* or 950px */
+}
+
+html * {
+	font-family: 'Open Sans', sans-serif;
 }
 
 h1 {
-   font-size: 30px;
+	font-family: 'Black Ops One', cursive;
 }
 
 h2 {
-   font-size: 60px;
+	font-size: 60px;
+	font-family: 'Black Ops One', cursive;
+}
+
+/* Large desktops and laptops */
+@media ( min-width : 1200px) {
+	.btn-red {
+		height: 200px;
+		width: 200px;
+	}
+	h1 {
+		font-size: 60px;
+	}
+	h3 {
+		font-size: 30px;
+	}
+}
+
+/* Landscape tablets and medium desktops */
+@media ( min-width : 992px) and (max-width: 1199px) {
+	.btn-red {
+		height: 150px;
+		width: 150px;
+	}
+	h1 {
+		font-size: 40px;
+	}
+	h3 {
+		font-size: 30px;
+	}
+}
+
+/* Portrait tablets and small desktops */
+@media ( min-width : 768px) and (max-width: 991px) {
+	.btn-red {
+		height: 100px;
+		width: 100px;
+	}
+	h1 {
+		font-size: 30px;
+	}
+	h3 {
+		font-size: 30px;
+	}
+}
+
+/* Landscape phones and portrait tablets */
+@media ( max-width : 767px) {
+	.btn-red {
+		height: 100px;
+		width: 100px;
+	}
+	h1 {
+		font-size: 30px;
+	}
+	h3 {
+		font-size: 20px;
+	}
+}
+
+/* Portrait phones and smaller */
+@media ( max-width : 480px) {
+	.btn-red {
+		height: 75px;
+		width: 75px;
+	}
+	h1 {
+		font-size: 23px;
+	}
+	h3 {
+		font-size: 15px;
+	}
 }
 
 .btn-red {
-  background: #E53030;
-  border: 3px solid #fff;
-  border-radius: 100%;
-  box-shadow: 0 -2px 0 3px #c91919 inset, 0 5px 5px rgba(65, 8, 8, 0.17), 0 15px rgba(255, 255, 255, 0.25) inset;
-  cursor: pointer;
-  display: inline-block;
-  height: 225px;
-  width:225px;
-}
-.btn-red:hover {
-  background: #E53030;;
-  box-shadow: 0 -2px 0 3px #1a1a1a inset, 0 5px 5px rgba(0, 0, 0, 0.17), 0 15px rgba(255, 255, 255, 0.32) inset;
-  outline:none;
+	background: #E53030;
+	border: 3px solid #fff;
+	border-radius: 100%;
+	box-shadow: 0 -2px 0 3px #c91919 inset, 0 5px 5px rgba(65, 8, 8, 0.17),
+		0 15px rgba(255, 255, 255, 0.25) inset;
+	cursor: pointer;
+	display: inline-block;
+	outline: none;
 }
 
-.imageSize{
-	
-	height:300px;
+.btn-red:hover {
+	background: #E53030;;
+	box-shadow: 0 -2px 0 3px #1a1a1a inset, 0 5px 5px rgba(0, 0, 0, 0.17), 0
+		15px rgba(255, 255, 255, 0.32) inset;
+	outline: none;
+}
+
+.imageSize {
+	height: 300px;
 	width: 350px;
+}
+
+.mobileImageSize {
+	height: 200px;
+	width: 300px;
+}
+
+.nopadding {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 30px;
+  background:#E53030;
+    color:white;
+}
+.btn-circle:hover {
+	color:black;
+}
+
+.btn-circle.btn-xl {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 70px;
+  text-align:center;
+  diplay:block;
+  position:relative;
+  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+  
+}
+.glyphicon-repeat{
+	font-size:20px;
+}
+
+.glyphicon-th{
+	font-size:20px;
+}
+
+.btn-circle:before {
+  content: "";
+  display: block;
+  background: #fff;
+  border-top: 2px solid #ddd;
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  bottom: -8px;
+  right: -8px;
+  z-index: -1;
+  border-radius: 50%;
+  box-shadow: inset 0px 8px 48px #ddd;
+}
+
+.row-buffer { margin-bottom:20px; }
+
+h4{
+	font-size:10px;
 }

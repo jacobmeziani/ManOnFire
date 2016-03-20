@@ -19,6 +19,8 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="style.css">
+<link href='https://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="vsStyle.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
@@ -101,27 +103,52 @@
 			</div>
 		</div> -->
 		<div class="row">
-		<div class=" col-xs-0 col-sm-0 col-md-0 col-lg-1"></div>
-			<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4">
+		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+		<button type="button" class="btn btn-circle btn-xl center-block"><span class="glyphicon glyphicon-th"></span></button>
+		</div>
+		<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
+		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+		<button type="button" class="btn btn-circle btn-xl center-block"><span class="glyphicon glyphicon-repeat"></span></button>
+		</div>
+		</div>
+		<div class="row row-buffer">
+		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+		<h4 class="centerAlign">Everything</h4>
+		</div>
+		<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
+		<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+		<h4 class="centerAlign">Random</h4>
+		</div>
+		</div>
+		<div class="row">
+			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<img src="imageservlet/leb.png" class="img-responsive center-block"></img>
 			</div>
-			<div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2 centerAlign">
-			<div class="row"> <h1><c:out value="${sessionScope.leftItem.belongingList}"></c:out></h1></div>
-			<div class="row"><button class="btn btn-lg btn-danger btn-red verticalALign"><h2>VS</h2></button></div>
+			<div class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
+			<div class="row"> <h3><c:out value="${sessionScope.leftItem.belongingList}"></c:out></h3></div>
+			<div class="row"><button class="btn btn-lg btn-danger btn-red"><h1>VS</h1></button></div>
 			</div>
-			<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4">
+			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				 <img
 					src="imageservlet/dicaps.png" class="img-responsive center-block"></img>
 			</div>
 			</div>
 			<div class="row">
-			<div class=" col-xs-0 col-sm-0 col-md-0 col-lg-1"></div>
-				<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4 centerAlign">
-					<h1><c:out value="${sessionScope.leftItem.name}"></c:out></h1>
+			<div class="hidden-xs hidden-sm col-md-5 col-lg-5 centerAlign">
+					<h3><c:out value="${sessionScope.leftItem.name}"></c:out></h3>
 				</div>
-				<div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-				<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4 centerAlign">
-					<h1><c:out value="${sessionScope.rightItem.name}"></c:out></h1>
+				<div class="col-xs-4 col-sm-4 hidden-md hidden-lg">
+					<h3 class="pull-right verticalAlign"><c:out value="${sessionScope.leftItem.name}"></c:out></h3>
+				</div>
+				<div class="col-xs-4 col-sm-4 hidden-md hidden-lg centerAlign">
+			<button class="btn btn-lg btn-danger btn-red"><h1>VS</h1></button>
+			</div>
+				<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
+				<div class="hidden-xs hidden-sm col-md-5 col-lg-5 centerAlign">
+					<h3><c:out value="${sessionScope.rightItem.name}"></c:out></h3>
+				</div>
+				<div class="col-xs-4 col-sm-4 hidden-md hidden-lg">
+					<h3 class="pull-left"><c:out value="${sessionScope.rightItem.name}"></c:out></h3>
 				</div>
 			</div>
 	</div>
