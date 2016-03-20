@@ -13,7 +13,6 @@
 
 <body>
 
-
 <div class="container-fluid">
 	<div class ="well">
 		<div class ="row">
@@ -97,13 +96,7 @@
 		<div class ="row">
 			<div class= "col-md-2">
 				<div class=navbar-header">
-					<a class="navbar-brand" href="/"><img alt="logo" src="images/logo.png" height="30px"></a>
-				
-		
-		
-		
-		
-		
+					<a class="navbar-brand" href="/"><img alt="logo" src="images/logo.png" height="30px"></a>		
 			</div>
 			</div>
 			<div class= "col-md-6">
