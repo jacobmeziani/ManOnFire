@@ -23,8 +23,32 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
 <body>
+<nav class="navbar navbar-default">
 	<div class="container-fluid">
-		<div class="row myrow">
+		<div class = "row">
+			<div class = "col-md-2">
+					<div class=navbar-header">
+			<a class="navbar-brand" href="home.jsp"> <img alt="logo" src="images/logo.png" height="30px"></a>
+			</div>
+			</div>
+			<div class= "col-md-6">
+			<div class = "navbar-form" role = "search">
+			<div class = "input-group">
+					<input type="text" class="form-control" placeholder="Search..." aria-label = "search_term">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default ">Submit</button>
+					</div> 				
+				</div>
+			</div>
+			</div>
+			<div class="col-md-2">
+				<button type="button" class="btn btn-default navbar-btn">Show Lysts</button>
+			</div>
+		</div>
+	</div>
+</nav>
+	<div class="container-fluid">
+<!-- 		<div class="row myrow">
 			<div class=" col-xs-4 col-sm-4 col-md-5 col-lg-5">
 				<img class="img-responsive pull-right" width="250" height="250"
 					src="images/ICON.png"></img>
@@ -32,7 +56,8 @@
 			<div class="col-xs-8 col-sm-8 col-md-4 col-lg-4">
 				<div class="input-group stylish-input-group pull-left">
 					<input type="text" class="form-control input-lg"
-						placeholder="Search"> <span class="input-group-addon">
+						placeholder="Search">
+					 <span class="input-group-addon">
 						<button type="submit">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
@@ -43,7 +68,7 @@
 		<div class="row">
 			<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-				<nav class="navbar navbar-default" role="navigation"> <!-- Brand and toggle get grouped for better mobile display -->
+				<nav class="navbar navbar-default" role="navigation"> Brand and toggle get grouped for better mobile display
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
 						data-target=".navbar-ex1-collapse">
@@ -52,8 +77,8 @@
 							class="icon-bar"></span>
 					</button>
 				</div>
-
-				<!-- Collect the nav links, forms, and other content for toggling -->
+		
+				Collect the nav links, forms, and other content for toggling
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="#">Movies</a></li>
@@ -72,9 +97,9 @@
 							</ul></li>
 					</ul>
 				</div>
-				<!-- /.navbar-collapse --> </nav>
+				/.navbar-collapse </nav>
 			</div>
-		</div>
+		</div> -->
 		<div class="row">
 		<div class=" col-xs-0 col-sm-0 col-md-0 col-lg-1"></div>
 			<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-4">

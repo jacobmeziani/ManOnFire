@@ -55,7 +55,7 @@ public class DatabaseAccessor {
 					members.addAll(hashSet);
 				}
 				String picPath = (String) item.get("PicPath");
-				Lyst lyst = new Lyst(name, categories, members, picPath);
+				Lyst lyst = new Lyst(name, categories, members.size(), picPath);
 				lysts.add(lyst);
 			}
 		}
