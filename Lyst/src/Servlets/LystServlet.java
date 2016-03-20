@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Data.Lyst;
+import Data.LystItem;
 import Database.DatabaseAccessor;
 import Html.HtmlWriter;
 
@@ -36,15 +37,16 @@ public class LystServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		// Todo:This manages sessions, get there later
+		
 		HttpSession session = request.getSession();
-		ArrayList<Lyst> lysts = (ArrayList<Lyst>) session.getAttribute("lysts");
-		if (lysts == null || lysts.size() <= 0) {
-			HtmlWriter w = new HtmlWriter();
-			lysts = w.LoadListsMainPage();
-			session.setAttribute("lysts", lysts);
+		String currentCategory = (String)session.getAttribute("CurrentCategory");
+		if(currentCategory == null || currentCategory.isEmpty()){
+			currentCategory = "Everything";
 		}
+		DatabaseAccessor d = new DatabaseAccessor();
+		LystItem[] items = d.getNextCombatants(currentCategory);
+		session.setAttribute("leftItem", items[0]);
+		session.setAttribute("rightItem", items[1]);
 		request.getRequestDispatcher("/home.jsp").forward(request, response);
 
 	}
