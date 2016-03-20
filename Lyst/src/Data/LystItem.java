@@ -35,5 +35,13 @@ public class LystItem implements Serializable {
 	public void setBelongingList(String belongingList) {
 		this.belongingList = belongingList;
 	}
+	
+	public String getPicPath() {
+		return picPath;
+	}
+
+	public void setPicPath(String picPath) {
+		this.picPath = picPath;
+	}
 
 }
