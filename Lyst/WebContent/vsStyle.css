@@ -93,10 +93,19 @@ h2 {
 	h3 {
 		font-size: 15px;
 	}
+	.imageDoBoys{
+	height: 50px;
+	width: 50px;
+}
+
+.imageDoBoys2{
+	height: 50px;
+	width: 100px;
+}
 }
 
 .btn-red {
-	background: #E53030;
+	background: #C20021;
 	border: 3px solid #fff;
 	border-radius: 100%;
 	box-shadow: 0 -2px 0 3px #c91919 inset, 0 5px 5px rgba(65, 8, 8, 0.17),
@@ -107,7 +116,7 @@ h2 {
 }
 
 .btn-red:hover {
-	background: #E53030;;
+	background: #C20021;;
 	box-shadow: 0 -2px 0 3px #1a1a1a inset, 0 5px 5px rgba(0, 0, 0, 0.17), 0
 		15px rgba(255, 255, 255, 0.32) inset;
 	outline: none;
@@ -136,7 +145,7 @@ h2 {
 	font-size: 12px;
 	line-height: 1.428571429;
 	border-radius: 30px;
-	background: #E53030;
+	background: #C20021;
 	color: white;
 }
 
@@ -186,4 +195,9 @@ h2 {
 
 h4 {
 	font-size: 10px;
+}
+
+.imageDoBoys{
+	height: 50px;
+	width: 50px;
 }

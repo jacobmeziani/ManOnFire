@@ -33,15 +33,22 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
 				<nav class="navbar navbar-default" role="navigation">
 					<div class="row">
-					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-					<h2>ListHub</h2>
+					<div class="hidden-xs col-sm-3 col-md-3 col-lg-3">
+					<img class="imageDoBoys2" src="imageservlet/Drawing(5).png"></img>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 parent">
+					<div class="col-xs-3 hidden-sm hidden-md hidden-lg">
+					<img class="imageDoBoys" src="imageservlet/Drawing(9).png"></img>
+					</div>
+					<div class="col-xs-6 hidden-sm hidden-md hidden-lg">
+						<img class="imageDoBoys2 center-block" src="imageservlet/Drawing(10).png"></img>
+						</div>
+					<div class="hidden-xs col-sm-6 col-md-6 col-lg-6 parent">
 						<input class="searchbar child" placeholder="Search..." />
-						</div>
+						</div>	
 						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-						<h2 class="pull-right">Lists</h2>
+						<img class="imageDoBoys pull-right" src="imageservlet/Drawing(7).png"></img>
 						</div>
+						<div class="col-xs-12 hidden-sm hidden-md hidden-lg"> <input class="searchbar" placeholder="Search..." /></div>
 					</div>
 				</nav>
 			</div>
@@ -56,10 +63,10 @@
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<button type="button" id="randomButton"
+				<a type="button" id="randomButton"
 					class="btn btn-circle btn-xl center-block">
 					<span class="glyphicon glyphicon-repeat"></span>
-				</button>
+				</a>
 			</div>
 		</div>
 		<div class="row row-buffer">
@@ -73,12 +80,12 @@
 		</div>
 		<div class="row">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<img src="${sessionScope.leftItem.picPath}"
+				<img id="thesauce" src="${sessionScope.leftItem.picPath}"
 					class="img-responsive center-block"></img>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
 				<div class="row">
-					<h3>
+					<h3 id="test2">
 						<c:out value="${sessionScope.leftItem.belongingList}"></c:out>
 					</h3>
 				</div>

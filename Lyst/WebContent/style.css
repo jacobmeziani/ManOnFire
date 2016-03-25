@@ -1,6 +1,6 @@
 .navbar-default {
-	background-color: #E53030;
-	border-color: #f25858;
+	background-color: #C20021;
+	border-color: #C20021;
 }
 
 .navbar-default .navbar-brand {
@@ -91,8 +91,8 @@
 	border: none;
 	font-size: 20px -webkit-border-radius: 21px;
 	border-radius: 21px;
-	color: rgba(255, 255, 255, 1);
-	background: rgba(0, 0, 0, 0.4);
+	color: rgba(0, 0, 0, .8);
+	background: rgba(255, 255, 255, 1);
 	text-decoration: normal;
 	-o-text-overflow: ellipsis;
 	text-overflow: ellipsis;
@@ -105,8 +105,8 @@
 }
 
 .searchbar:hover {
-	color: rgba(255, 255, 255, 1);
-	background: rgba(0, 0, 0, 0.4);
+	color: rgba(0, 0, 0, .8);
+	background: rgba(255, 255, 255, 1);
 	-webkit-transition: all 500ms cubic-bezier(0.68, -0.75, 0.265, 1.75);
 	-moz-transition: all 500ms cubic-bezier(0.68, -0.75, 0.265, 1.75);
 	-o-transition: all 500ms cubic-bezier(0.68, -0.75, 0.265, 1.75);
@@ -129,4 +129,14 @@
   position: absolute;
   top: 50%;
   transform: translateY(50%);
+}
+
+/* Portrait phones and smaller */
+@media ( max-width : 480px) {
+	
+	.searchbar{
+	width: 415px;
+	height: 40px;
+	border-radius:0px;
+	}
 }
