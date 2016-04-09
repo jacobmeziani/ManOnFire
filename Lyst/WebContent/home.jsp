@@ -25,44 +25,13 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="vsStyle.css">
+<link rel="stylesheet" type="text/css" href="march29.css">
+<script src = "april3.js"></script>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
 	<div class="container-fluid">
-		<div class = "row">
-			<div class = "col-md-2">
-					<div class=navbar-header">
-			<a class="navbar-brand" href="index.jsp"> <img alt="logo" src="images/logo.png" height="30px"></a>
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-				<nav class="navbar navbar-default" role="navigation">
-					<div class="row">
-					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-					<h2>ListHub</h2>
-					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 parent">
-						<input class="searchbar child" placeholder="Search..." />
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-						<h2 class="pull-right">Lists</h2>
-						</div>
-					</div>
-				</nav>
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-				<nav class="navbar navbar-default" role="navigation">
-					<div class="row">
-					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-					<h2>ListHub</h2>
-					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 parent">
-						<input class="searchbar child" placeholder="Search..." />
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-						<h2 class="pull-right">Lists</h2>
-						</div>
-					</div>
-				</nav>
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
 				<nav class="navbar navbar-default" role="navigation">
@@ -84,18 +53,38 @@
 		<div class="container-fluid" id="main-body">
 		<div class="row">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<button type="button" class="btn btn-circle btn-xl center-block">
-					<span class="glyphicon glyphicon-th"></span>
-				</button>
+				<button id="clicker" type="button"
+					class="btn btn-circle btn-xl center-block">
+					<span class="glyphicon glyphicon-th"></span></button>
+					${sessionScope.CategoryHTML}	
+				 	<!-- <ul id="top-nav" class="showmethemoney">
+						<li id="id is titties" class="menu-item  final"><a class="showmethemoney">Everything</a></li>
+						<li id=" more titties " class="menu-item  children"><a class="showmethemoney">Sports</a>
+							<ul id="levelone-nav" class="menu-item-menu showmethemoney">
+								<li class="menu-item final"><a class="showmethemoney">Basketball</a></li>
+								<li class="menu-item final"><a class="showmethemoney">Football</a></li>
+								<li class="menu-item children"><a class="showmethemoney">Racquet
+										Sports</a>
+									<ul class="showmethemoney">
+										<li class="menu-item final"><a class="showmethemoney">Tennis</a></li>
+										<li class="menu-item final"><a class="showmethemoney">Squash</a></li>
+									</ul></li>
+							</ul></li>
+						<li class="menu-item children"><a class="showmethemoney">Entertainment</a>
+							<ul class="menu-item-menu showmethemoney">
+								<li class="menu-item children"><a class="showmethemoney">Movies</a>
+									<ul class="menu-item-menu showmethemoney">
+										<li class="menu-item final"><a class="showmethemoney">Westeners</a></li>
+										<li class="menu-item final"><a class="showmethemoney">Horror
+												flicks</a></li>
+									</ul></li>
+								<li class="menu-item final"><a class="showmethemoney">Music</a></li>
+								<li class="menu-item final"><a class="showmethemoney">Television</a></li>
+								<li class="menu-item final"><a class="showmethemoney">Online
+										Poop Shows</a></li>
+							</ul></li>
+					</ul> -->
 			</div>
-			<div class= "col-md-6">
-			<div class = "navbar-form" role = "search"> -->
-			<div class = "input-group">
-					<input type="text" class="form-control" placeholder="Search..." aria-label = "search_term">
-					<div class="input-group-btn">
-						<button type="button" class="btn btn-default ">Submit</button>
-					</div> 				
-				</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<button type="button" id="randomButton"
@@ -106,11 +95,15 @@
 		</div>
 		<div class="row row-buffer">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<h4 class="centerAlign">Everything</h4>
+				<span><h4 class="centerAlign">Current Category is: </h4></span>
+				<span><h4 id = "showCategory" class="centerAlign">Everything</h4></span>
+				<input type = "hidden" name="CurrentCategory" value = "Something">
+				
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<h4 class="centerAlign">Random</h4>
+				dude"${sessionScope.catstring}"
 			</div>
 		</div>
 		<div class="row">
@@ -164,5 +157,6 @@
 			</div>
 		</div>
 	</div>
+	Current session information : Current session category is <c:out value="${sessionScope.CurrentCategory}"></c:out>
 </body>
 </html>

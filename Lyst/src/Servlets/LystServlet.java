@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Data.CategoryDB;
+import Data.HTMLCategory;
 import Data.Lyst;
 import Data.LystItem;
 import Database.DatabaseAccessor;
@@ -42,12 +44,26 @@ public class LystServlet extends HttpServlet {
 		String currentCategory = (String)session.getAttribute("CurrentCategory");
 		if(currentCategory == null || currentCategory.isEmpty()){
 			currentCategory = "Everything";
+			session.setAttribute("CurrentCategory", "Everything");
 		}
 		String initial = (String)session.getAttribute("intial");		
 		DatabaseAccessor d = new DatabaseAccessor();
 		LystItem[] items = d.getNextCombatants(currentCategory);
 		session.setAttribute("leftItem", items[0]);
 		session.setAttribute("rightItem", items[1]);
+		session.setAttribute("CurrentCategory", ((String)request.getParameter("CurrentCategory")));
+		session.setAttribute("CategoryHTML", null);
+		String testing_categories = (String)session.getAttribute("CategoryHTML");
+		
+		if (testing_categories==null) {
+			String catstring = "<a>MUHHHFUCKINTITTIES </a>";
+			session.setAttribute("catstring",catstring);
+			//build the category tree html
+			CategoryDB cdb = new CategoryDB(d);
+			HTMLCategory top = HTMLCategory.buildit(cdb);
+			String category_html = top.HTMLWriter();
+			session.setAttribute("CategoryHTML", category_html);
+		}
 		if(initial == null || initial.isEmpty()){
 			request.getRequestDispatcher("/home.jsp").forward(request, response);
 		}

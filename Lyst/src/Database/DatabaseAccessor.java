@@ -17,6 +17,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.KeyAttribute;
 import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
+import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
@@ -31,14 +32,27 @@ public class DatabaseAccessor {
 
 	static DynamoDB dynamoDB;
 	Random random = new Random();
+	static AmazonDynamoDBClient client;
 
 	public DatabaseAccessor() {
 		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
 		AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("jmeziani"));
 		dbClient.setRegion(usWest2);
+		client = dbClient;
 		dynamoDB = new DynamoDB(dbClient);
 	}
-
+			
+	
+	public ItemCollection<ScanOutcome> getCategories () {
+		//Used to get categories from the database to build tree
+		Table categories = dynamoDB.getTable("Categories");
+		//ScanRequest scanrequest = new ScanRequest().withTableName("Categories");
+		//ScanResult result = client.scan(scanrequest);
+		return categories.scan();
+		
+		
+	}
+	
 	public ArrayList<Lyst> getRandomLists(int numberOfLists) {
 		BatchGetItemOutcome outcome = getRandomListsFromDb(numberOfLists);
 
