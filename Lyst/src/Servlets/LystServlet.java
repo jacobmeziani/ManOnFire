@@ -45,8 +45,8 @@ public class LystServlet extends HttpServlet {
 		if(currentCategory == null || currentCategory.isEmpty()){
 			currentCategory = "Everything";
 			session.setAttribute("CurrentCategory", "Everything");
-		}
-		String initial = (String)session.getAttribute("intial");		
+			session.setAttribute("CurrentCategory", currentCategory);
+		}		
 		DatabaseAccessor d = new DatabaseAccessor();
 		LystItem[] items = d.getNextCombatants(currentCategory);
 		session.setAttribute("leftItem", items[0]);

@@ -9,4 +9,8 @@ $(document).ready(function() {
 		newDoc.write(data);
 		newDoc.close();
 		});
+	
+	$("#randomButton a").click(function(){
+		alert("dus dit it");
+	});
 });
