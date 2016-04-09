@@ -59,16 +59,16 @@
 
 
 
-<nav class="navbar navbar-default">
+<body>
 	<div class="container-fluid">
 		<div class = "row">
 			<div class = "col-md-2">
 					<div class=navbar-header">
-			<a class="navbar-brand" href="home.jsp"> <img alt="logo" src="images/logo.png" height="30px"></a>
+			<a class="navbar-brand" href="index.jsp"> <img alt="logo" src="images/logo.png" height="30px"></a>
 			</div>
 			</div>
 			<div class= "col-md-6">
-			<div class = "navbar-form" role = "search">
+			<div class = "navbar-form" role = "search"> -->
 			<div class = "input-group">
 					<input type="text" class="form-control" placeholder="Search..." aria-label = "search_term">
 					<div class="input-group-btn">

@@ -1,0 +1,69 @@
+
+/* --------------------------
+ */
+
+#top-nav {
+	list-style: none;
+	position: absolute;
+	z-index: 9;
+	left: 200px;
+}
+
+ #top-nav ul {
+ 	width: 200px;
+ 	position: absolute;
+ 	list-style:none;
+ 	margin: 0;
+ 	padding: 0;
+ }
+ 
+/*  #top-nav li a {
+	padding: 5px 5px;
+	background: #ccc;
+	border-top: 1px solid #eee;
+	color: #000;
+	height: 30px;
+	width: 200px;
+	font-size: 16px;
+} */
+ #top-nav li a {
+	padding: 5px 5px;
+	background: #ccc;
+	border-top: 1px solid #eee;
+	color: #000;
+	height: 30px;
+	width: 200px;
+	font-size: 16px;
+}
+#top-nav li:hover {
+	background: red;
+}
+ 
+#top-nav li ul {
+	position: absolute;
+	width: 200px;
+} 
+
+/* .menu-item-menu {
+	position: absolute;
+	left: 200px;
+	top: -30px;
+	
+} */
+
+.showblock {
+	display: block;
+}
+
+#navcontainer {
+	postion: absolute;
+}
+
+.hidden {
+	display: none;
+}
+
+.showmethemoney{
+	display: block;
+}
+
