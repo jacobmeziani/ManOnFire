@@ -37,6 +37,7 @@ public class LystServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String params = getPathForData(request);
 		
 		HttpSession session = request.getSession();
 		String currentCategory = (String)session.getAttribute("CurrentCategory");
@@ -47,8 +48,14 @@ public class LystServlet extends HttpServlet {
 		DatabaseAccessor d = new DatabaseAccessor();
 		LystItem[] items = d.getNextCombatants(currentCategory);
 		session.setAttribute("leftItem", items[0]);
-		session.setAttribute("rightItem", items[1]);		
+		session.setAttribute("rightItem", items[1]);
+		if(params !=null && params.equals("true")){
 			request.getRequestDispatcher("/home.jsp").forward(request, response);
+		}
+		else
+		{
+			request.getRequestDispatcher("/newmatchup.jsp").forward(request, response);
+		}
 
 	}
 
@@ -73,6 +80,11 @@ public class LystServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public String getPathForData(HttpServletRequest req) {
+		String a = req.getParameter("isInitial");
+		return a;
 	}
 
 }

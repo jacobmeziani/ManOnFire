@@ -17,12 +17,25 @@
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="testCss.css">
+	<script src="testScripts.js"></script>
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
-<button type="button" class="btn btn-circle btn-xl"><span class="glyphicon glyphicon-repeat"></span></button>
-<button type="button" class="btn btn-circle btn-xl"><span class="glyphicon glyphicon-th"></span></button>
+	<div id="myCard" class="flip-container">
+	<div class="flipper">
+		<div class="front">
+			<img id="thesauce" class="img-responsive center-block" src="imageservlet/dicaps.png">
+		</div>
+		<div class="back">
+			<img id="thesauce" class="img-responsive center-block" src="imageservlet/leb.png">
+		</div>
+	</div>
+</div>
+<a type="button" id="randomButton"
+					class="btn btn-circle btn-xl center-block">
+					<span class="glyphicon glyphicon-repeat"></span>
+				</a>
 </div>
 </body>
 </html>
