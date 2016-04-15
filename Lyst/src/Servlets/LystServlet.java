@@ -39,31 +39,28 @@ public class LystServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String params = getPathForData(request);
+		String initialRequest = getParameters(request);
 		
 		HttpSession session = request.getSession();
 		String currentCategory = (String)session.getAttribute("CurrentCategory");
 		if(currentCategory == null || currentCategory.isEmpty()){
 			session.setAttribute("CurrentCategory", "Everything");
-		}		
+			currentCategory = "Everything";		}		
 		DatabaseAccessor d = new DatabaseAccessor();
 		LystItem[] items = d.getNextCombatants(currentCategory);
 		session.setAttribute("leftItem", items[0]);
-		session.setAttribute("rightItem", items[1]);
 		session.setAttribute("rightItem", items[1]);
 //		session.setAttribute("CurrentCategory", ((String)request.getParameter("CurrentCategory")));
 		String testing_categories = (String)session.getAttribute("CategoryHTML");
 		
 		if (testing_categories==null) {
-			String catstring = "<a>MUHHHFUCKINTITTIES </a>";
-			session.setAttribute("catstring",catstring);
-			//build the category tree html
+
 			CategoryDB cdb = new CategoryDB(d);
 			HTMLCategory top = HTMLCategory.buildit(cdb);
 			String category_html = top.HTMLWriter();
 			session.setAttribute("CategoryHTML", category_html);
 		}
-		if(params !=null && params.equals("true")){
+		if(initialRequest !=null && initialRequest.equals("true")){
 			request.getRequestDispatcher("/home.jsp").forward(request, response);
 		}
 		else
@@ -96,7 +93,7 @@ public class LystServlet extends HttpServlet {
 		}
 	}
 	
-	public String getPathForData(HttpServletRequest req) {
+	public String getParameters(HttpServletRequest req) {
 		String a = req.getParameter("isInitial");
 		return a;
 	}
