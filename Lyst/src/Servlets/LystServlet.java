@@ -64,10 +64,6 @@ public class LystServlet extends HttpServlet {
 			String category_html = top.HTMLWriter();
 			session.setAttribute("CategoryHTML", category_html);
 		}
-		if(initial == null || initial.isEmpty()){
-			request.getRequestDispatcher("/home.jsp").forward(request, response);
-		}
-
 	}
 
 	/**

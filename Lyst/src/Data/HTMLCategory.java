@@ -68,6 +68,7 @@ public class HTMLCategory {
 		} else if (this.leaf==false) {
 			if (this.name.equals("Top")) {
 				String top_ul = "<ul id =\"top-nav\" class=\"showmethemoney\">\n";
+				String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\">Close</a></li>\n";
 				String html_first_li = "<li class = \"menu-item final\"><a class=\"showmethemoney\"> Everything </a></li>\n";
 				String html_recurse = "";
 				String temp;
@@ -75,11 +76,13 @@ public class HTMLCategory {
 					temp = category.HTMLWriter();
 					html_recurse = html_recurse+temp;
 				}
-				String html_response = top_ul+html_first_li+html_recurse+"</ul>\n";
+				String html_response = top_ul+close_html+html_first_li+html_recurse+"</ul>\n";
 				return html_response;
 			} else if (!(this.name.equals("Top"))) { //writes all other Li except top
 				String html_opening_li = "<li class = \"menu-item children\"><a class=\"showmethemoney testclass\">"+this.name+"</a>\n";
 				String html_opening_ul = "<ul class = \"showmethemoney\">\n";
+				String up_html = "<li class = \"final upmenu\"><a class = \"showmethemoney\">Up</a></li>\n";
+				String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\">Close</a></li>\n";
 				String html_first_li = "<li class = \"menu-item final\"><a class=\"showmethemoney\"> All "+this.name+"</a></li>\n";
 				String html_recurse = "";
 				String temp;
@@ -87,7 +90,7 @@ public class HTMLCategory {
 					temp = category.HTMLWriter();
 					html_recurse = html_recurse+temp;
 				}
-				String html_response = html_opening_li+html_opening_ul+html_first_li+html_recurse+"</ul></li>\n";
+				String html_response = html_opening_li+html_opening_ul+up_html+close_html+html_first_li+html_recurse+"</ul></li>\n";
 				return html_response;
 			} 
 		}
