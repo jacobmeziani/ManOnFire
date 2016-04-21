@@ -88,5 +88,10 @@ public class LystServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getParameters(HttpServletRequest req) {
+		String a = req.getParameter("isInitial");
+		return a;
+	}
 
 }

@@ -6,7 +6,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LystServlet</servlet-name>
-    <url-pattern>/bro</url-pattern>
+    <url-pattern>/bro/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ImageServlet</servlet-name>

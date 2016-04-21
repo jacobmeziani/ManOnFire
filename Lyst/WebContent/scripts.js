@@ -4,7 +4,7 @@ $(document).ready(function() {
 		alert( "damn daniel" );
 	});
 	
-	$.get( "bro", function( data ) {
+	$.get( "bro", "isInitial=true", function( data ) {
 		var newDoc = document.open("text/html", "replace");
 		newDoc.write(data);
 		newDoc.close();
