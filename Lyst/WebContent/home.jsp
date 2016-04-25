@@ -67,9 +67,9 @@
 				<button id="clicker" type="button"
 					class="btn btn-circle btn-xl center-block">
 					<span class="glyphicon glyphicon-th"></span></button>
-<%-- 					${sessionScope.CategoryHTML}
- --%>
-				<ul id="top-nav" class="showmethemoney">
+			${sessionScope.CategoryHTML}
+
+			<!-- 	<ul id="top-nav" class="showmethemoney">
 					<li class="final closemenu"><a class="showmethemoney">Close</a></li>
 					<li id="id is titties" class="menu-item  final"><a class = "showmethemoney">Everything</a></li>
 					<li id=" more titties " class="menu-item  children"><a class = "showmethemoney">Sports</a>
@@ -105,7 +105,7 @@
 						</ul></li>
 
 
-				</ul>
+				</ul> -->
 				<!-- <ul id="top-nav" class="showmethemoney">
 						<li id="id is titties" class="menu-item  final"><a class="showmethemoney">Everything</a></li>
 						<li id=" more titties " class="menu-item  children"><a class="showmethemoney">Sports</a>
@@ -232,30 +232,5 @@
 			</div>
 		</div>
 	</div>
-<<<<<<< HEAD
-	Current session information : Current session category is <c:out value="${sessionScope.CurrentCategory}"></c:out>
-	<h2>Page Width: <span id="dimensions"></span></h2>
-	
-<a href="javascript:void(0)" class="icon">
-	<div class="hamburger">
-  <div class="menui top-menu"></div>
-  <div class="menui mid-menu"></div>
-  <div class="menui bottom-menu"></div>
-</div>
-</a>	
-	<div class="mobilenav"> 
-  <li><a href="#">Home</a></li> 
-  <li><a href="#">Services</a></li> 
-  <li><a href="#">Contact</a></li> 
-  <li><a href="#">About</a></li> 
-  <li><a href="#">Blog</a></li> 
-</div>
-
-	
-=======
->>>>>>> branch 'master' of https://github.com/jacobmeziani/ManOnFire.git
 </body>
-<<<<<<< HEAD
-=======
 </html>
->>>>>>> branch 'master' of https://github.com/jacobmeziani/ManOnFire.git

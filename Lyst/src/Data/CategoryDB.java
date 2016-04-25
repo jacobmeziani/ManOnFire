@@ -11,12 +11,17 @@ import java.util.LinkedHashSet;
 public class CategoryDB {
 	
 	ArrayList<Category> categories;
+	ArrayList<ListServerInit> lists;
 
 	public CategoryDB(DatabaseAccessor db){
 		ItemCollection<ScanOutcome> collection = db.getCategories();
 		Iterator<Item> iterator = collection.iterator();
+		//ItemCollection<ScanOutcome>collectionlists= db.getLists();
+		//Iterator<Item> iteratorlist = collectionlists.iterator();
 		Category temp;
+		//ListServerInit templist;
 		ArrayList<Category> categories = new ArrayList<Category>();
+		//ArrayList<ListServerInit> lists = new ArrayList<ListServerInit>(); 
 		while(iterator.hasNext()) {
 			Item cat = iterator.next();
 			String name = (String)cat.get("CategoryName");
@@ -25,9 +30,25 @@ public class CategoryDB {
 			temp = new Category(name,subCats,subLysts);
 			categories.add(temp);
 		}
+//		while (iteratorlist.hasNext()) {
+//			Item list = iterator.next();
+//			int id = list.getInt("Id");
+//			String name = (String)list.get("ListName");
+//			templist = new ListServerInit(id,name);
+//			lists.add(templist);
+//		}
 		this.categories = categories;
+		//this.lists = lists;
 	}
 	
+	public String findList(int id) {
+		for (int i = 0;i<lists.size();i++) {
+			ListServerInit list = lists.get(i);
+			if (list.getID()==id) {
+				return list.getName();
+			}
+		} return null;
+	}
 	
 	public Category findCategory (String name) {
 		for (int i = 0;i<categories.size();i++) {
@@ -37,4 +58,5 @@ public class CategoryDB {
 			}
 		} return null;
 	}
+
 }

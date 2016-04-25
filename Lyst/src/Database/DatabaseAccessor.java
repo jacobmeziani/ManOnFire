@@ -48,10 +48,13 @@ public class DatabaseAccessor {
 		Table categories = dynamoDB.getTable("Categories");
 		//ScanRequest scanrequest = new ScanRequest().withTableName("Categories");
 		//ScanResult result = client.scan(scanrequest);
-		return categories.scan();
-		
-		
+		return categories.scan();	
 	}
+	public ItemCollection<ScanOutcome> getLists () {
+		Table lists = dynamoDB.getTable("Lists");
+		return lists.scan();
+	}
+		
 	
 	public ArrayList<Lyst> getRandomLists(int numberOfLists) {
 		BatchGetItemOutcome outcome = getRandomListsFromDb(numberOfLists);
