@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import java.util.LinkedHashSet;
+import java.math.BigDecimal;
 
 public class CategoryDB {
 	
@@ -16,32 +17,43 @@ public class CategoryDB {
 	public CategoryDB(DatabaseAccessor db){
 		ItemCollection<ScanOutcome> collection = db.getCategories();
 		Iterator<Item> iterator = collection.iterator();
-		//ItemCollection<ScanOutcome>collectionlists= db.getLists();
-		//Iterator<Item> iteratorlist = collectionlists.iterator();
+		ItemCollection<ScanOutcome>collectionlists= db.getLists();
+		Iterator<Item> iteratorlist = collectionlists.iterator();
 		Category temp;
-		//ListServerInit templist;
+		ListServerInit templist;
 		ArrayList<Category> categories = new ArrayList<Category>();
-		//ArrayList<ListServerInit> lists = new ArrayList<ListServerInit>(); 
+		ArrayList<ListServerInit> lists = new ArrayList<ListServerInit>(); 
 		while(iterator.hasNext()) {
 			Item cat = iterator.next();
 			String name = (String)cat.get("CategoryName");
 			LinkedHashSet<String> subCats = (LinkedHashSet<String>) cat.get("subCategories");
-			LinkedHashSet<String> subLysts = (LinkedHashSet<String>) cat.get("ListIds");
+			LinkedHashSet<BigDecimal> subLysts = (LinkedHashSet<BigDecimal>) cat.get("ListIds");
 			temp = new Category(name,subCats,subLysts);
 			categories.add(temp);
 		}
-//		while (iteratorlist.hasNext()) {
-//			Item list = iterator.next();
-//			int id = list.getInt("Id");
-//			String name = (String)list.get("ListName");
-//			templist = new ListServerInit(id,name);
-//			lists.add(templist);
-//		}
+		try {
+		while (iteratorlist.hasNext()) {
+			Item list = iteratorlist.next();
+			int id = list.getInt("Id");
+			String name = (String)list.get("ListName");
+			templist = new ListServerInit(id,name);
+			lists.add(templist);
+		}} finally {}
 		this.categories = categories;
-		//this.lists = lists;
+		this.lists = lists;
 	}
 	
-	public String findList(int id) {
+	public ListServerInit getListObject (int id) {
+		for (int i = 0;i<lists.size();i++) {
+			ListServerInit list = lists.get(i);
+			if (list.getID()==id) {
+				return list;
+			}
+		} return null;
+	}
+
+	
+	public String getListName (int id) {
 		for (int i = 0;i<lists.size();i++) {
 			ListServerInit list = lists.get(i);
 			if (list.getID()==id) {
@@ -59,4 +71,11 @@ public class CategoryDB {
 		} return null;
 	}
 
+//	public static void main (String args[]) {
+//		DatabaseAccessor d = new DatabaseAccessor();
+//		CategoryDB cdb = new CategoryDB(d);
+//		HTMLCategory top = HTMLCategory.buildit(cdb);
+//		String category_html = top.HTMLWriter();
+//		System.out.println(category_html);
+//	}
 }

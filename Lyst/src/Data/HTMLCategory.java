@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.LinkedHashSet;
+import java.math.BigDecimal;
 
 public class HTMLCategory {
 
@@ -12,7 +13,7 @@ public class HTMLCategory {
 	boolean leaf; //means it is final
 	HTMLCategory[] subCategories;
 	//String[] subLysts;
-	LinkedHashSet<String>subLysts;
+	ArrayList<ListServerInit>subLysts;
 	int level;
 	
 	public static HTMLCategory buildit(CategoryDB cdb) {
@@ -23,6 +24,7 @@ public class HTMLCategory {
 	HTMLCategory (String name,CategoryDB cdb,int level) {
 		Category temp = cdb.findCategory(name);
 		this.name = name;
+		System.out.println("cat: "+name);
 		this.level = level;
 		if (temp.subCats!=null) {
 			this.leaf = false; 
@@ -39,9 +41,21 @@ public class HTMLCategory {
 				i++;
 			} 
 		} else {
-			this.leaf=true;
-			this.subLysts = temp.subLysts;
-		}
+			this.leaf = true;
+			if (temp.subLysts!=null) {
+			Iterator <BigDecimal> iteratornum = temp.subLysts.iterator();
+			int temp_int;
+			ArrayList<ListServerInit> templist = new ArrayList<ListServerInit>();
+			while(iteratornum.hasNext()) {
+				//String bigint= iteratornum.next().getClass().getName();
+				//System.out.println(bigint);
+				int list_id = iteratornum.next().intValue(); //intValueExact
+				//temp_int = Integer.parseInt(list_id);
+				templist.add(cdb.getListObject(list_id));
+				System.out.println("list: " + cdb.getListObject(list_id).getName());
+			}
+			this.subLysts = templist;
+		}}
 
 		//		else if (temp.subLysts!=null) {//must delete if later.
 		//			this.leaf = true;
@@ -62,9 +76,23 @@ public class HTMLCategory {
 	}
 	
 	public String HTMLWriter() {
+		System.out.println(this.name);
 		if (this.leaf==true) {
-			String html = "<li class = \"menu-item final\"><a class = \"showmethemoney\">"+this.name+"</a></li>\n";
+			if (subLysts!=null) {
+			String html_opening_li = "<li class = \"menu-item children\"><a class=\"showmethemoney \">"+this.name+"</a>\n";
+			String html_opening_ul = "<ul class = \"showmethemoney\">\n";
+			String up_html = "<li class = \"final upmenu\"><a class = \"showmethemoney\">Up</a></li>\n";
+			String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\">Close</a></li>\n";
+			String html_first_li = "<li class = \"menu-item final\"><a class=\"showmethemoney\"> All "+this.name+"</a></li>\n";
+			String html_lysts = "";
+			String temp;
+			for (ListServerInit list:subLysts) {
+				temp = "<li class = \"meny-item final\"><a class = \"showmethemoney\">"+list.getName()+"</a></li>\n";
+				html_lysts = html_lysts+temp;
+			}
+			String html = html_opening_li+html_opening_ul+up_html+close_html+html_first_li+html_lysts+"</ul></li>\n";
 			return html;
+			}
 		} else if (this.leaf==false) {
 			if (this.name.equals("Top")) {
 				String top_ul = "<ul id =\"top-nav\" class=\"showmethemoney\">\n";
@@ -94,6 +122,6 @@ public class HTMLCategory {
 				return html_response;
 			} 
 		}
-		return "MISTEK";	
+		return null;	
 	}
 }
