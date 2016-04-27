@@ -7,22 +7,33 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="jquery.validate.min.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
-	<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.0/css/bootstrap-slider.min.css"></script>
 	<link rel="stylesheet" type="text/css" href="testCss.css">
-	<script src="testScripts.js"></script>
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="vsStyle.css">
+<script src="testScripts.js"></script>
+	<script src="testScripts2.js"></script>
 </head>
 <body>
-<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>bruh
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<h3  class="centerAlign" id="descriptor">Yooo son!</h3>
+</div>
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+<button type="button" id="leftButton"
+					class="btn btn-circle btn-xl center-block">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				</button>
+</div>
+<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+<div class="slider" id="circles-slider"></div>
+</div>
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+<button type="button" id="rightButton"
+					class="btn btn-circle btn-xl center-block">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</button>
+</div>
+
 </body>
 </html>
