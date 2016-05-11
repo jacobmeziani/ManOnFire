@@ -54,7 +54,9 @@ public class DatabaseAccessor {
 		Table lists = dynamoDB.getTable("Lists");
 		return lists.scan();
 	}
-		
+	public DynamoDB getDDB(){
+		return dynamoDB;
+	}
 	
 	public ArrayList<Lyst> getRandomLists(int numberOfLists) {
 		BatchGetItemOutcome outcome = getRandomListsFromDb(numberOfLists);
@@ -73,7 +75,6 @@ public class DatabaseAccessor {
 	}
 
 	public LystItem[] getNextCombatants(String category) {
-
 		Table categories = dynamoDB.getTable("Categories");
 		Table lists = dynamoDB.getTable("Lists");
 		Table listItems = dynamoDB.getTable("ListItems");
@@ -87,16 +88,16 @@ public class DatabaseAccessor {
 		else 
 		{
 			Item categoryItem = categories.getItem("CategoryName", category);
-			 LinkedHashSet<Integer> e = (LinkedHashSet<Integer>)categoryItem.get("ListIds");
-		        ArrayList<Integer> listsInCategory = new ArrayList<Integer>();
-		        listsInCategory.addAll(e);
-		        int size = listsInCategory.size();
-		        int randomIndex = random.nextInt(size);
-		        int listKey = listsInCategory.get(randomIndex);
-		        Item theCombatantList = lists.getItem("Id",listKey);
-		        listToPullFrom = theCombatantList.getString("ListName");
-		        listSize = theCombatantList.getInt("ListSize");
-		        
+			LinkedHashSet<Integer> e = (LinkedHashSet<Integer>)categoryItem.get("ListIds");
+			ArrayList<Integer> listsInCategory = new ArrayList<Integer>();
+			listsInCategory.addAll(e); //i fux with this -bruce
+			int size = listsInCategory.size();
+			int randomIndex = random.nextInt(size);
+			int listKey = listsInCategory.get(randomIndex);
+			Item theCombatantList = lists.getItem("Id",listKey);
+			listToPullFrom = theCombatantList.getString("ListName");
+			listSize = theCombatantList.getInt("ListSize");
+
 		}
 		
 		Index index = listItems.getIndex("BelongingList-index");

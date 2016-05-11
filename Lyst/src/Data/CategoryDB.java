@@ -14,6 +14,7 @@ public class CategoryDB {
 	ArrayList<Category> categories;
 	ArrayList<ListServerInit> lists;
 
+	@SuppressWarnings("unchecked")
 	public CategoryDB(DatabaseAccessor db){
 		ItemCollection<ScanOutcome> collection = db.getCategories();
 		Iterator<Item> iterator = collection.iterator();

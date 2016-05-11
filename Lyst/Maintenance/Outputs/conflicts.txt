@@ -1,0 +1,14 @@
+The Following Item names were already in the DB
+ItemThe Chronicon list Best Rap Albums from the 1990'swith ID 1000
+ItemIllmaticon list Best Rap Albums from the 1990'swith ID 1000
+ItemReasonable Doubton list Best Rap Albums from the 1990'swith ID 1001
+ItemReady to Dieon list Best Rap Albums from the 1990'swith ID 1002
+ItemParison list Most Amazing cities in the Worldwith ID 1003
+ItemRomeon list Most Amazing cities in the Worldwith ID 1004
+ItemNew Yorkon list Most Amazing cities in the Worldwith ID 1005
+ItemLos Angeleson list Most Amazing cities in the Worldwith ID 1006
+ItemBangkokon list Most Amazing cities in the Worldwith ID 1007
+ItemParison list Most Ratchet Cities in the Worldwith ID 1003
+ItemMiamion list Most Ratchet Cities in the Worldwith ID 1008
+ItemLas Vegason list Most Ratchet Cities in the Worldwith ID 1009
+ItemBangkokon list Most Ratchet Cities in the Worldwith ID 1007

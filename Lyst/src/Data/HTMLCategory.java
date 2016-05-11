@@ -21,6 +21,16 @@ public class HTMLCategory {
 		return top;
 	}
 	//builds object categories based on Category from database collection 
+	boolean isLystHere (int value) {
+		try {
+			for (ListServerInit lyst:subLysts) {
+				if (lyst.getID()==value) return true;
+			} return false;
+		} catch (NullPointerException e) {
+			return false;
+		}
+	}
+	
 	HTMLCategory (String name,CategoryDB cdb,int level) {
 		Category temp = cdb.findCategory(name);
 		this.name = name;
@@ -43,19 +53,19 @@ public class HTMLCategory {
 		} else {
 			this.leaf = true;
 			if (temp.subLysts!=null) {
-			Iterator <BigDecimal> iteratornum = temp.subLysts.iterator();
-			int temp_int;
-			ArrayList<ListServerInit> templist = new ArrayList<ListServerInit>();
-			while(iteratornum.hasNext()) {
-				//String bigint= iteratornum.next().getClass().getName();
-				//System.out.println(bigint);
-				int list_id = iteratornum.next().intValue(); //intValueExact
-				//temp_int = Integer.parseInt(list_id);
-				templist.add(cdb.getListObject(list_id));
-				System.out.println("list: " + cdb.getListObject(list_id).getName());
-			}
-			this.subLysts = templist;
-		}}
+				Iterator <BigDecimal> iteratornum = temp.subLysts.iterator();
+				int temp_int;
+				ArrayList<ListServerInit> templist = new ArrayList<ListServerInit>();
+				while(iteratornum.hasNext()) {
+					//String bigint= iteratornum.next().getClass().getName();
+					//System.out.println(bigint);
+					int list_id = iteratornum.next().intValue(); //intValueExact
+					//temp_int = Integer.parseInt(list_id);
+					templist.add(cdb.getListObject(list_id));
+					System.out.println("list: " + cdb.getListObject(list_id).getName());
+				}
+				this.subLysts = templist;
+			}}
 
 		//		else if (temp.subLysts!=null) {//must delete if later.
 		//			this.leaf = true;
@@ -87,7 +97,7 @@ public class HTMLCategory {
 			String html_lysts = "";
 			String temp;
 			for (ListServerInit list:subLysts) {
-				temp = "<li class = \"meny-item final\"><a class = \"showmethemoney\">"+list.getName()+"</a></li>\n";
+				temp = "<li class = \"menu-item final\"><a class = \"showmethemoney\">"+list.getName()+"</a></li>\n";
 				html_lysts = html_lysts+temp;
 			}
 			String html = html_opening_li+html_opening_ul+up_html+close_html+html_first_li+html_lysts+"</ul></li>\n";
@@ -123,5 +133,29 @@ public class HTMLCategory {
 			} 
 		}
 		return null;	
+	}
+	
+	public ArrayList<Integer> checkLists (ArrayList<String> missingString) {
+		ArrayList<Integer> all_inside = new ArrayList<Integer>();
+		if (this.leaf) {
+			try {
+			for (ListServerInit lyst:subLysts) {
+				all_inside.add(lyst.getID());
+			}
+			} catch (NullPointerException e) {
+				missingString.add("Final Category "+ this.name + " does not have any lists"); 
+			}
+		} else if (!this.leaf) {
+			for (HTMLCategory subcat:subCategories) {
+				all_inside.addAll(subcat.checkLists(missingString));
+			}
+			for (Integer i:all_inside) {
+				if (!isLystHere(i)) {
+					String temp = "Category "+ this.name + " is missing list number " + i;
+					missingString.add(temp);
+				}
+			}
+		}
+		return all_inside;
 	}
 }
