@@ -99,7 +99,7 @@ public class DatabaseAccessor {
 			listSize = theCombatantList.getInt("ListSize");
 
 		}
-		
+		//DBA
 		Index index = listItems.getIndex("BelongingList-index");
 		QuerySpec spec = new QuerySpec()
 			    .withKeyConditionExpression("BelongingList = :v_belong")

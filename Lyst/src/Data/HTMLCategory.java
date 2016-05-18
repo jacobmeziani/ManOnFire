@@ -49,9 +49,7 @@ public class HTMLCategory {
 				HTMLCategory new_cat = new HTMLCategory (new_name,cdb,level+1);
 				subCategories[i]=new_cat;
 				i++;
-			} 
-		} else {
-			this.leaf = true;
+			}
 			if (temp.subLysts!=null) {
 				Iterator <BigDecimal> iteratornum = temp.subLysts.iterator();
 				int temp_int;
@@ -65,7 +63,24 @@ public class HTMLCategory {
 					System.out.println("list: " + cdb.getListObject(list_id).getName());
 				}
 				this.subLysts = templist;
-			}}
+			}
+		} else {
+			this.leaf = true;
+			if (temp.subLysts!=null) {
+				Iterator <BigDecimal> iteratornum = temp.subLysts.iterator();
+				int temp_int;
+				ArrayList<ListServerInit> templist = new ArrayList<ListServerInit>();
+				while(iteratornum.hasNext()) {
+					//String bigint= iteratornum.next().getClass().getName();
+					//System.out.println(bigint);
+					int list_id = iteratornum.next().intValue(); //intValueExact
+					//temp_int = Integer.parseInt(list_id);
+					templist.add(cdb.getListObject(list_id));
+					//System.out.println("list: " + cdb.getListObject(list_id).getName());
+				}
+				this.subLysts = templist;
+			}
+		}
 
 		//		else if (temp.subLysts!=null) {//must delete if later.
 		//			this.leaf = true;
@@ -136,6 +151,7 @@ public class HTMLCategory {
 	}
 	
 	public ArrayList<Integer> checkLists (ArrayList<String> missingString) {
+		//for use with checkCategories.java
 		ArrayList<Integer> all_inside = new ArrayList<Integer>();
 		if (this.leaf) {
 			try {
@@ -143,16 +159,17 @@ public class HTMLCategory {
 				all_inside.add(lyst.getID());
 			}
 			} catch (NullPointerException e) {
-				missingString.add("Final Category "+ this.name + " does not have any lists"); 
+				missingString.add("Missing,"+ this.name); 
 			}
 		} else if (!this.leaf) {
 			for (HTMLCategory subcat:subCategories) {
 				all_inside.addAll(subcat.checkLists(missingString));
 			}
 			for (Integer i:all_inside) {
-				if (!isLystHere(i)) {
-					String temp = "Category "+ this.name + " is missing list number " + i;
+				if (!(isLystHere(i))) {
+					String temp = "Category,"+ this.name + "," + i;
 					missingString.add(temp);
+					System.out.println("inside HTMLCategory --> " + this.name + " missing "+ i);
 				}
 			}
 		}
