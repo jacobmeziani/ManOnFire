@@ -33,6 +33,7 @@ public class DatabaseAccessor {
 	static DynamoDB dynamoDB;
 	Random random = new Random();
 	static AmazonDynamoDBClient client;
+	private ArrayList<Integer> DBlists;
 
 	public DatabaseAccessor() {
 		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
@@ -40,6 +41,13 @@ public class DatabaseAccessor {
 		dbClient.setRegion(usWest2);
 		client = dbClient;
 		dynamoDB = new DynamoDB(dbClient);
+		
+		Table lists = dynamoDB.getTable("Lists");
+		ItemCollection<ScanOutcome> collection = lists.scan();
+		DBlists = new ArrayList<Integer>();
+		for (Item item:collection) {
+			DBlists.add(item.getInt("Id"));
+		}
 	}
 			
 	
@@ -173,6 +181,25 @@ public class DatabaseAccessor {
 //			startingIndex++;
 //		}
 		idsToGet[0] = 1;
+		TableKeysAndAttributes forumTableKeysAndAttributes = new TableKeysAndAttributes("Lists");
+		// Add a partition key
+		forumTableKeysAndAttributes.addHashOnlyPrimaryKeys("Id", idsToGet);
+		BatchGetItemOutcome outcome = dynamoDB.batchGetItem(forumTableKeysAndAttributes);
+		return outcome;
+	}
+	
+	private BatchGetItemOutcome getRandomListsFromDatabase(int numberOfLists) {
+		ArrayList<Integer> listArray = (ArrayList<Integer>) DBlists.clone();
+		int largest = listArray.size();
+		Object[] idsToGet = new Object[numberOfLists];
+		int indexToGet;
+		for (int i = 0; i < numberOfLists; i++) {
+			indexToGet = random.nextInt(largest);
+			
+			idsToGet[i] = listArray.get(indexToGet);
+			listArray.remove((int)indexToGet);
+			largest--;
+		}
 		TableKeysAndAttributes forumTableKeysAndAttributes = new TableKeysAndAttributes("Lists");
 		// Add a partition key
 		forumTableKeysAndAttributes.addHashOnlyPrimaryKeys("Id", idsToGet);
