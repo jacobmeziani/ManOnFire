@@ -3,6 +3,8 @@ package Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.amazonaws.util.json.JSONException;
+import com.amazonaws.util.json.JSONObject;
 
 import Data.CategoryDB;
 import Data.HTMLCategory;
@@ -37,38 +42,73 @@ public class LystServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String initialRequest = getParameters(request);
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String requestAction = getParameter(request);
 		HttpSession session = request.getSession();
-		String currentCategory = (String)session.getAttribute("CurrentCategory");
-		if(currentCategory == null || currentCategory.isEmpty()){
-			currentCategory = "Everything";
-			session.setAttribute("CurrentCategory", "Everything");
-			session.setAttribute("CurrentCategory", currentCategory);
-		}		
 		DatabaseAccessor d = new DatabaseAccessor();
-		LystItem[] items = d.getNextCombatants(currentCategory);
-		session.setAttribute("leftItem", items[0]);
-		session.setAttribute("rightItem", items[1]);
-		//session.setAttribute("CurrentCategory", ((String)request.getParameter("CurrentCategory")));
-		session.setAttribute("CategoryHTML", null);
-		String testing_categories = (String)session.getAttribute("CategoryHTML");
-		
-		if (testing_categories==null) {
-			
-			CategoryDB cdb = new CategoryDB(d);
-			HTMLCategory top = HTMLCategory.buildit(cdb);
-			String category_html = top.HTMLWriter();
-			session.setAttribute("CategoryHTML", category_html);
-		}
-		if(initialRequest !=null && initialRequest.equals("true")){
-			request.getRequestDispatcher("/home.jsp").forward(request, response);
-		}
-		else
+
+		if (requestAction.equals("") || requestAction.equals("initial")) 
 		{
-			request.getRequestDispatcher("/newmatchup.jsp").forward(request, response);
+			String currentCategory = (String) session.getAttribute("CurrentCategory");
+			if (currentCategory == null || currentCategory.isEmpty()) {
+				currentCategory = "Everything";
+				session.setAttribute("CurrentCategory", "Everything");
+			}
+			
+			Object[] items = d.getNextCombatants(currentCategory,false);
+			session.setAttribute("currentList", items[0]);
+			session.setAttribute("leftItem", items[1]);
+			session.setAttribute("rightItem", items[2]);
+			// session.setAttribute("CurrentCategory",
+			// ((String)request.getParameter("CurrentCategory")));
+			session.setAttribute("CategoryHTML", null);
+			String testing_categories = (String) session.getAttribute("CategoryHTML");
+
+			if (testing_categories == null) {
+
+				CategoryDB cdb = new CategoryDB(d);
+				HTMLCategory top = HTMLCategory.buildit(cdb);
+				String category_html = top.HTMLWriter();
+				session.setAttribute("CategoryHTML", category_html);
+			}
+
+			if (requestAction.equals("initial")) 
+			{
+				request.getRequestDispatcher("/home.jsp").forward(request, response);
+			} 
+			else 
+			{
+				request.getRequestDispatcher("/newmatchup.jsp").forward(request, response);
+			}
+			
+		}
+		else if (requestAction.equals("vs")) 
+		{
+			LystItem leftItem = (LystItem)session.getAttribute("leftItem");
+			LystItem rightItem = (LystItem)session.getAttribute("rightItem");
+			Lyst currentList = (Lyst)session.getAttribute("currentList");
+			//return attributes, from DB to load up the js
+			Object[] data = d.getAttributesAndStringPackages(currentList);
+			ArrayList<String> attributes = (ArrayList<String>)data[0];
+			ArrayList<Integer> stringPackages = (ArrayList<Integer>)data[1];
+			JSONObject json = new JSONObject();
+			try {
+				json.put("attributes", attributes);
+				json.put("stringPackages", stringPackages);
+				json.put("leftItem", leftItem.getName());
+				json.put("rightItem", rightItem.getName());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			PrintWriter out = response.getWriter();
+			out.print(json.toString());
+			
+		}
+		else if (requestAction.equals("vsDisplay")) 
+		{
+			request.getRequestDispatcher("/slider.jsp").forward(request, response);
 		}
 	}
 
@@ -77,12 +117,11 @@ public class LystServlet extends HttpServlet {
 	 *      response)
 	 */
 	@SuppressWarnings("unused")
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("shit");
 		DatabaseAccessor db = new DatabaseAccessor();
-		String name = request.getParameter("firstName") + " "
-				+ request.getParameter("lastName");
+		String name = request.getParameter("firstName") + " " + request.getParameter("lastName");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
@@ -94,10 +133,13 @@ public class LystServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	public String getParameters(HttpServletRequest req) {
-		String a = req.getParameter("isInitial");
-		return a;
+
+	public String getParameter(HttpServletRequest req) {
+		Enumeration<String> a = req.getParameterNames();
+		if (a.hasMoreElements()) {
+			return a.nextElement();
+		}
+		return "";
 	}
 
 }

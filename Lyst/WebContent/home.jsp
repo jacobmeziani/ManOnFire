@@ -14,9 +14,11 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="jquery.validate.min.js"></script>
 <script src="homescripts.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="style.css">
 <link href='https://fonts.googleapis.com/css?family=Black+Ops+One'
@@ -25,7 +27,10 @@
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="vsStyle.css">
 <link rel="stylesheet" type="text/css" href="march29.css">
+<link rel="stylesheet" type="text/css" href="sliderStyle.css">
 <script src = "april3.js"></script>
+<script src = "sliderScript.js"></script>
+<script src = "testScripts2.js"></script>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
@@ -143,10 +148,9 @@
 		</div>
 		<div class="row row-buffer">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<span><h4 class="centerAlign">Current Category/List is: </h4></span>
+				<span><h4 class="centerAlign">Current Category is: </h4></span>
 				<span><h4 id = "showCategory" class="centerAlign">Everything</h4></span>
-				<input type = "hidden" id="CurrentCategory" value = "Something">
-				<input type = "hidden" id="isCategoryList" value = "false">
+				<input type = "hidden" name="CurrentCategory" value = "Something">
 				
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
@@ -172,14 +176,14 @@
 				</div>
 				<div id="clear" style="clear:both;"></div>
 			</div>
-			<div class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
+			<div id="centerContent" class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
 				<div id="list" class="row">
 					<h3>
 						<c:out value="${sessionScope.leftItem.belongingList}"></c:out>
 					</h3>
 				</div>
 				<div class="row">
-					<button class="btn btn-lg btn-danger btn-red">
+					<button id="vsButton" class="btn btn-lg btn-danger btn-red">
 						<h1>VS</h1>
 					</button>
 				</div>
@@ -201,7 +205,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="bottomRow">
 			<div id="leftName"
 				class="hidden-xs hidden-sm col-md-5 col-lg-5 centerAlign">
 				<h3>

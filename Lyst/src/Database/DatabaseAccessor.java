@@ -41,15 +41,11 @@ public class DatabaseAccessor {
 		dbClient.setRegion(usWest2);
 		client = dbClient;
 		dynamoDB = new DynamoDB(dbClient);
-		
-		Table lists = dynamoDB.getTable("Lists");
-		ItemCollection<ScanOutcome> collection = lists.scan();
-		DBlists = new ArrayList<Integer>();
-		for (Item item:collection) {
-			DBlists.add(item.getInt("Id"));
-		}
 	}
-			
+		
+	public DynamoDB getDDB(){
+		return dynamoDB;
+	}
 	
 	public ItemCollection<ScanOutcome> getCategories () {
 		//Used to get categories from the database to build tree
@@ -62,9 +58,7 @@ public class DatabaseAccessor {
 		Table lists = dynamoDB.getTable("Lists");
 		return lists.scan();
 	}
-	public DynamoDB getDDB(){
-		return dynamoDB;
-	}
+		
 	
 	public ArrayList<Lyst> getRandomLists(int numberOfLists) {
 		BatchGetItemOutcome outcome = getRandomListsFromDb(numberOfLists);
@@ -73,47 +67,72 @@ public class DatabaseAccessor {
 			List<Item> items = outcome.getTableItems().get("Lists");
 			for (Item item : items) {
 				String name = (String) item.get("ListName");
-				//String categories = (String) item.get("Categories");
+				int index = item.getInt("Id");
+				ArrayList<String> attributes = (ArrayList<String>) item.get("Attributes");
 				int size = item.getInt("ListSize");
 				String picPath = (String) item.get("PicPath");
-				//Lyst lyst = new Lyst(name, categories, size, picPath);
-				Lyst lyst = new Lyst(name,size);
+				Lyst lyst = new Lyst(name, index, attributes, size, picPath);
 				lysts.add(lyst);
 			}
 		return lysts;
 	}
 
-	public LystItem[] getNextCombatants(String category) {
+	public Object[] getNextCombatants(String categoryOrList, boolean list) {
+
 		Table categories = dynamoDB.getTable("Categories");
 		Table lists = dynamoDB.getTable("Lists");
 		Table listItems = dynamoDB.getTable("ListItems");
 		int listSize;
-		String listToPullFrom = "";
-		if (category.equals("Everything")) {
+		Lyst listToPullFrom;
+		if (categoryOrList.equals("Everything")) {
 			ArrayList<Lyst> theCombatantList = getRandomLists(1);
-			listToPullFrom = theCombatantList.get(0).getListName();
+			listToPullFrom = theCombatantList.get(0);
 			listSize = theCombatantList.get(0).getSize();
 		} 
-		else 
+		else if(!list) 
 		{
-			Item categoryItem = categories.getItem("CategoryName", category);
-			LinkedHashSet<Integer> e = (LinkedHashSet<Integer>)categoryItem.get("ListIds");
-			ArrayList<Integer> listsInCategory = new ArrayList<Integer>();
-			listsInCategory.addAll(e); //i fux with this -bruce
-			int size = listsInCategory.size();
-			int randomIndex = random.nextInt(size);
-			int listKey = listsInCategory.get(randomIndex);
-			Item theCombatantList = lists.getItem("Id",listKey);
-			listToPullFrom = theCombatantList.getString("ListName");
-			listSize = theCombatantList.getInt("ListSize");
-
+			Item categoryItem = categories.getItem("CategoryName", categoryOrList);
+			 LinkedHashSet<Integer> e = (LinkedHashSet<Integer>)categoryItem.get("ListIds");
+		        ArrayList<Integer> listsInCategory = new ArrayList<Integer>();
+		        listsInCategory.addAll(e);
+		        int size = listsInCategory.size();
+		        int randomIndex = random.nextInt(size);
+		        int listKey = listsInCategory.get(randomIndex);
+		        Item item = lists.getItem("Id",listKey);
+		        String name = (String) item.get("ListName");
+		        ArrayList<String> attributes = (ArrayList<String>) item.get("Attributes");
+				size = item.getInt("ListSize");
+				String picPath = (String) item.get("PicPath");
+				listToPullFrom = new Lyst(name, listKey, attributes, size, picPath);
+		        listSize = size;
+		        
 		}
-		//DBA
+		else{
+			//Todo: test this garbo
+			Index index = lists.getIndex("ListName-index");
+			QuerySpec spec = new QuerySpec()
+				    .withKeyConditionExpression("ListName = :v_listName")
+				    .withValueMap(new ValueMap()
+				        .withString(":v_listName",categoryOrList));
+			
+
+			ItemCollection<QueryOutcome> items = index.query(spec);
+			Iterator<Item> iter = items.iterator();			
+			Item item = iter.next();
+			 String name = (String) item.get("ListName");
+				ArrayList<String> attributes = (ArrayList<String>) item.get("Attributes");
+				int listKey = item.getInt("Id");
+				int size = item.getInt("ListSize");
+				String picPath = (String) item.get("PicPath");
+				listToPullFrom = new Lyst(name, listKey, attributes, size, picPath);
+		        listSize = size;
+		}
+		
 		Index index = listItems.getIndex("BelongingList-index");
 		QuerySpec spec = new QuerySpec()
 			    .withKeyConditionExpression("BelongingList = :v_belong")
 			    .withValueMap(new ValueMap()
-			        .withString(":v_belong",listToPullFrom));
+			        .withString(":v_belong",listToPullFrom.getListName()));
 		
 
 		ItemCollection<QueryOutcome> items = index.query(spec);
@@ -152,7 +171,7 @@ public class DatabaseAccessor {
 		}
 		Item item2 = iter.next();
 		System.out.println(item2.toJSONPretty());
-		LystItem[] lystItems = new LystItem[2];
+		Object[] lystItems = new Object[3];
 		
 		String name = item1.getString("ItemName");
 		String picPath = item1.getString("PicPath");
@@ -161,13 +180,12 @@ public class DatabaseAccessor {
 		name = item2.getString("ItemName");
 		picPath = item2.getString("PicPath");
 		LystItem secondItem = new LystItem(name, belongingList, picPath);
-		lystItems[0] = firstItem;
-		lystItems[1] = secondItem;
+		lystItems[0] = listToPullFrom;
+		lystItems[1] = firstItem;
+		lystItems[2] = secondItem;
 		return lystItems;
 		
 	}
-	
- 
 
 	private BatchGetItemOutcome getRandomListsFromDb(int numberOfLists) {
 		Table lists = dynamoDB.getTable("Lists");
@@ -176,11 +194,10 @@ public class DatabaseAccessor {
 		int randomSeed = (int) count - numberOfLists;
 		int startingIndex = random.nextInt(randomSeed);
 		Object[] idsToGet = new Object[numberOfLists];
-//		for (int i = 0; i < numberOfLists; i++) {
-//			idsToGet[i] = startingIndex;
-//			startingIndex++;
-//		}
-		idsToGet[0] = 1;
+		for (int i = 0; i < numberOfLists; i++) {
+			idsToGet[i] = startingIndex;
+			startingIndex++;
+		}
 		TableKeysAndAttributes forumTableKeysAndAttributes = new TableKeysAndAttributes("Lists");
 		// Add a partition key
 		forumTableKeysAndAttributes.addHashOnlyPrimaryKeys("Id", idsToGet);
@@ -206,6 +223,7 @@ public class DatabaseAccessor {
 		BatchGetItemOutcome outcome = dynamoDB.batchGetItem(forumTableKeysAndAttributes);
 		return outcome;
 	}
+
 	
 	public List<Item> getListIDsFromCategoryTable(Integer[] ids_to_get) {
 		TableKeysAndAttributes KandA = new TableKeysAndAttributes("Lists");
@@ -215,6 +233,15 @@ public class DatabaseAccessor {
 		List<Item> items = result.getTableItems().get("Lists");
 
 		return items;
+	}
+	
+	public Object[] getAttributesAndStringPackages(Lyst currentList) {
+		Table lists = dynamoDB.getTable("Lists");
+		Item list = lists.getItem("Id",currentList.getListIndex());
+		ArrayList<String> attributeList = (ArrayList<String>)list.get("Attributes");
+		ArrayList<Integer> stringList = (ArrayList<Integer>)list.get("StringPackage");
+		return new Object[]{attributeList,stringList};
+		
 	}
 	
 }
