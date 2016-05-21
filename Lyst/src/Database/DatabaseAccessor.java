@@ -65,10 +65,11 @@ public class DatabaseAccessor {
 			List<Item> items = outcome.getTableItems().get("Lists");
 			for (Item item : items) {
 				String name = (String) item.get("ListName");
-				String categories = (String) item.get("Categories");
+				//String categories = (String) item.get("Categories");
 				int size = item.getInt("ListSize");
 				String picPath = (String) item.get("PicPath");
-				Lyst lyst = new Lyst(name, categories, size, picPath);
+				//Lyst lyst = new Lyst(name, categories, size, picPath);
+				Lyst lyst = new Lyst(name,size);
 				lysts.add(lyst);
 			}
 		return lysts;
@@ -157,6 +158,8 @@ public class DatabaseAccessor {
 		return lystItems;
 		
 	}
+	
+ 
 
 	private BatchGetItemOutcome getRandomListsFromDb(int numberOfLists) {
 		Table lists = dynamoDB.getTable("Lists");
@@ -165,14 +168,26 @@ public class DatabaseAccessor {
 		int randomSeed = (int) count - numberOfLists;
 		int startingIndex = random.nextInt(randomSeed);
 		Object[] idsToGet = new Object[numberOfLists];
-		for (int i = 0; i < numberOfLists; i++) {
-			idsToGet[i] = startingIndex;
-			startingIndex++;
-		}
+//		for (int i = 0; i < numberOfLists; i++) {
+//			idsToGet[i] = startingIndex;
+//			startingIndex++;
+//		}
+		idsToGet[0] = 1;
 		TableKeysAndAttributes forumTableKeysAndAttributes = new TableKeysAndAttributes("Lists");
 		// Add a partition key
 		forumTableKeysAndAttributes.addHashOnlyPrimaryKeys("Id", idsToGet);
 		BatchGetItemOutcome outcome = dynamoDB.batchGetItem(forumTableKeysAndAttributes);
 		return outcome;
 	}
+	
+	public List<Item> getListIDsFromCategoryTable(Integer[] ids_to_get) {
+		TableKeysAndAttributes KandA = new TableKeysAndAttributes("Lists");
+		KandA.addHashOnlyPrimaryKeys("Id", ids_to_get);
+		
+		BatchGetItemOutcome result = dynamoDB.batchGetItem(KandA);
+		List<Item> items = result.getTableItems().get("Lists");
+
+		return items;
+	}
+	
 }

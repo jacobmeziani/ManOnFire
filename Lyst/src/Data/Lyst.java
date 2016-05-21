@@ -34,6 +34,11 @@ public class Lyst implements Serializable {
 		this.size = members;
 		this.imagePath = imagePath;
 	}
+	
+	public Lyst(String listname, int members) {
+		this.listName = listname;
+		this.size = members;
+	}
 
 	public String getListName() {
 		return listName;

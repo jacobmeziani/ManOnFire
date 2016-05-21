@@ -8,6 +8,14 @@
 	padding: 0;
 }
 
+.list-item a {
+	width: 350px !IMPORTANT;
+}
+
+.list-item-parent {
+	width: 350px !IMPORTANT;
+}
+
  #top-nav.desk ul {
  	width: 200px;
  	position: absolute;

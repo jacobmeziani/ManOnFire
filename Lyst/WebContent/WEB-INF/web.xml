@@ -16,4 +16,14 @@
     <servlet-name>ImageServlet</servlet-name>
     <url-pattern>/imageservlet/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>used to return lists to the list page</description>
+    <display-name>ListHandler</display-name>
+    <servlet-name>ListHandler</servlet-name>
+    <servlet-class>Servlets.ListHandler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListHandler</servlet-name>
+    <url-pattern>/ListHandler</url-pattern>
+  </servlet-mapping>
 </web-app>

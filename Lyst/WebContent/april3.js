@@ -26,7 +26,26 @@ $(document).ready(function() {
 				$("#top-nav").find("ul").addClass("hidden");
 				$("#top-nav").removeClass("showmethemoney");
 				$("#top-nav").addClass("hidden");
-				$("#showCategory").html($(this).find("a").html());
+				
+				if ($(this).hasClass("all_class")) { 
+					var stringest = $(this).find("a").html();
+					var newstringest = stringest.split("All ");
+					var curr_cat = newstringest[1];
+					$("#showCategory").html(curr_cat);
+					$("#isCategoryList").val("false");
+					$("#CurrentCategory").val(curr_cat);
+				} else {
+					$("#showCategory").html($(this).find("a").html());
+					if ($(this).hasClass("list-item")) {
+						var dbid = event.target.getAttribute("database-id");
+						$("#CurrentCategory").val(dbid);
+						$("#isCategoryList").val("true");
+					} else {
+						$("#CurrentCategory").val($(this).find("a").html());
+						$("#isCategoryList").val("false");
+					}
+				}
+				
 			} else if ($(this).hasClass("children")) {
 				//$("#top-nav").find("ul").removeClass("showmethemoney");
 				//$("#top-nav").find("ul").addClass("hidden");
@@ -95,7 +114,25 @@ $(document).ready(function() {
 		if ($(this).hasClass("final")) {
 			//do something to set the code
 			//do something more
-			$("#showCategory").html($(this).find("a").html());
+			if ($(this).hasClass("all_class")) { 
+				var stringest = $(this).find("a").html();
+				var newstringest = stringest.split("All ");
+				var curr_cat = newstringest[1];
+				$("#showCategory").html(curr_cat);
+				$("#isCategoryList").val("false");
+				$("#CurrentCategory").val(curr_cat);
+			} else {
+				$("#showCategory").html($(this).find("a").html());
+				if ($(this).hasClass("list-item")) {
+					var dbid = event.target.getAttribute("database-id");
+					$("#CurrentCategory").val(dbid);
+					$("#isCategoryList").val("true");
+				} else {
+					$("#CurrentCategory").val($(this).find("a").html());
+					$("#isCategoryList").val("false");
+				}
+			}
+
 			
 			$("#top-nav").find("ul").removeClass("showmethemoney");
 			$("#top-nav").find("ul").addClass("hidden");

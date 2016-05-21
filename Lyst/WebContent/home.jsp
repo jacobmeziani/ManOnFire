@@ -14,7 +14,6 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="jquery.validate.min.js"></script>
 <script src="homescripts.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
@@ -144,9 +143,10 @@
 		</div>
 		<div class="row row-buffer">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<span><h4 class="centerAlign">Current Category is: </h4></span>
+				<span><h4 class="centerAlign">Current Category/List is: </h4></span>
 				<span><h4 id = "showCategory" class="centerAlign">Everything</h4></span>
-				<input type = "hidden" name="CurrentCategory" value = "Something">
+				<input type = "hidden" id="CurrentCategory" value = "Something">
+				<input type = "hidden" id="isCategoryList" value = "false">
 				
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
