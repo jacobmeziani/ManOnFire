@@ -150,7 +150,8 @@
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<span><h4 class="centerAlign">Current Category is: </h4></span>
 				<span><h4 id = "showCategory" class="centerAlign">Everything</h4></span>
-				<input type = "hidden" name="CurrentCategory" value = "Something">
+				<input type = "hidden" id="CurrentCategory" value = "Something">
+				<input type = "hidden" id="isCategoryList" value = "false">
 				
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
