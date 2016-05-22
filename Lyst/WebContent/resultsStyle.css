@@ -1,0 +1,32 @@
+.positionRelativeContainer{
+	position: relative;
+}
+
+.bannerOverlay{
+	position: absolute;
+    left: 5%;
+    top:10%;
+    width: 40%;
+    height: 10%;
+}
+
+.numberCircle {
+	position: absolute;
+    left: 70%;
+    top:10%;
+/*     width: 12%; */
+/*     height: 15%; */
+width:50px;
+height:50px;
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+    color: white;
+    background: #C20021;
+    text-align: center;
+}
+#ratingNumber{
+	font-size: 26px;
+	font-family: 'Black Ops One', cursive;
+	margin-left:-1px;
+	margin-top: 7px;
+}
