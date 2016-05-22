@@ -30,7 +30,6 @@
 <link rel="stylesheet" type="text/css" href="sliderStyle.css">
 <script src = "april3.js"></script>
 <script src = "sliderScript.js"></script>
-<script src = "testScripts2.js"></script>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
@@ -66,91 +65,27 @@
 		</div>
 	</div>
 		<div class="container-fluid" id="main-body">
-		<div class="row">
-			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+		<div id="contextButtons" class="row">
+			<div id="topLeftButton" class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<button id="clicker" type="button"
 					class="btn btn-circle btn-xl center-block">
 					<span class="glyphicon glyphicon-th"></span></button>
 			${sessionScope.CategoryHTML}
-
-			<!-- 	<ul id="top-nav" class="showmethemoney">
-					<li class="final closemenu"><a class="showmethemoney">Close</a></li>
-					<li id="id is titties" class="menu-item  final"><a class = "showmethemoney">Everything</a></li>
-					<li id=" more titties " class="menu-item  children"><a class = "showmethemoney">Sports</a>
-						<ul id="levelone-nav" class="menu-item-menu showmethemoney">
-							<li class="final upmenu"><a class="showmethemoney">Up</a></li>
-							<li class="final closemenu"><a class="showmethemoney">Close</a></li>
-							<li class="menu-item final"><a class="showmethemoney">Basketball</a></li>
-							<li class="menu-item final"><a class="showmethemoney">Football</a></li>
-							<li class="menu-item children"><a class="showmethemoney">Racquet Sports</a>
-								<ul class="showmethemoney">
-									<li class="final upmenu"><a class="showmethemoney">Up</a></li>
-									<li class="final closemenu"><a class="showmethemoney">Close</a></li>
-									<li class="menu-item final"><a class="showmethemoney">Tennis</a></li>
-									<li class="menu-item final"><a class="showmethemoney">Squash</a></li>
-								</ul></li>
-						</ul></li>
-					<li class="menu-item children"><a class="showmethemoney">Entertainment</a>
-						<ul class="menu-item-menu showmethemoney">
-							<li class="final upmenu"><a class="showmethemoney">Up</a></li>
-							<li class="final closemenu"><a class="showmethemoney">Close</a></li>
-							<li class="menu-item children"><a class="showmethemoney">Movies</a>
-								<ul class="menu-item-menu showmethemoney">
-									<li class="final upmenu"><a class="showmethemoney">Up</a></li>
-									<li class="final closemenu"><a class="showmethemoney">Close</a></li>
-									<li class="menu-item final"><a class="showmethemoney">Westeners</a></li>
-									<li class="menu-item final"><a class="showmethemoney">Dick
-											flicks</a></li>
-								</ul></li>
-							<li class="menu-item final"><a class="showmethemoney">Music</a></li>
-							<li class="menu-item final"><a class="showmethemoney">Television</a></li>
-							<li class="menu-item final"><a class="showmethemoney">Online
-									Poop Shows</a></li>
-						</ul></li>
-
-
-				</ul> -->
-				<!-- <ul id="top-nav" class="showmethemoney">
-						<li id="id is titties" class="menu-item  final"><a class="showmethemoney">Everything</a></li>
-						<li id=" more titties " class="menu-item  children"><a class="showmethemoney">Sports</a>
-							<ul id="levelone-nav" class="menu-item-menu showmethemoney">
-								<li class="menu-item final"><a class="showmethemoney">Basketball</a></li>
-								<li class="menu-item final"><a class="showmethemoney">Football</a></li>
-								<li class="menu-item children"><a class="showmethemoney">Racquet
-										Sports</a>
-									<ul class="showmethemoney">
-										<li class="menu-item final"><a class="showmethemoney">Tennis</a></li>
-										<li class="menu-item final"><a class="showmethemoney">Squash</a></li>
-									</ul></li>
-							</ul></li>
-						<li class="menu-item children"><a class="showmethemoney">Entertainment</a>
-							<ul class="menu-item-menu showmethemoney">
-								<li class="menu-item children"><a class="showmethemoney">Movies</a>
-									<ul class="menu-item-menu showmethemoney">
-										<li class="menu-item final"><a class="showmethemoney">Westeners</a></li>
-										<li class="menu-item final"><a class="showmethemoney">Dick
-												flicks</a></li>
-									</ul></li>
-								<li class="menu-item final"><a class="showmethemoney">Music</a></li>
-								<li class="menu-item final"><a class="showmethemoney">Television</a></li>
-								<li class="menu-item final"><a class="showmethemoney">Online
-										Poop Shows</a></li>
-							</ul></li>
-					</ul> -->
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
-			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+			<div id ="topRightButton" class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<button type="button" id="randomButton"
 					class="btn btn-circle btn-xl center-block">
 					<span class="glyphicon glyphicon-repeat"></span>
 				</button>
 			</div>
 		</div>
-		<div class="row row-buffer">
+		<div id="labels" class="row row-buffer">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<span><h4 class="centerAlign">Current Category is: </h4></span>
 				<span><h4 id = "showCategory" class="centerAlign">Everything</h4></span>
-				<input type = "hidden" name="CurrentCategory" value = "Something">
+				<input type = "hidden" id="CurrentCategory" value = "Something">
+				<input type = "hidden" id="isCategoryList" value = "false">
 				
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
@@ -161,20 +96,10 @@
 		<div class="row">
 			<div 
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<div id="myCard" class="flip-container center-block">
-					<div class="flipper">
-						<div class="front">
-							<img class="img-responsive center-block"
-								src="imageservlet/question.png">
-						</div>
-						<div class="back" id="leftPic">
+						<div id="leftPic">
 							<img class="img-responsive center-block"
 								src="${sessionScope.leftItem.picPath}">
 						</div>
-					</div>
-					<div id="clear" style="clear:both;"></div>
-				</div>
-				<div id="clear" style="clear:both;"></div>
 			</div>
 			<div id="centerContent" class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
 				<div id="list" class="row">
@@ -190,19 +115,10 @@
 			</div>
 			<div
 				class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<div id="myCardRight" class="flip-container center-block">
-					<div class="flipper">
-						<div class="front">
-							<img class="img-responsive center-block"
-								src="imageservlet/question.png">
-						</div>
-						<div class="back" id="rightPic">
+						<div id="rightPic">
 							<img class="img-responsive center-block"
 								src="${sessionScope.rightItem.picPath}">
 						</div>
-						<div id="clear" style="clear:both;"></div>
-					</div>
-				</div>
 			</div>
 		</div>
 		<div class="row" id="bottomRow">

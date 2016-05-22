@@ -6,6 +6,7 @@ import maintenance.Counter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -81,6 +82,16 @@ public class FullReader {
 		List<String> returnbro = new ArrayList<String>();
 		for (String thing : things) {
 			returnbro.add(thing);
+		}
+		return returnbro;
+	}
+	
+	static List<Integer> parseCellInteger(String inputstring) {
+		String longstring = inputstring.substring(1,inputstring.length()-1);
+		String [] things = longstring.split("; ");
+		List<Integer> returnbro = new ArrayList<Integer>();
+		for (String thing : things) {
+			returnbro.add(Integer.parseInt(thing));
 		}
 		return returnbro;
 	}
@@ -207,9 +218,11 @@ public class FullReader {
 		List<String> attributes	= parseCell(tokens[2]);
 		List<String> items = parseCell(tokens[3]);
 		String category = tokens[4];
+		if (tokens.length == 6) {
+			List<Integer> stringpackage = parseCellInteger(tokens[5]);
+			insertList(list_id_counter,listname,attributes,picpath,items.size(),items,stringpackage);
+		} else {
 		insertList(list_id_counter,listname,attributes,picpath,items.size(),items);
-		for (int i = 0; i<attributes.size();i++) {
-			System.out.println(attributes.get(i));
 		}
 		addCategory(category,list_id_counter);
 		list_id_counter++;
@@ -262,12 +275,48 @@ public class FullReader {
 	public static Table getCategoriesTable() {return categoriesTable;}
 	
 	static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,List<String> items) {
+		List<BigDecimal> stringPackage =new ArrayList<BigDecimal> ();
+		for (String attribute:attributes) {
+			stringPackage.add(new BigDecimal(0));
+		}
 		Item item = new Item ()
 				.withPrimaryKey("Id",listid)
 				.withString("ListName", listname)
 				.withList("Attributes", attributes)
 				.withString("PicPath",picpath)
+				.withList("StringPackage", stringPackage)
 				.withNumber("ListSize",listsize);
+		listsTable.putItem(item);
+		int max = 0;
+		for (int i = 0;i<items.size();i++) {
+			String listitem = items.get(i);
+			int current = itemEntry(listitem,listname,listid,attributes);
+			if (current > max) {
+				max = current;
+			}
+		}
+	}
+	
+	static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,List<String> items,List<Integer> stringpackage) {
+		Item item;
+		if (stringpackage.size()!=attributes.size()) {
+			System.out.println("String Package non-matching array lengths at: "+listname);
+			item = new Item ()
+					.withPrimaryKey("Id",listid)
+					.withString("ListName", listname)
+					.withList("Attributes", attributes)
+					.withString("PicPath",picpath)
+					.withNumber("ListSize",listsize);
+		} else {
+			item = new Item ()
+					.withPrimaryKey("Id",listid)
+					.withString("ListName", listname)
+					.withList("Attributes", attributes)
+					.withString("PicPath",picpath)
+					.withList("StringPackage", stringpackage)
+					.withNumber("ListSize",listsize);
+		};
+		
 		listsTable.putItem(item);
 		int max = 0;
 		for (int i = 0;i<items.size();i++) {

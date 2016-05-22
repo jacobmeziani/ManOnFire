@@ -45,6 +45,7 @@ public class LystServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String requestAction = getParameter(request);
+		System.out.println(requestAction);
 		HttpSession session = request.getSession();
 		DatabaseAccessor d = new DatabaseAccessor();
 
@@ -76,6 +77,7 @@ public class LystServlet extends HttpServlet {
 			if (requestAction.equals("initial")) 
 			{
 				request.getRequestDispatcher("/home.jsp").forward(request, response);
+				System.out.println("in hurr");
 			} 
 			else 
 			{
