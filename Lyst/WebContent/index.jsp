@@ -8,9 +8,16 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="Stylesheets/initial.css">
+
 </head>
 <body>
-
+<div class="sk-folding-cube">
+  <div class="sk-cube1 sk-cube"></div>
+  <div class="sk-cube2 sk-cube"></div>
+  <div class="sk-cube4 sk-cube"></div>
+  <div class="sk-cube3 sk-cube"></div>
+</div>
 </body>
 </html>
 

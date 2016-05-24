@@ -181,7 +181,7 @@ public class DatabaseAccessor {
 			largerIndex = combatantIndex1;
 			smallerIndex = combatantIndex2;			
 		}
-		else{
+		else {
 			
 			largerIndex = combatantIndex2;
 			smallerIndex = combatantIndex1;	
@@ -304,7 +304,12 @@ public class DatabaseAccessor {
 		ArrayList<String> attributeList = (ArrayList<String>)list.get("Attributes");
 		ArrayList<Integer> stringList = (ArrayList<Integer>)list.get("StringPackage");
 		return new Object[]{attributeList,stringList};
-		
 	}
 	
+//	public static void main (String [] args ) {
+//		DatabaseAccessor db = new DatabaseAccessor();
+//		System.out.println(db.random);
+//		System.out.println(db.dynamodb);
+//		System.out.println(DatabaseAccessor.dynamoDB);
+//	}
 }
