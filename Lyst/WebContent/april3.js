@@ -77,9 +77,7 @@ $(document).ready(function() {
 	var menu_ul = $("#top-nav");
 	var menu_offset = menu_ul.offsetHeight;
 	var ul_elements = $("ul","#top-nav");
-	console.log('ya boy');		
 	for (i = 0;i<ul_elements.length;i++) {
-		console.log(ul_elements[i]);
 		var parentdude= ul_elements[i].parentNode;
 		ul_elements[i].style.left=parentdude.offsetWidth+"px";
 		ul_elements[i].style.top=parentdude.offsetTop+"px";

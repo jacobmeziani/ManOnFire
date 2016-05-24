@@ -17,7 +17,7 @@ public class HTMLCategory {
 	int level;
 	
 	public static HTMLCategory buildit(CategoryDB cdb) {
-		HTMLCategory top = new HTMLCategory("Top",cdb,0);
+		HTMLCategory top = new HTMLCategory("Everything",cdb,0);
 		return top;
 	}
 	//builds object categories based on Category from database collection 
@@ -34,7 +34,6 @@ public class HTMLCategory {
 	HTMLCategory (String name,CategoryDB cdb,int level) {
 		Category temp = cdb.findCategory(name);
 		this.name = name;
-		System.out.println("cat: "+name);
 		this.level = level;
 		if (temp.subCats!=null) {
 			this.leaf = false; 
@@ -119,7 +118,7 @@ public class HTMLCategory {
 			return html;
 			}
 		} else if (this.leaf==false) {
-			if (this.name.equals("Top")) {
+			if (this.name.equals("Everything")) {
 				String top_ul = "<ul id =\"top-nav\" class=\"showmethemoney\">\n";
 				String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\">Close</a></li>\n";
 				String html_first_li = "<li class = \"menu-item final\"><a class=\"showmethemoney\"> Everything </a></li>\n";
@@ -131,7 +130,7 @@ public class HTMLCategory {
 				}
 				String html_response = top_ul+close_html+html_first_li+html_recurse+"</ul>\n";
 				return html_response;
-			} else if (!(this.name.equals("Top"))) { //writes all other Li except top
+			} else { //writes all other Li except top
 				String html_opening_li = "<li class = \"menu-item children\"><a class=\"showmethemoney testclass\">"+this.name+"</a>\n";
 				String html_opening_ul = "<ul class = \"showmethemoney\">\n";
 				String up_html = "<li class = \"final upmenu\"><a class = \"showmethemoney\">Up</a></li>\n";

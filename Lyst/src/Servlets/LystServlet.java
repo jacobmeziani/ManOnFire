@@ -53,31 +53,27 @@ public class LystServlet extends HttpServlet {
 		{
 			String currentCategory = (String) session.getAttribute("CurrentCategory");
 			if (currentCategory == null || currentCategory.isEmpty()) {
-				currentCategory = "Everything";
+				currentCategory = "Foreign Sports";
 				session.setAttribute("CurrentCategory", "Everything");
 			}
-			
-			Object[] items = d.getNextCombatants(currentCategory,false);
+			currentCategory = "2003";
+			Object[] items = d.getNextCombatants(currentCategory,true);
 			session.setAttribute("currentList", items[0]);
 			session.setAttribute("leftItem", items[1]);
 			session.setAttribute("rightItem", items[2]);
 			// session.setAttribute("CurrentCategory",
 			// ((String)request.getParameter("CurrentCategory")));
-			session.setAttribute("CategoryHTML", null);
+			//session.setAttribute("CategoryHTML", null);
 			String testing_categories = (String) session.getAttribute("CategoryHTML");
 
 			if (testing_categories == null) {
-
-				CategoryDB cdb = new CategoryDB(d);
-				HTMLCategory top = HTMLCategory.buildit(cdb);
-				String category_html = top.HTMLWriter();
+				String category_html = d.getMenu();
 				session.setAttribute("CategoryHTML", category_html);
 			}
 
 			if (requestAction.equals("initial")) 
 			{
 				request.getRequestDispatcher("/home.jsp").forward(request, response);
-				System.out.println("in hurr");
 			} 
 			else 
 			{
