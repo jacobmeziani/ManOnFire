@@ -12,20 +12,29 @@
 $(document).ready(function() {
 
 	$("#randomButton").click(function() {
-		$("#leftPic" ).fadeOut( "slow" );
-		$("#rightPic" ).fadeOut( "slow" );
+		$("#leftPic").fadeOut( "slow");
+		$("#rightPic").fadeOut( "slow");
+		$("#leftName").fadeOut( "slow");
+		$("#rightName").fadeOut( "slow");
+		$("#rightName2").fadeOut( "slow" );
+		$("#leftName2").fadeOut( "slow" );
+		$("#mobileVs").fadeOut( "slow" );
 		$.get("bro", function(html) {
 			var parsed = $('<div/>').append(html);
-
 			$("#leftPic").html(parsed.find("#leftPic"));
-			$("#leftPic").fadeIn( "slow" );
+			$("#leftPic").fadeIn( "slow");
 			$("#leftName").html(parsed.find("#leftName"));
+			$("#leftName").fadeIn( "slow" );
 			$("#list").html(parsed.find("#list"));
 			$("#rightPic").html(parsed.find("#rightPic"));
 			$("#rightPic").fadeIn( "slow" );
 			$("#rightName").html(parsed.find("#rightName"));
+			$("#rightName").fadeIn( "slow" );
 			$("#rightName2").html(parsed.find("#rightName2"));
 			$("#leftName2").html(parsed.find("#leftName2"));
+			$("#rightName2").fadeIn( "slow" );
+			$("#leftName2").fadeIn( "slow" );
+			$("#mobileVs").fadeIn( "slow" );
 		});
 	})
 

@@ -30,9 +30,9 @@ import Data.LystItem;
 
 public class DatabaseAccessor {
 
-	static DynamoDB dynamoDB;
+	private DynamoDB dynamoDB;
 	Random random = new Random();
-	static AmazonDynamoDBClient client;
+	private AmazonDynamoDBClient client;
 	private ArrayList<Integer> DBlists;
 
 	public DatabaseAccessor() {
