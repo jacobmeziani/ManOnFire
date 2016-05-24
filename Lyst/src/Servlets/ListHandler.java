@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import org.json.simple.JSONObject;
 //import org.json.simple.JSONArray;
+import javax.servlet.http.HttpSession;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
@@ -33,8 +34,6 @@ public class ListHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
 	private static int n_lists;
-	private static HashMap<String,ArrayList<Integer>> listIDs;
-	private static DatabaseAccessor db;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -50,25 +49,7 @@ public class ListHandler extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		
 		n_lists = 2;  // <---- set number of lists to retrieve at every retrieval 
-		listIDs = new HashMap<String,ArrayList<Integer>> ();
-		db = new DatabaseAccessor() ;
-		Table lists = db.getDDB().getTable("Categories");
-		ItemCollection<ScanOutcome> collection = lists.scan();
-		LinkedHashSet<BigDecimal> tempBigDecimals;
-		for (Item item:collection) {
-			String name = item.getString("CategoryName");
-			tempBigDecimals = (LinkedHashSet<BigDecimal>)item.get("ListIds");
-			ArrayList<Integer> ids = new ArrayList<Integer> ();
-			try {
-				for (BigDecimal bigdecimal : tempBigDecimals) {
-					ids.add(bigdecimal.intValue());
-				}
-				listIDs.put(name, ids);
-			} catch (NullPointerException e) {
-				listIDs.put(name, null);
 			}
-		}
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -77,6 +58,7 @@ public class ListHandler extends HttpServlet {
 		// TODO Auto-generated method stub
 		//String dude = (String) request.getParameter("id");
 		//System.out.println(dude);
+		DatabaseAccessor db = new DatabaseAccessor();
 		JSONObject json = new JSONObject();
 		JSONArray return_lists = new JSONArray() ;
 		JSONObject single_list;
@@ -88,11 +70,10 @@ public class ListHandler extends HttpServlet {
 		for (String string:deliveredAsStrings) {
 			delivered.add(Integer.parseInt(string));
 		}}
-		ArrayList<Integer> possible = (ArrayList<Integer>) listIDs.get(category).clone();
 		ArrayList<Integer> result = null;
 		boolean is_final = true;
 		try {
-			result = getRandomListNumbers(possible,delivered);
+			result = db.getRandomListNumbers(category,delivered,n_lists);
 			is_final = checkLastReturn(result);
 			if (is_final) {
 				try{
@@ -126,7 +107,14 @@ public class ListHandler extends HttpServlet {
 		response.setContentType("application/json");
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.getWriter().write(json.toString());
-		
+		HttpSession session = request.getSession();
+
+		String testing_categories = (String) session.getAttribute("CategoryHTML");
+
+		if (testing_categories == null) {
+			String category_html = db.getMenu();
+			session.setAttribute("CategoryHTML", category_html);
+		}
 	}
 
 	/**
@@ -141,33 +129,8 @@ public class ListHandler extends HttpServlet {
 	 * @param allPossible - all possible list IDs possible 
 	 * 
 	*/
-	private static ArrayList<Integer> getRandomListNumbers(ArrayList<Integer> allPossible, ArrayList<Integer> delivered) throws OutOfListsException {
-		
-		Random rando = new Random();
-		allPossible.removeAll(delivered);
-		int possible_values = allPossible.size();
-		ArrayList<Integer> new_lists = new ArrayList<Integer> ();
-		int newint;
-		int newrando;
-		try{
-			for (int i = 0;i < n_lists;i++) {
-				newrando = rando.nextInt(possible_values);
-				newint = allPossible.get(newrando);
-				allPossible.remove((int)newrando);
-				new_lists.add(newint);
-				possible_values--;
-				if (possible_values == 0) {
-					if (i==(n_lists-1)) {	
-						new_lists.add(0);
-					}
-					break;
-				}
-			}
-			return new_lists;
-		} catch (Exception e) { //methinks think this is unused
-			throw new OutOfListsException();
-		}
-	}
+	
+	public static int getNLists() {return n_lists;}
 	
 	private static boolean checkLastReturn(ArrayList<Integer> input) {
 		if (input.size()==n_lists) {
@@ -176,64 +139,7 @@ public class ListHandler extends HttpServlet {
 		return true;
 	}
 	
-	private static ArrayList<Integer> parseReturn (String delivered) {
-		String [] stringint = delivered.split(",");
-		ArrayList<Integer> result = new ArrayList<Integer> ();
-		for (String string:stringint) {
-			result.add(Integer.parseInt(string));
-		}
-		return result;
-	}
-	private static void Tester() {
-		n_lists = 5;  // <---- set number of lists to retrieve at every retrieval 
-		listIDs = new HashMap<String,ArrayList<Integer>> ();
-		db = new DatabaseAccessor() ;
-		Table lists = db.getDDB().getTable("Categories");
-		ItemCollection<ScanOutcome> collection = lists.scan();
-		LinkedHashSet<BigDecimal> tempBigDecimals;
-		for (Item item:collection) {
-			String name = item.getString("CategoryName");
-			System.out.println("putting : "+name);
-			tempBigDecimals = (LinkedHashSet<BigDecimal>)item.get("ListIds");
-			ArrayList<Integer> ids = new ArrayList<Integer> ();
-			try {
-				for (BigDecimal bigdecimal : tempBigDecimals) {
-					ids.add(bigdecimal.intValue());
-				}
-				listIDs.put(name,ids);
-			} catch (NullPointerException e) {
-				System.out.println("in exception");
-				listIDs.put(name, null);
-			}
-		}
-		ArrayList<Integer> delivered = new ArrayList<Integer> () ;
-		ArrayList<Integer> result; 
-		for (int i = 0;i<4;i++) {
-			ArrayList<Integer> possible = (ArrayList<Integer>) (listIDs.get("Foreign Sports")).clone();
-			System.out.println("getting items for the "+(i+1) + "th time");
-			System.out.println("Posible: "+possible);
-			System.out.println("Delivered:" + delivered);
-			System.out.println("");
-			try{
-				result = getRandomListNumbers(possible,delivered);
-				boolean last = checkLastReturn(result);
 
-				if (checkLastReturn(result)){
-					System.out.println("this is the last return");
-					try {
-						result.remove((int) n_lists);
-					} catch(Exception e) {}
-				}
-				delivered.addAll(result);
-				System.out.println("Items returned: " + result);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println("printing original array: \n" + listIDs.get("Foreign Sports"));
-		System.out.println(delivered);
-	}
-	
 	
 	public static void main (String [] args) {
 		

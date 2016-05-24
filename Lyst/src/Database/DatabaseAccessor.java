@@ -1,6 +1,8 @@
 package Database;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -25,15 +27,21 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
 
+import Data.CategoryDB;
+import Data.HTMLCategory;
 import Data.Lyst;
 import Data.LystItem;
+import Servlets.OutOfListsException;
 
 public class DatabaseAccessor {
 
 	static DynamoDB dynamoDB;
 	Random random = new Random();
 	static AmazonDynamoDBClient client;
-	private ArrayList<Integer> DBlists;
+	private static String htmlmenu;
+	static private HashMap<String,ArrayList<Integer>> CategoryListIDs;
+	
+	
 
 	public DatabaseAccessor() {
 		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
@@ -41,6 +49,38 @@ public class DatabaseAccessor {
 		dbClient.setRegion(usWest2);
 		client = dbClient;
 		dynamoDB = new DynamoDB(dbClient);
+		
+		if (CategoryListIDs == null) {
+			buildMaps();
+		}
+	}
+	
+	private static void buildMaps() {
+		Table categories = dynamoDB.getTable("Categories");
+		CategoryListIDs = new HashMap<String,ArrayList<Integer>> ();
+		ItemCollection<ScanOutcome> collection = categories.scan();
+		LinkedHashSet<BigDecimal> tempBigDecimals;
+		for (Item item:collection) {
+			String name = item.getString("CategoryName");
+			tempBigDecimals = (LinkedHashSet<BigDecimal>) item.get("ListIds");
+			ArrayList<Integer> ids = new ArrayList<Integer> ();
+			try {
+				for (BigDecimal bigdecimal : tempBigDecimals) {
+					ids.add(bigdecimal.intValue());
+				}
+				CategoryListIDs.put(name,ids);
+			} catch(NullPointerException e) {
+				CategoryListIDs.put(name,null);
+			}
+		}
+
+		CategoryDB cdb = new CategoryDB(new DatabaseAccessor());
+		HTMLCategory top = HTMLCategory.buildit(cdb);
+		htmlmenu = top.HTMLWriter();
+	} 
+	
+	public String getMenu () {
+		return htmlmenu;
 	}
 		
 	public DynamoDB getDDB(){
@@ -60,8 +100,8 @@ public class DatabaseAccessor {
 	}
 		
 	
-	public ArrayList<Lyst> getRandomLists(int numberOfLists) {
-		BatchGetItemOutcome outcome = getRandomListsFromDb(numberOfLists);
+	public ArrayList<Lyst> getRandomLists(String category,int numberOfLists) {   //drama
+		BatchGetItemOutcome outcome = getRandomListsFromDatabase(category,numberOfLists);
 
 		ArrayList<Lyst> lysts = new ArrayList<Lyst>();
 			List<Item> items = outcome.getTableItems().get("Lists");
@@ -77,51 +117,43 @@ public class DatabaseAccessor {
 		return lysts;
 	}
 
-	public Object[] getNextCombatants(String categoryOrList, boolean list) {
+	public Object[] getNextCombatants(String categoryOrList, boolean list) { //drama n bruce
 
 		Table categories = dynamoDB.getTable("Categories");
 		Table lists = dynamoDB.getTable("Lists");
 		Table listItems = dynamoDB.getTable("ListItems");
 		int listSize;
 		Lyst listToPullFrom;
-		if (categoryOrList.equals("Everything")) {
-			ArrayList<Lyst> theCombatantList = getRandomLists(1);
+		if (!list) {
+			ArrayList<Lyst> theCombatantList = getRandomLists(categoryOrList,1);
 			listToPullFrom = theCombatantList.get(0);
 			listSize = theCombatantList.get(0).getSize();
 		} 
-		else if(!list) 
-		{
-			Item categoryItem = categories.getItem("CategoryName", categoryOrList);
-			 LinkedHashSet<Integer> e = (LinkedHashSet<Integer>)categoryItem.get("ListIds");
-		        ArrayList<Integer> listsInCategory = new ArrayList<Integer>();
-		        listsInCategory.addAll(e);
-		        int size = listsInCategory.size();
-		        int randomIndex = random.nextInt(size);
-		        int listKey = listsInCategory.get(randomIndex);
-		        Item item = lists.getItem("Id",listKey);
-		        String name = (String) item.get("ListName");
-		        ArrayList<String> attributes = (ArrayList<String>) item.get("Attributes");
-				size = item.getInt("ListSize");
-				String picPath = (String) item.get("PicPath");
-				listToPullFrom = new Lyst(name, listKey, attributes, size, picPath);
-		        listSize = size;
-		        
-		}
+//		else if(!list) 
+//		{
+//			Item categoryItem = categories.getItem("CategoryName", categoryOrList);
+//			 LinkedHashSet<Integer> e = (LinkedHashSet<Integer>)categoryItem.get("ListIds");
+//		        ArrayList<Integer> listsInCategory = new ArrayList<Integer>();
+//		        listsInCategory.addAll(e);
+//		        int size = listsInCategory.size();
+//		        int randomIndex = random.nextInt(size);
+//		        int listKey = listsInCategory.get(randomIndex);
+//		        Item item = lists.getItem("Id",listKey);
+//		        String name = (String) item.get("ListName");
+//		        ArrayList<String> attributes = (ArrayList<String>) item.get("Attributes");
+//				size = item.getInt(" ListSize");
+//				String picPath = (String) item.get("PicPath");
+//				listToPullFrom = new Lyst(name, listKey, attributes, size, picPath);
+//		        listSize = size;
+//		        
+//		}
 		else{
 			//Todo: test this garbo
-			Index index = lists.getIndex("ListName-index");
-			QuerySpec spec = new QuerySpec()
-				    .withKeyConditionExpression("ListName = :v_listName")
-				    .withValueMap(new ValueMap()
-				        .withString(":v_listName",categoryOrList));
 			
-
-			ItemCollection<QueryOutcome> items = index.query(spec);
-			Iterator<Item> iter = items.iterator();			
-			Item item = iter.next();
+			int listKey  = Integer.parseInt(categoryOrList);		
+			Item item = lists.getItem("Id",listKey);
 			 String name = (String) item.get("ListName");
 				ArrayList<String> attributes = (ArrayList<String>) item.get("Attributes");
-				int listKey = item.getInt("Id");
 				int size = item.getInt("ListSize");
 				String picPath = (String) item.get("PicPath");
 				listToPullFrom = new Lyst(name, listKey, attributes, size, picPath);
@@ -134,7 +166,6 @@ public class DatabaseAccessor {
 			    .withValueMap(new ValueMap()
 			        .withString(":v_belong",listToPullFrom.getListName()));
 		
-
 		ItemCollection<QueryOutcome> items = index.query(spec);
 		Iterator<Item> iter = items.iterator();
 		
@@ -205,8 +236,11 @@ public class DatabaseAccessor {
 		return outcome;
 	}
 	
-	private BatchGetItemOutcome getRandomListsFromDatabase(int numberOfLists) {
-		ArrayList<Integer> listArray = (ArrayList<Integer>) DBlists.clone();
+	@SuppressWarnings("unchecked")
+	private BatchGetItemOutcome getRandomListsFromDatabase(String category, int numberOfLists) {
+		
+		ArrayList<Integer> temp = CategoryListIDs.get(category);
+		ArrayList<Integer> listArray =(ArrayList<Integer>) temp.clone();
 		int largest = listArray.size();
 		Object[] idsToGet = new Object[numberOfLists];
 		int indexToGet;
@@ -222,6 +256,35 @@ public class DatabaseAccessor {
 		forumTableKeysAndAttributes.addHashOnlyPrimaryKeys("Id", idsToGet);
 		BatchGetItemOutcome outcome = dynamoDB.batchGetItem(forumTableKeysAndAttributes);
 		return outcome;
+	}
+
+	public ArrayList<Integer> getRandomListNumbers(String category, ArrayList<Integer> delivered, int n_lists) throws OutOfListsException {
+
+		ArrayList<Integer> allPossible = (ArrayList<Integer>) CategoryListIDs.get(category).clone();		
+		Random rando = new Random();
+		allPossible.removeAll(delivered);
+		int possible_values = allPossible.size();
+		ArrayList<Integer> new_lists = new ArrayList<Integer> ();
+		int newint;
+		int newrando;
+		try{
+			for (int i = 0;i < n_lists;i++) {
+				newrando = rando.nextInt(possible_values);
+				newint = allPossible.get(newrando);
+				allPossible.remove((int)newrando);
+				new_lists.add(newint);
+				possible_values--;
+				if (possible_values == 0) {
+					if (i==(n_lists-1)) {	
+						new_lists.add(0);
+					}
+					break;
+				}
+			}
+			return new_lists;
+		} catch (Exception e) { //methinks think this is unused
+			throw new OutOfListsException();
+		}
 	}
 
 	
