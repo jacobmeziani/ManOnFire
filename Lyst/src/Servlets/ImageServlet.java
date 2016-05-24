@@ -1,6 +1,8 @@
 package Servlets;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
@@ -28,7 +30,7 @@ public class ImageServlet extends HttpServlet {
     public void init() throws ServletException {
 
         // Define base path somehow. You can define it as init-param of the servlet.
-        this.imagePath = "C:\\Users\\Jacob\\Desktop\\WebImages";
+        this.imagePath = Paths.getPicPath();
 
         // In a Windows environment with the Applicationserver running on the
         // c: volume, the above path is exactly the same as "c:\var\webapp\images".
@@ -81,5 +83,5 @@ public class ImageServlet extends HttpServlet {
         // Write image content to response.
         Files.copy(image.toPath(), response.getOutputStream());
     }
-
+    
 }
