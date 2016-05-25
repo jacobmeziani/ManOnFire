@@ -102,8 +102,8 @@
 						<p id="ratingNumber">81</p>
 					</div>
 					<div id="rightPic">
-						<img id="thesauce" class="img-responsive center-block"
-							src="imageservlet/dicaps.png">
+						<img id="thesauce" class="img-responsive img-circle center-block test"
+							src="imageservlet/otown.jpg">
 					</div>
 				</div>
 			</div>
@@ -122,8 +122,8 @@
 						<p id="ratingNumber">85</p>
 					</div>
 					<div id="rightPic">
-						<img id="thesauce" class="img-responsive center-block"
-							src="imageservlet/dicaps.png">
+						<img id="thesauce" class="img-responsive img-circle center-block test"
+							src="imageservlet/dicaps.jpg">
 					</div>
 				</div>
 			</div>

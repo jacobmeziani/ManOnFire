@@ -35,13 +35,11 @@ import Servlets.OutOfListsException;
 
 public class DatabaseAccessor {
 
-	static DynamoDB dynamoDB;
+	private DynamoDB dynamoDB;
 	Random random = new Random();
 	static AmazonDynamoDBClient client;
 	private static String htmlmenu;
-	static private HashMap<String,ArrayList<Integer>> CategoryListIDs;
-	
-	
+	static private HashMap<String,ArrayList<Integer>> CategoryListIDs;	
 
 	public DatabaseAccessor() {
 		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
@@ -55,7 +53,7 @@ public class DatabaseAccessor {
 		}
 	}
 	
-	private static void buildMaps() {
+	private void buildMaps() {
 		Table categories = dynamoDB.getTable("Categories");
 		CategoryListIDs = new HashMap<String,ArrayList<Integer>> ();
 		ItemCollection<ScanOutcome> collection = categories.scan();

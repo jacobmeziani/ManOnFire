@@ -96,8 +96,8 @@
 		<div class="row">
 			<div 
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-						<div id="leftPic">
-							<img class="img-responsive center-block"
+						<div id="leftPic" class="testing">
+							<img class="img-responsive center-block "
 								src="${sessionScope.leftItem.picPath}">
 						</div>
 			</div>
@@ -115,7 +115,7 @@
 			</div>
 			<div
 				class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-						<div id="rightPic">
+						<div id="rightPic" class="testing"> 
 							<img class="img-responsive center-block"
 								src="${sessionScope.rightItem.picPath}">
 						</div>
@@ -134,7 +134,7 @@
 				</h3>
 			</div>
 			<div class="col-xs-4 col-sm-4 hidden-md hidden-lg centerAlign">
-				<button class="btn btn-lg btn-danger btn-red">
+				<button id="mobileVs" class="btn btn-lg btn-danger btn-red">
 					<h1>VS</h1>
 				</button>
 			</div>
