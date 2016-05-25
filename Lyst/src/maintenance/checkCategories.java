@@ -110,10 +110,10 @@ public class checkCategories {
 	}  
 	
 	public static void main (String [] args) {
-		//writeCategoryConflicts(check()); //   <--this goes into database
-		//updateCategories();   			//    <-- this does not go into database 
-		new FullReader();
-		stripLists();
+		writeCategoryConflicts(check()); //   <--this goes into database
+		updateCategories();   			//    <-- this does not go into database 
+		//new FullReader();
+		//stripLists();
 		
 		
 	}

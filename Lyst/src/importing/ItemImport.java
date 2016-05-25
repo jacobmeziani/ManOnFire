@@ -21,19 +21,18 @@ public class ItemImport {
 		new FullReader();
 		FullReader.scanItems();
 		int listid = 0;
-		int max = FullReader.getItemCounter();
 		Item item = null;
 		List<String> attributes = null;
 		String listname = "";
-		int current = 0;
+		int counter = 0;
 		try {
 			fileReader = new BufferedReader (new FileReader(filename));
 			while ((line = fileReader.readLine())!=null) {
+				System.out.println("writing line " + line);
 				if (first_line) {
 					String[] longstring = line.split(",");
 					listid = Integer.parseInt(longstring[1]);
 					item = getList(listid);
-					attributes = getAttributes(item);
 					first_line = false;
 					item = FullReader.getListTable().getItem("Id",listid);
 					attributes = item.getList("Attributes");
@@ -41,27 +40,31 @@ public class ItemImport {
 					
 					continue;
 				}
-				//String line is the item name
 				
-				current = FullReader.itemEntry (line,listname,listid,attributes);
-				if (current > max) {
-					max = current;
+				String [] longstring = line.split(",");
+				if (longstring.length==2) {
+					String itemname = longstring[0];
+					String picpath = processPicPath(longstring[1]);
+					FullReader.itemEntry(itemname, listname, listid, attributes,picpath);
+				} else {
+				
+				FullReader.itemEntry (longstring[0],listname,listid,attributes);
 				}
-				FullReader.terminate();
-				
+				counter++;
 			}
+			
+			FullReader.updateListSize(listid, counter);
+			FullReader.terminate();
+			fileReader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	static List<String> getAttributes(Item item) {
-		List<String> newlsit = item.getList("Attributes");
-		for (String list: newlsit) {
-			System.out.println(list);
-		}
-		return newlsit;
+	static String processPicPath(String input) {
+		return input;
 	}
+
 	
 	static Item getList (int listid) {
 		try {
@@ -77,8 +80,8 @@ public class ItemImport {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new FullReader();
-		
+
+		readFile("Maintenance/Inputs/item_import.csv");
 
 	}
 

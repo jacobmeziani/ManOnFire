@@ -77,6 +77,10 @@ public class FullReader {
 	}
 
 	static List<String> parseCell (String inputstring) {
+		if (inputstring.length()==0) {
+			System.out.println("yatzee");
+			return null;
+		}
 		String longstring = inputstring.substring(1,inputstring.length()-1);
 		String [] things = longstring.split("; ");
 		List<String> returnbro = new ArrayList<String>();
@@ -135,14 +139,14 @@ public class FullReader {
 		return item_id_counter;
 	}
 	
-	static void addOneListSize(int listid) {
+	public static void updateListSize(int listid,int numberadded) {
 		//DBA
 		Map<String,String> expressionAttributeNames = new HashMap<String,String>();
 		expressionAttributeNames.put("#L", "ListSize");
 		Map<String,Object> expressionAttributeValues = new HashMap<String,Object>();
-		expressionAttributeValues.put(":val1",1);
+		expressionAttributeValues.put(":val1",numberadded);
 		listsTable.updateItem("Id",listid,
-				"set #L = #L + :val2",
+				"set #L = #L + :val1",
 				expressionAttributeNames,expressionAttributeValues);
 	}
 	
@@ -179,22 +183,45 @@ public class FullReader {
 		return itemid;
 	}
 	
-	static void itemEntry (String itemname, String list, int itemid, int listid, List<String> attributes) {
-		//unused
-		Item item = new Item()
-				.withPrimaryKey("ItemName",itemname,"BelongingList",list)
-				.withNumber("Win",0)
-				.withNumber("Loss",0)
-				.withNumber("ItemID",itemid)
-				.withNumber("ListID", listid);
-		listItemsTable.putItem(item);
-		
-		attributeEntry(listid,0,itemid,"Overall");
-		for (int att_value = 0;att_value<attributes.size();att_value++) {
-			attributeEntry(listid,att_value,itemid,attributes.get(att_value));
-			System.out.println("Adding " + attributes.get(att_value) + " to item " + itemname);
-		}
+	static String processString (String input) {
+		String result = "imageservlet/" + input;
+		return result;
 	}
+	
+	static int itemEntry (String itemname, String list, int listid, List<String> attributes, String picpath) {
+		int itemid;
+		try {
+			Integer tempid = (Integer) hm.get(itemname);
+			itemid = tempid;
+			//itemEntry(itemname,list, itemid, listid, attributes);
+			String tempstring = itemname + "," + list + "," + tempid;
+			conflicts.add(tempstring);
+		} catch (NullPointerException e) {
+			//itemEntry(itemname,list, item_id_counter, listid, attributes);
+			itemid = item_id_counter;
+			hm.put(itemname, item_id_counter);
+			item_id_counter++;}
+
+			Item item = new Item()
+					.withPrimaryKey("ItemName",itemname,"BelongingList",list)
+					.withNumber("Win",0)
+					.withNumber("Loss",0)
+					.withNumber("ItemID",itemid)
+					.withNumber("Score", 75)
+					.withString("PicPath", picpath)
+					.withNumber("ListID", listid);
+			listItemsTable.putItem(item);
+
+			attributeEntry(listid,0,itemid,"Overall");
+			for (int att_value=1;att_value<(attributes.size()+1);att_value++) {
+				attributeEntry(listid,att_value,itemid,attributes.get(att_value-1));
+				//System.out.println("Adding " + attributes.get(att_value-1) + "to item " + itemname);
+			}
+		
+		
+		return itemid;
+	}
+	
 	
 	static void attributeEntry (int listid,int att,int itemid,String attributename) {
 		String codestring = encodeString(listid,att);
@@ -216,13 +243,23 @@ public class FullReader {
 			return;
 		}
 		List<String> attributes	= parseCell(tokens[2]);
-		List<String> items = parseCell(tokens[3]);
+		List<String> items = null;
+		if (tokens[3]!=null) {
+			items = parseCell(tokens[3]);
+		}
+		int items_size;
+		try {
+			items_size = items.size();
+		} catch(Exception e) {
+			items_size = 0;
+		}
 		String category = tokens[4];
+
 		if (tokens.length == 6) {
 			List<Integer> stringpackage = parseCellInteger(tokens[5]);
-			insertList(list_id_counter,listname,attributes,picpath,items.size(),items,stringpackage);
+			insertList(list_id_counter,listname,attributes,picpath,items_size,items,stringpackage);
 		} else {
-		insertList(list_id_counter,listname,attributes,picpath,items.size(),items);
+		insertList(list_id_counter,listname,attributes,picpath,items_size,items);
 		}
 		addCategory(category,list_id_counter);
 		list_id_counter++;
@@ -275,26 +312,36 @@ public class FullReader {
 	public static Table getCategoriesTable() {return categoriesTable;}
 	
 	static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,List<String> items) {
-		List<BigDecimal> stringPackage =new ArrayList<BigDecimal> ();
-		for (String attribute:attributes) {
-			stringPackage.add(new BigDecimal(0));
-		}
-		Item item = new Item ()
-				.withPrimaryKey("Id",listid)
-				.withString("ListName", listname)
-				.withList("Attributes", attributes)
-				.withString("PicPath",picpath)
-				.withList("StringPackage", stringPackage)
-				.withNumber("ListSize",listsize);
-		listsTable.putItem(item);
-		int max = 0;
-		for (int i = 0;i<items.size();i++) {
-			String listitem = items.get(i);
-			int current = itemEntry(listitem,listname,listid,attributes);
-			if (current > max) {
-				max = current;
+		
+		Item item = null;
+		if (items != null) {
+			item = new Item ()
+					.withPrimaryKey("Id",listid)
+					.withString("ListName", listname)
+					.withList("Attributes", attributes)
+					.withString("PicPath",processString(picpath))
+					.withNumber("ListSize",listsize);
+			
+			int max = 0;
+
+			for (int i = 0;i<items.size();i++) {
+				String listitem = items.get(i);
+				int current = itemEntry(listitem,listname,listid,attributes);
+				if (current > max) {
+					max = current;
+				}
 			}
+		} else {
+			item = new Item ()
+					.withPrimaryKey("Id",listid)
+					.withString("ListName", listname)
+					.withList("Attributes", attributes)
+					.withString("PicPath",processString(picpath))
+					.withNumber("ListSize",listsize);
 		}
+		
+		listsTable.putItem(item);
+
 	}
 	
 	static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,List<String> items,List<Integer> stringpackage) {

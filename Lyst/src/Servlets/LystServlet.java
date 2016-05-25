@@ -56,7 +56,7 @@ public class LystServlet extends HttpServlet {
 				currentCategory = "Foreign Sports";
 				session.setAttribute("CurrentCategory", "Everything");
 			}
-			currentCategory = "2003";
+			currentCategory = "9";
 			Object[] items = d.getNextCombatants(currentCategory,true);
 			session.setAttribute("currentList", items[0]);
 			session.setAttribute("leftItem", items[1]);
