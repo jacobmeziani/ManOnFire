@@ -49,7 +49,7 @@ public class DatabaseAccessor {
 		dynamoDB = new DynamoDB(dbClient);
 		
 		if (CategoryListIDs == null) {
-			buildMaps();
+			//buildMaps();
 		}
 	}
 	

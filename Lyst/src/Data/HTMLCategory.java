@@ -144,7 +144,7 @@ public class HTMLCategory {
 				}
 				String html_response = html_opening_li+html_opening_ul+up_html+close_html+html_first_li+html_recurse+"</ul></li>\n";
 				return html_response;
-			} 
+			}
 		}
 		return null;	
 	}
