@@ -103,11 +103,11 @@ public class HTMLCategory {
 		System.out.println(this.name);
 		if (this.leaf==true) {
 			if (subLysts!=null) {
-			String html_opening_li = "<li class = \"menu-item children\"><a class=\"showmethemoney \">"+this.name+"</a>\n";
+			String html_opening_li = "<li class = \"menu-item children finalcategory\"><a class=\"showmethemoney \">"+this.name+"</a>\n";
 			String html_opening_ul = "<ul class = \"showmethemoney\">\n";
 			String up_html = "<li class = \"final upmenu\"><a class = \"showmethemoney\">Up</a></li>\n";
 			String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\">Close</a></li>\n";
-			String html_first_li = "<li class = \"menu-item list-item final all_class\"><a class=\"showmethemoney all_class\"> All "+this.name+"</a></li>\n";
+			String html_first_li = "<li class = \"menu-item list-item final finalcategory all_class\"><a class=\"showmethemoney all_class\"> All "+this.name+"</a></li>\n";
 			String html_lysts = "";
 			String temp;
 			for (ListServerInit list:subLysts) {

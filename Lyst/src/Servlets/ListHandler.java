@@ -110,7 +110,8 @@ public class ListHandler extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String testing_categories = (String) session.getAttribute("CategoryHTML");
-
+		testing_categories = null; //comment out later
+		
 		if (testing_categories == null) {
 			String category_html = db.getMenu();
 			session.setAttribute("CategoryHTML", category_html);
