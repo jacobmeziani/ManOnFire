@@ -8,7 +8,7 @@
  <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	
-<link rel = "stylesheet" href = "Stylesheets/lists_view.css">
+<link rel = "stylesheet" href = "Stylesheets/lists.css">
 <!-- jQuery library -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -18,7 +18,7 @@
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 	
-<script src = "JS/lists_view.js"></script>	
+<script src = "JS/lists.js"></script>	
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -128,6 +128,20 @@
 			<div class="rect5"></div>
 		</div>
 	</div>
-	
+<div class = "col-md-6">
+<div class = "item-desktop">
+	<img class = "img-responsive" src = "imageservlet/dicaps.png">
+	<div class = "gray-desktop">Lebron's Best Dunks of 2015</div> 
+</div>
+</div>
+<div class = "col-md-6"><img class = "img-responsive" src = "imageservlet/dicaps.png"></div>
+<div class = "col-md-6"><img class = "img-responsive" src = "imageservlet/dicaps.png"></div>
+<div class = "col-md-6"><img class = "img-responsive" src = "imageservlet/dicaps.png"></div>
+<div class = "col-md-6"><img class = "img-responsive" src = "imageservlet/dicaps.png"></div>
+<div class = "col-md-6"><img class = "img-responsive" src = "imageservlet/dicaps.png"></div>
+<div class = "col-md-6"><img class = "img-responsive" src = "imageservlet/dicaps.png"></div>
+<div class = "col-md-6"><img class = "img-responsive" src = "imageservlet/dicaps.png"></div>
+
+
 </body>
 </html>

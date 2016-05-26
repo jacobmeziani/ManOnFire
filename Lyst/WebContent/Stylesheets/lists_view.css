@@ -1,52 +1,48 @@
 body {
-	background-color: #d9d9d9;
-		font-family: Tahoma, Geneva, sans-serif;
-
+	background-color: #FF5A5F;
 /* 	soft red : #FF5A5F;
 	selected : #C20021;
 	other red: #ff6666 */
 }
 
-.col-md-6 {
-	padding-bottom: 30px;
-	max-width: 500px;
-}
-
-.gray-desktop {
-	color: #333333;
-	transition: all 0.2s ease;
-	height: 80px;
-	width: 100%;
-	font-size: 25px;
-	font-weight: bold;
-	opacity: 0.8;
-	text-align: center;
-	font-variant: small-caps;
-	padding-top: 20px;
-}
-
-
-
 .item-desktop {
-	position: relative;
-	padding: 10px;
-	border: 1 px solid;
-	border-color: #808080;
-	background-color: white;
-	-moz-box-shadow: 3px 3px 4px #cc3300;
-	-webkit-box-shadow: 3px 3px 4px #cc00cc;
-	box-shadow: 3px 3px 4px #000000;
-	
+	transition: all 0.2s ease;
+	background-color: #666666;
+	border: 2px solid;
+	border-color: #666666;
+	border-radius: 7px;
+	width: 100%;
+	height: 100px;
+	margin-bottom: 7px;
 }
 
-.col-desk {
-	
+.list-name-description {
+	color: white;
+	font-size: 25px;
+	padding-top: 10px;
+	font-weight: bold;
+	width: 100%;
 }
 
-.col-mob {
-	
+.current-leader-description {
+	color: white;
+	font-size: 20px;
+	padding-top: 15px;
+}
+.category-name-description {
+	color: white;
+	font-size: 17px;
+	vertical-align: bottom;
+	padding-top: 50px;
+	padding-right: 8px;
 }
 
+.item-desktop:hover {
+	background-color: #C20021;
+	border-color: #C20021;
+	cursor: pointer;
+	
+}
 
 .spinner {
   margin: 100px auto;

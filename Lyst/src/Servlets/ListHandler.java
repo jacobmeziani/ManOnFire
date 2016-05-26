@@ -95,7 +95,7 @@ public class ListHandler extends HttpServlet {
 			single_list = new JSONObject();
 			single_list.put("ListName", item.getString("ListName"));
 			single_list.put("PicPath", item.getString("PicPath"));
-			single_list.put("Category", "current");//work here
+			single_list.put("Category", "Current");//work here
 			single_list.put("CurrentLeader", "Lebron James"); //work here too
 			single_list.put("ListID", item.getInt("Id"));
 			return_lists.put(single_list);
