@@ -68,20 +68,44 @@
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="sliderRow">
-		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-			<button type="button" id="leftButton"
-				class="btn btn-circle btn-xl center-block">
-				<span class="glyphicon glyphicon-chevron-left"></span>
-			</button>
+		<div class="hidden-xs hidden-sm col-md-12 col-lg-12">
+			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+				<button type="button" id="leftButton"
+					class="btn slider-btn-circle center-block">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				</button>
+			</div>
+			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+				<div class="slider" id="circles-slider"></div>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+				<button type="button" id="rightButton"
+					class="btn slider-btn-circle center-block">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</button>
+			</div>
 		</div>
-		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-			<div class="slider" id="circles-slider"></div>
-		</div>
-		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-			<button type="button" id="rightButton"
-				class="btn btn-circle btn-xl center-block">
-				<span class="glyphicon glyphicon-chevron-right"></span>
-			</button>
+		<div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
+			<div class="row">
+				<div class="col-xs-2 col-sm-2">
+					<button type="button" id="leftButtonMini"
+						class="btn slider-btn-circle center-block">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</button>
+				</div>
+				<div class="col-xs-8 col-sm-8"></div>
+				<div class="col-xs-2 col-sm-2">
+					<button type="button" id="rightButtonMini"
+						class="btn slider-btn-circle center-block">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</button>
+				</div>
+			</div>
+			<div class="row">
+			<div class="col-xs-12 col-sm-12">
+				<div class="slider" id="circles-slider"></div>
+			</div>
+			</div>
 		</div>
 	</div>
 </body>

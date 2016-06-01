@@ -126,6 +126,21 @@ function sliderFunc(leftItem, rightItem, attributes) {
 			$(".slider").slider('value', currentSelection);
 		}
 	})
+	$("#rightButtonMini").click(function() {
+		if (currentSelection == 10) {
+		} else {
+			currentSelection++;
+			$(".slider").slider('value', currentSelection);
+		}
+	})
+
+	$("#leftButtonMini").click(function() {
+		if (currentSelection == 0) {
+		} else {
+			currentSelection--;
+			$(".slider").slider('value', currentSelection);
+		}
+	})
 	}	
 	sliderInit = true;
 
