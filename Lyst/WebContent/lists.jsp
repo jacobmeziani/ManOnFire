@@ -18,6 +18,10 @@
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 
+
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+
 <script src="JS/lists.js"></script>
 <link rel="stylesheet" href="Stylesheets/lists.css">
 <link rel="stylesheet" href = "Stylesheets/MenuStyle.css">
@@ -28,7 +32,7 @@
 
 </head>
 <body>
-	<!-- <script id = "item-template" type "text/template">
+<!-- <script id = "item-template" type "text/template">
 <div class="item-desktop" id="tester">
 <div class="row">
 	<div class="col-md-3">picpath</div>
@@ -57,16 +61,16 @@
 	<nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="btn-group" role="group">
-			${sessionScope.CategoryHTML}
-			<button type="button" id="categoryselect" class="btn btn-default">
-				<span id="showCategory">Everything</span><span class="caret"></span>
+			<button type="button" id="categoryselect" class="btn">
+				<span id="showCategory">Everything</span>
 			</button>
-			<button type="button" id="filterbutton" class="btn btn-default">Filter</button>
+			${sessionScope.CategoryHTML}
+			<div class = "menubackground hidden"></div>
+			<button type="button" id="filterbutton" class="btn"> <span class = "caret"></span></button>
 
 		</div>
 	</div>
 	</nav>
-	<button id="clicker">CLICK ME!</button>
 	<div class="container-fluid main-body" id = "main-body">
 
 		<!-- <div class="col-md-6">
@@ -102,7 +106,7 @@
 
 			</div>
 		</div>
- -->	</div><div class="container-fluid main-body">
+ -->	</div><div class="container-fluid main-body" id = "spinnerbody">
  
 		<div class="spinner">
 			<div class="rect1"></div>

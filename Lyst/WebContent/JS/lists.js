@@ -4,7 +4,7 @@ $(document).ready(function() {
 	
 	var delivered = new Array() ;
 	var cat = "Everything";
-	
+	var working = false;
 	var isFinal = 0;
 	
 	delivered = requestLists(delivered,cat);
@@ -32,7 +32,7 @@ $(document).ready(function() {
 		$("#top-nav").find("ul").removeClass("showmethemoney");
 		$("#top-nav").find("ul").addClass("hidden");
 
-		$("#categoryselect").click(function()  {
+		$("#filterbutton").click(function()  {
 			$("#top-nav").removeClass("hidden");
 			$("#top-nav").addClass("showmethemoney");
 		});
@@ -52,9 +52,17 @@ $(document).ready(function() {
 					var curr_cat = newstringest[1];
 					$("#showCategory").html(curr_cat);
 					cat = curr_cat;
+		    		$(".spinner").removeClass("hidden");
+					delivered.length = 0;
+					$("#main-body").html("");
+					delivered = requestLists(delivered,cat);
 				} else {
 					$("#showCategory").html($(this).find("a").html());
-					cat = $(this).find("a").html();					
+					cat = $(this).find("a").html();
+		    		$(".spinner").removeClass("hidden");
+					delivered.length = 0;
+					$("#main-body").html("");
+					delivered = requestLists(delivered,cat);
 				}
 				
 			} else if ($(this).hasClass("children")) {
@@ -106,7 +114,9 @@ $(document).ready(function() {
 	$("#top-nav").find("ul").removeClass("showmethemoney");
 	$("#top-nav").find("ul").addClass("hidden");
 	//clicker functions go here 
-	$("#categoryselect").click(function() {
+	$("#filterbutton").click(function() {
+		$(".menubackground").removeClass("hidden");
+		$(".menubackground").addClass("showmethemoney");
 		if ($("#top-nav").hasClass("hidden")) {
 			$("#top-nav").removeClass("hidden");
 			$("#top-nav").addClass("showmethemoney");
@@ -119,9 +129,32 @@ $(document).ready(function() {
 		}
 	});
 	
+	$(".menubackground").click(function () {
+		$(".menubackground").removeClass("showmethemoney");
+		$(".menubackground").addClass("hidden");
+		$("#top-nav").find("ul").removeClass("showmethemoney");
+		$("#top-nav").find("ul").addClass("hidden");
+		$("#top-nav").removeClass("showmethemoney");
+		$("#top-nav").addClass("hidden");
+		$("#top-nav").find("a").removeClass("selected");
+	});
+	
+	$("#categoryselect").click(function(){
+		$(".menubackground").removeClass("showmethemoney");
+		$(".menubackground").addClass("hidden");
+		$("#top-nav").find("ul").removeClass("showmethemoney");
+		$("#top-nav").find("ul").addClass("hidden");
+		$("#top-nav").removeClass("showmethemoney");
+		$("#top-nav").addClass("hidden");
+		$("#top-nav").find("a").removeClass("selected");
+	});
+
 	$(".menu-item").click(function (event) {
+
 		event.stopPropagation();
 		if ($(this).hasAnyClass("final finalcategory")) {
+			$(".menubackground").removeClass("showmethemoney");
+			$(".menubackground").addClass("hidden");
 			//do something to set the code
 			//do something more
 			if ($(this).hasClass("all_class")) { 
@@ -130,11 +163,18 @@ $(document).ready(function() {
 				var curr_cat = newstringest[1];
 				$("#showCategory").html(curr_cat);
 				cat = curr_cat;
+				delivered.length = 0;
+	    		$(".spinner").removeClass("hidden");
+				$("#main-body").html("");
+				delivered = requestLists(delivered,cat);
 			} else {
 				$("#showCategory").html($(this).find("a").html());
 				cat = $(this).find("a").html();
+				delivered.length = 0;
+	    		$(".spinner").removeClass("hidden");
+				$("#main-body").html("");
+				delivered = requestLists(delivered,cat);
 			}
-
 			
 			$("#top-nav").find("ul").removeClass("showmethemoney");
 			$("#top-nav").find("ul").addClass("hidden");
@@ -155,15 +195,14 @@ $(document).ready(function() {
 	//
 
 
-	$("#filterbutton").click(function() {
-		delivered.length = 0;
-		$("#main-body").html("");
-		delivered = requestLists(delivered,cat);
-		
-	});
+//	$("#filterbutton").click(function() {
+//		delivered.length = 0;
+//		$("#main-body").html("");
+//		delivered = requestLists(delivered,cat);
+//	
+//	});
 	
 	function requestLists (delivered_in,category_in) {
-		$(".spinner").removeClass("hidden");
 		var xhr = $.ajax({
 			url: "ListHandler",
 			data: {
@@ -174,7 +213,6 @@ $(document).ready(function() {
 			dataType: "json",
 		})
 		.done(function(json,textStatus,xhr) {
-			
 			for (i = 0; i<json.lists.length;i++) {
 				var item = json.lists[i];
 				var picpath = item.PicPath;
@@ -189,18 +227,18 @@ $(document).ready(function() {
 				//var man = headers.isFinal;
 				isFinal = man;
 				$(".spinner").addClass("hidden");
+				
 
 
 			}
 			
-
+			working = false;
 		})
-
 		return delivered_in;
 		
 		
+	
 	};
-
 	
 	//buildRow("picpath","best titties in south florida","titties","yaboy");
 	
@@ -221,16 +259,30 @@ $(document).ready(function() {
 //				alert("hovering off");
 //				$(this).find(".gray-desktop").css("display","none");
 //			});
-	$(".item-desktop").click(function() {
-		alert($(this).html());
-	});
 	
 	$(window).scroll(function() {
-	    if($(window).scrollTop() == $(document).height() - $(window).height()) {
+	    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+	    	console.log("scrolltop: "+ $(window).scrollTop());
+	    	console.log ("window height: " + $(window).height());
+	    	console.log ("div height: " + $("#spinnerbody").offset().top);
+	    	console.log("document height: "+$(document).height());
+	    	
 	    	if (isFinal==0) {
-	    		delivered = requestLists(delivered,cat);
+	    		$(".spinner").removeClass("hidden");
+//	    		if (!working) {
+//	    			working = true;
+//		    		delivered = requestLists(delivered,cat);
+//		    		working = false;
+//	    		} else {
+//	    			alert("too busy");
+//	    			console.log("too busy");
+//	    		}
+	    	if (!working) {
+	    	working = true;
+	    	delivered = requestLists(delivered,cat);
+	    	}
 	    	} else {
-	    		alert ("out of lists");
+	    		console.log("out of lists");
 	    	}
 	    }
 	});
@@ -262,6 +314,16 @@ $(document).ready(function() {
 		topitem.append(row);
 		$("#main-body").append(topitem);
 	};
+	
+	function closeMenu() {
+		$(".menubackground").removeClass("hidden");
+		$(".menubackground").addClass("showmethemoney");
+		delivered.length = 0;
+		$(".spinner").removeClass("hidden");
+		$("#main-body").html("");
+		delivered = requestLists(delivered,cat);
+	};
+	
 	
 	function buildItem (picpath,listname,category,listid,currentleader) {
 		var topitem = $("<div class = col-md-6>");

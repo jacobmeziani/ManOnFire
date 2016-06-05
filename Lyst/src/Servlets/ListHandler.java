@@ -83,6 +83,7 @@ public class ListHandler extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Result: "+ result);
 		
 		response.addIntHeader("isFinal", (is_final?1:0));
 		

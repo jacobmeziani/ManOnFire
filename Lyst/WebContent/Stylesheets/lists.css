@@ -1,6 +1,7 @@
 body {
-	background-color: #ff6666;
-		font-family: Tahoma, Geneva, sans-serif;
+	background-color: #cccccc;
+/* 	background-color: #ff6666;
+ */		font-family: Tahoma, Geneva, sans-serif;
 
 /* 	soft red : #FF5A5F;
 	selected : #C20021;
@@ -11,6 +12,7 @@ body {
 	padding-bottom: 30px;
 	max-width: 500px;
 }
+
 
 .showlist-desktop {
 	color: #333333;
@@ -27,8 +29,26 @@ body {
 	bottom: 10px;
 }
 
-#categoryselect {
-	width: 120px;
+#categoryselect,#categoryselect:hover {
+	z-index: 1032;
+	color: white;
+	width: 150px;
+	cursor: default;
+	background-color: #FF5A5F;
+}
+
+
+#filterbutton {
+	border: none;
+	border-left: 2px solid;
+	border-color: #C20021;
+	height: 34px;
+	background-color: #FF5A5F;
+	
+}
+
+#filterbutton:hover {
+	background-color: #C20021;
 }
 
 .show-info {
@@ -62,7 +82,6 @@ body {
 
 button {
 	color: white;
-	background-color: #C20021;
 }
 
 .main-body {
@@ -73,8 +92,8 @@ button {
 }
 
 .navbar-default {
-	background-color: #ff6666;
-	border-color: #ff6666;
+	background-color: #cccccc;
+	border-color: #cccccc;
 	padding-top: 15px;
 	height: 60px;
 }
@@ -113,10 +132,6 @@ button {
   height: 40px;
   text-align: center;
   font-size: 10px;
-}
-
-.hidden {
-	visibility: hidden !important;
 }
 
 .spinner > div {

@@ -2,10 +2,22 @@
 #top-nav.desk {
 	list-style: none;
 	position: absolute;
-	z-index: 9;
-	left: 120px;
+	z-index: 1032;
+	left: 150px;
 	margin: 0;
 	padding: 0;
+}
+
+.menubackground {
+	position: fixed;
+	background-color: gray;
+	opacity: .5;
+	width:150%;
+	height:120%;
+	z-index:1031;
+	top: -40px;
+	left: -300px;
+	
 }
 
 .list-item a {
