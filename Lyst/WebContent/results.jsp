@@ -103,7 +103,7 @@
 					</div>
 					<div id="rightPic">
 						<img id="thesauce" class="img-responsive img-circle center-block test"
-							src="imageservlet/otown.jpg">
+							src="imageservlet/bane.jpg">
 					</div>
 				</div>
 			</div>
@@ -111,7 +111,7 @@
 				class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
 				<div id="attributePhrases">
 					<div class="row row-buffer">
-						<h3 id="attributeTitle" class="centerAlign">Results</h3>
+						<h3 id="attributeTitle" class="centerAlign">56-59</h3>
 					</div>
 				</div>
 			</div>
@@ -123,7 +123,7 @@
 					</div>
 					<div id="rightPic">
 						<img id="thesauce" class="img-responsive img-circle center-block test"
-							src="imageservlet/dicaps.jpg">
+							src="imageservlet/FLA.png">
 					</div>
 				</div>
 			</div>

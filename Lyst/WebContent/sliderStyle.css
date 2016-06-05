@@ -60,7 +60,6 @@
 /* it overflows so no need for width to be accurate */
 .ui-slider-pips .ui-slider-label {
   position: absolute;
-  font-size: 25px;
   top: 35px;
   left: 50%;
   margin-left: -1em;
@@ -326,7 +325,71 @@
   background: black;
 }
 
+/* Large desktops and laptops */
+@media ( min-width : 1200px) {
+	#circles-slider .ui-slider-handle {
+    width: 38px;
+    height: 38px;
+        margin-left: -20px;
+    margin-top: -12px;
+	}
+	.ui-slider-pips .ui-slider-label {
+  font-size: 25px;
+	}
+}
 
+/* Landscape tablets and medium desktops */
+@media ( min-width : 992px) and (max-width: 1199px) {
+	#circles-slider .ui-slider-handle {
+    width: 38px;
+    height: 38px;
+        margin-left: -20px;
+    margin-top: -12px;
+	}
+	.ui-slider-pips .ui-slider-label {
+  font-size: 25px;
+	}
+}
+
+/* Portrait tablets and small desktops */
+@media ( min-width : 768px) and (max-width: 991px) {
+	#circles-slider .ui-slider-handle {
+    width: 38px;
+    height: 38px;
+        margin-left: -20px;
+    margin-top: -12px;
+	}
+	.ui-slider-pips .ui-slider-label {
+  font-size: 25px;
+	}
+}
+
+/* Landscape phones and portrait tablets */
+@media ( max-width : 767px) {
+	#circles-slider .ui-slider-handle {
+    width: 28px;
+    height: 28px;
+        margin-left: -10px;
+    margin-top: -6px;
+	}
+	.ui-slider-pips .ui-slider-label {
+  font-size: 15px;
+	}
+}
+
+/* Portrait phones and smaller */
+@media ( max-width : 480px) {
+
+	#circles-slider .ui-slider-handle {
+    width: 22px;
+    height: 22px;
+        margin-left: -8px;
+    margin-top: -4px;
+	}
+	.ui-slider-pips .ui-slider-label {
+  font-size: 15px;
+	}
+}
 
 
 
@@ -340,10 +403,6 @@
 #circles-slider .ui-slider-handle {
   background: black;
     border: none;
-    width: 38px;
-    height: 38px;
-    margin-left: -20px;
-    margin-top: -12px;
     border-radius: 100%;
     transition: box-shadow 0.2s ease; }
     
@@ -362,5 +421,21 @@
       transition: all 0.4s ease; }
       
        #circles-slider.ui-slider .ui-slider-pip {
-    top: -3px; }
+    top: -3px; }    
+
+.slider-btn-circle {
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	padding: 6px 0;
+	font-size: 12px;
+	line-height: 1.428571429;
+	border-radius: 30px;
+	background: #C20021;
+	color: white;
+}
+
+.slider-btn-circle:hover {
+	color: black;
+}
     

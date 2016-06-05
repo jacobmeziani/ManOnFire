@@ -84,7 +84,7 @@
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<span><h4 class="centerAlign">Current Category is: </h4></span>
 				<span><h4 id = "showCategory" class="centerAlign">Everything</h4></span>
-				<input type = "hidden" id="CurrentCategory" value = "Something">
+				<input type = "hidden" id="currentCategory" value = "Everything">
 				<input type = "hidden" id="isCategoryList" value = "false">
 				
 			</div>
@@ -134,7 +134,7 @@
 				</h3>
 			</div>
 			<div class="col-xs-4 col-sm-4 hidden-md hidden-lg centerAlign">
-				<button id="mobileVs" class="btn btn-lg btn-danger btn-red">
+				<button id="vsButtonMobile" class="btn btn-lg btn-danger btn-red">
 					<h1>VS</h1>
 				</button>
 			</div>

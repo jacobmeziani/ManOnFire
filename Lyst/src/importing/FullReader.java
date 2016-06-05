@@ -435,7 +435,7 @@ public class FullReader {
 	public static void main (String[] args) {
 		new FullReader();
 		scanItems();
-		Parser("Maintenance/Inputs/import_test.csv");
+		Parser("Maintenance/Inputs/drama_import_test.csv");
 		//System.out.println(item.getString("BelongingList"));
 		writeConflicts();
 		terminate();		

@@ -33,15 +33,15 @@ $(document).ready(function() {
 					var curr_cat = newstringest[1];
 					$("#showCategory").html(curr_cat);
 					$("#isCategoryList").val("false");
-					$("#CurrentCategory").val(curr_cat);
+					$("#currentCategory").val(curr_cat);
 				} else {
 					$("#showCategory").html($(this).find("a").html());
 					if ($(this).hasClass("list-item")) {
 						var dbid = event.target.getAttribute("database-id");
-						$("#CurrentCategory").val(dbid);
+						$("#currentCategory").val(dbid);
 						$("#isCategoryList").val("true");
 					} else {
-						$("#CurrentCategory").val($(this).find("a").html());
+						$("#currentCategory").val($(this).find("a").html());
 						$("#isCategoryList").val("false");
 					}
 				}
@@ -118,15 +118,15 @@ $(document).ready(function() {
 				var curr_cat = newstringest[1];
 				$("#showCategory").html(curr_cat);
 				$("#isCategoryList").val("false");
-				$("#CurrentCategory").val(curr_cat);
+				$("#currentCategory").val(curr_cat);
 			} else {
 				$("#showCategory").html($(this).find("a").html());
 				if ($(this).hasClass("list-item")) {
 					var dbid = event.target.getAttribute("database-id");
-					$("#CurrentCategory").val(dbid);
+					$("#currentCategory").val(dbid);
 					$("#isCategoryList").val("true");
 				} else {
-					$("#CurrentCategory").val($(this).find("a").html());
+					$("#currentCategory").val($(this).find("a").html());
 					$("#isCategoryList").val("false");
 				}
 			}

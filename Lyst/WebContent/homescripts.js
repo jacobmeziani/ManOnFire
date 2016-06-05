@@ -18,8 +18,10 @@ $(document).ready(function() {
 		$("#rightName").fadeOut( "slow");
 		$("#rightName2").fadeOut( "slow" );
 		$("#leftName2").fadeOut( "slow" );
-		$("#mobileVs").fadeOut( "slow" );
-		$.get("bro", function(html) {
+		$("#vsButtonMobile").fadeOut( "slow" );
+		var category = $("#currentCategory").attr("value"); 
+		var list = $("#isCategoryList").attr("value"); 
+		$.get("bro",{"random":true, "currentCategory" : category, "isList":list}, function(html) {
 			var parsed = $('<div/>').append(html);
 			$("#leftPic").html(parsed.find("#leftPic"));
 			$("#leftPic").fadeIn( "slow");
@@ -34,51 +36,60 @@ $(document).ready(function() {
 			$("#leftName2").html(parsed.find("#leftName2"));
 			$("#rightName2").fadeIn( "slow" );
 			$("#leftName2").fadeIn( "slow" );
-			$("#mobileVs").fadeIn( "slow" );
+			$("#vsButtonMobile").fadeIn( "slow" );
 		});
 	})
 
 	$("#vsButton").click(function() {
-		$.get("bro", "vs=true", function(json) {
-			sliderInit = false;
-			var obj = JSON.parse(json);
-			attributes = obj.attributes;
-			leftItem = obj.leftItem;
-			rightItem = obj.rightItem;
-			stringPackage = obj.stringPackages;
-			attributeSize = attributes.length;
-			scorePositions = new Array();
-			for (i=0;i<attributeSize;i++){
-				scorePositions[i]=5;
-			}
-			$.get("bro", "vsDisplay=true", function(html) {
-				var parsed = $('<div/>').append(html);
-
-				$("#bottomRow").html(parsed.find("#sliderRow"));
-				$("#centerContent").html(parsed.find("#attributePhrases"));
-				$("#contextButtons").html(parsed.find("#sliderTopButtons"));
-				$("#labels").html(parsed.find("#sliderTopButtonsLabels"));
-				$("#attributeTitle").html(attributes[currentAttributeIndex]);
-				sliderFunc(leftItem, rightItem, attributes);
-				$("#descriptor").html(descriptors[5]);
-				$("#nextAttributeButton").click(function(){
-					nextAttribute();
-				});
-				$("#previousAttributeButton").click(function(){
-					previousAttribute();
-				});
-				$("#quitButton").click(function(){
-					$.get( "bro", "initial=true", function( data ) {
-						var newDoc = document.open("text/html", "replace");
-						newDoc.write(data);
-						newDoc.close();
-						});
-				});
-			});
-		});
+		goToVsScreen();
+	})
+	$("#vsButtonMobile").click(function() {
+		goToVsScreen();
 	})
 
 });
+
+function goToVsScreen(){
+	$.get("bro", "vs=true", function(json) {
+		sliderInit = false;
+		var obj = JSON.parse(json);
+		attributes = obj.attributes;
+		leftItem = obj.leftItem;
+		rightItem = obj.rightItem;
+		stringPackage = obj.stringPackages;
+		attributeSize = attributes.length;
+		scorePositions = new Array();
+		for (i=0;i<attributeSize;i++){
+			scorePositions[i]=5;
+		}
+		$.get("bro", "vsDisplay=true", function(html) {
+			var parsed = $('<div/>').append(html);
+
+			$("#bottomRow").html(parsed.find("#sliderRow"));
+			$("#centerContent").html(parsed.find("#attributePhrases"));
+			$("#contextButtons").html(parsed.find("#sliderTopButtons"));
+			$("#labels").html(parsed.find("#sliderTopButtonsLabels"));
+			$("#attributeTitle").html(attributes[currentAttributeIndex]);
+			sliderFunc(leftItem, rightItem, attributes);
+			$("#descriptor").html(descriptors[5]);
+			$("#descriptorMobile").html(descriptors[5]);
+			$("#nextAttributeButton").click(function(){
+				nextAttribute();
+			});
+			$("#previousAttributeButton").click(function(){
+				previousAttribute();
+			});
+			$("#quitButton").click(function(){
+				$.get( "bro", "initial=true", function( data ) {
+					var newDoc = document.open("text/html", "replace");
+					newDoc.write(data);
+					newDoc.close();
+					});
+			});
+		});
+	});
+}
+
 
 function sliderFunc(leftItem, rightItem, attributes) {
 	
@@ -108,6 +119,7 @@ function sliderFunc(leftItem, rightItem, attributes) {
 	.on("slidechange", function(e, ui) {
 		currentSelection = ui.value;
 		$("#descriptor").html(descriptors[currentSelection]);
+		$("#descriptorMobile").html(descriptors[currentSelection]);
 	});
 	
 	if(!sliderInit){
@@ -120,6 +132,21 @@ function sliderFunc(leftItem, rightItem, attributes) {
 	})
 
 	$("#leftButton").click(function() {
+		if (currentSelection == 0) {
+		} else {
+			currentSelection--;
+			$(".slider").slider('value', currentSelection);
+		}
+	})
+	$("#rightButtonMini").click(function() {
+		if (currentSelection == 10) {
+		} else {
+			currentSelection++;
+			$(".slider").slider('value', currentSelection);
+		}
+	})
+
+	$("#leftButtonMini").click(function() {
 		if (currentSelection == 0) {
 		} else {
 			currentSelection--;
