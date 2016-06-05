@@ -103,7 +103,7 @@
 					</div>
 					<div id="rightPic">
 						<img id="thesauce" class="img-responsive img-circle center-block test"
-							src="imageservlet/IllinoisLogo.jpg">
+							src="imageservlet/bane.jpg">
 					</div>
 				</div>
 			</div>

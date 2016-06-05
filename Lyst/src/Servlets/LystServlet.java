@@ -49,15 +49,23 @@ public class LystServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		DatabaseAccessor d = new DatabaseAccessor();
 
-		if (requestAction.equals("") || requestAction.equals("initial")) 
+		if (requestAction.equals("random") || requestAction.equals("initial")) 
 		{
-			String currentCategory = (String) session.getAttribute("CurrentCategory");
-			if (currentCategory == null || currentCategory.isEmpty()) {
-				currentCategory = "Foreign Sports";
-				session.setAttribute("CurrentCategory", "Everything");
+//			String currentCategory = (String) session.getAttribute("CurrentCategory");
+//			if (currentCategory == null || currentCategory.isEmpty()) {
+//				currentCategory = "Everything";
+//				session.setAttribute("CurrentCategory", "Everything");
+//			}
+			String currentCategory = "Everything";
+			boolean list = false;
+			if(requestAction.equals("random")){
+			currentCategory = request.getParameter("currentCategory");
+			String listString = request.getParameter("isList");
+			if(listString.equals("true")){
+				list = true;
 			}
-			currentCategory = "9";
-			Object[] items = d.getNextCombatants(currentCategory,true);
+			}
+			Object[] items = d.getNextCombatants(currentCategory,list);
 			session.setAttribute("currentList", items[0]);
 			session.setAttribute("leftItem", items[1]);
 			session.setAttribute("rightItem", items[2]);
