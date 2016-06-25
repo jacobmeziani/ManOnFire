@@ -37,9 +37,6 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
-	.bannerOverlay{
-    font-size: 26px;
-}
 }
 
 /* Landscape tablets and medium desktops */
@@ -54,9 +51,6 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
-		.bannerOverlay{
-    font-size: 26px;
-}
 }
 
 /* Portrait tablets and small desktops */
@@ -71,9 +65,6 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
-		.bannerOverlay{
-    font-size: 26px;
-}
 }
 
 /* Landscape phones and portrait tablets */
@@ -88,9 +79,6 @@ h2 {
 	h3 {
 		font-size: 20px;
 	}
-		.bannerOverlay{
-    font-size: 20px;
-}
 }
 
 /* Portrait phones and smaller */
@@ -113,9 +101,6 @@ h2 {
 .imageDoBoys2{
 	height: 50px;
 	width: 100px;
-}
-	.bannerOverlay{
-    font-size: 12px;
 }
 }
 

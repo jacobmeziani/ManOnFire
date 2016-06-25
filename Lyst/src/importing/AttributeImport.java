@@ -71,8 +71,10 @@ public class AttributeImport {
 				int itemid = item.getNumber("ItemID").intValue();
 				Item newitem = new Item()
 						.withPrimaryKey("ItemID",itemid,"ListAttribute",encoded)
-						.withNumber("Average",75)
-						.withNumber("n_rated",1)
+						.withNumber("Rating",100)
+						.withNumber("Entries",0)
+						.withNumber("Points",0)
+						.withNumber("Wins",0)
 						.withString("AttributeName",att_name);
 				attributes.putItem(newitem);
 				

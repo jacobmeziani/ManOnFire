@@ -227,9 +227,10 @@ public class FullReader {
 		String codestring = encodeString(listid,att);
 		Item item = new Item () 
 				.withPrimaryKey("ItemID",itemid,"ListAttribute",codestring)
-				.withNumber("ItemID",itemid)
-				.withNumber("Average",75)
-				.withNumber("n_rated",1)
+				.withNumber("Rating",100)
+				.withNumber("Entries",0)
+				.withNumber("Points",0)
+				.withNumber("Wins",0)
 				.withString("AttributeName",attributename);
 		attributeTable.putItem(item);
 	}
@@ -393,12 +394,7 @@ public class FullReader {
 		return counterTable;
 	}
 	public static String encodeString (int id,int att) {
-		String zeros = "0000000000";
-		String idstring = zeros + id;
-		String attstring = zeros + att;
-		String first = idstring.substring((idstring.length()-10));
-		String last = attstring.substring((attstring.length()-2));
-		String bigstring = first + "xx" + last;
+		String bigstring = id + "-" + att;
 		return bigstring;
 	}
 	
