@@ -123,18 +123,6 @@ public class FullReader {
 		
 	}
 	
-	static void itemEntry (String itemname, String list, String picpath, int itemid, int listid) {
-		//unused
-		Item item = new Item()
-				.withPrimaryKey("ItemName",itemname,"BelongingList",list)
-				.withString("PicPath", picpath)
-				.withNumber("Win",0)
-				.withNumber("Loss",0)
-				.withNumber("ItemID",itemid)
-				.withNumber("ListID", listid);
-		listItemsTable.putItem(item);
-	}
-	
 	public static int getItemCounter(){
 		return item_id_counter;
 	}
@@ -166,10 +154,8 @@ public class FullReader {
 
 			Item item = new Item()
 					.withPrimaryKey("ItemName",itemname,"BelongingList",list)
-					.withNumber("Win",0)
-					.withNumber("Loss",0)
+					.withNumber("Overall",100)
 					.withNumber("ItemID",itemid)
-					.withNumber("Score", 75)
 					.withNumber("ListID", listid);
 			listItemsTable.putItem(item);
 
@@ -204,10 +190,8 @@ public class FullReader {
 
 			Item item = new Item()
 					.withPrimaryKey("ItemName",itemname,"BelongingList",list)
-					.withNumber("Win",0)
-					.withNumber("Loss",0)
+					.withNumber("Overall",100)
 					.withNumber("ItemID",itemid)
-					.withNumber("Score", 75)
 					.withString("PicPath", picpath)
 					.withNumber("ListID", listid);
 			listItemsTable.putItem(item);
@@ -228,6 +212,7 @@ public class FullReader {
 		Item item = new Item () 
 				.withPrimaryKey("ItemID",itemid,"ListAttribute",codestring)
 				.withNumber("Rating",100)
+				.withNumber("Ranking",1)
 				.withNumber("Entries",0)
 				.withNumber("Points",0)
 				.withNumber("Wins",0)

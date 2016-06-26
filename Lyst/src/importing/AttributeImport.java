@@ -72,6 +72,7 @@ public class AttributeImport {
 				Item newitem = new Item()
 						.withPrimaryKey("ItemID",itemid,"ListAttribute",encoded)
 						.withNumber("Rating",100)
+						.withNumber("Ranking",1)
 						.withNumber("Entries",0)
 						.withNumber("Points",0)
 						.withNumber("Wins",0)

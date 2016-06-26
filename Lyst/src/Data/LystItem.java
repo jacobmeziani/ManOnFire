@@ -27,7 +27,7 @@ public class LystItem implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getBelongingList() {
 		return belongingList;
 	}
@@ -35,7 +35,7 @@ public class LystItem implements Serializable {
 	public void setBelongingList(String belongingList) {
 		this.belongingList = belongingList;
 	}
-	
+
 	public String getPicPath() {
 		return picPath;
 	}

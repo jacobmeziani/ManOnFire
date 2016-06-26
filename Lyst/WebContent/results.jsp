@@ -68,10 +68,10 @@
 		<div id="contextButtons" class="row">
 			<div id="topLeftButton"
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<button id="quitButton" type="button"
-					class="btn btn-circle btn-xl center-block">
-					<span class="glyphicon glyphicon-eye-close"></span>
-				</button>
+				<a id="quitButton" type="button"
+					class="btn btn-circle btn-xl center-block" href="home.jsp"> <span
+					class="glyphicon glyphicon-eye-close"></span>
+				</a>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div id="topRightButton"
@@ -97,14 +97,16 @@
 		<div class="row">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<div class="positionRelativeContainer nopadding">
-					<span class="label label-success bannerOverlay hidden">Winner</span>
+					<c:if test="${sessionScope.winningSide eq 'left'}">
+					<span class="label label-success bannerOverlay">Winner</span>
+					</c:if>
 					<div class="numberCircle">
 						<p id="ratingNumber">81</p>
 					</div>
 					<div id="leftPic">
 						<img id="thesauce"
 							class="img-responsive img-circle center-block resultImage"
-							src="imageservlet/sherekhan.jpg">
+							src="${sessionScope.leftItem.picPath}">
 					</div>
 				</div>
 			</div>
@@ -112,7 +114,17 @@
 				class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
 				<div id="attributePhrases">
 					<div class="row row-buffer">
-						<h3 id="attributeTitle" class="centerAlign">Agent Smith wins!</h3>
+						<h3 id="attributeTitle" class="centerAlign">
+							<c:if test="${sessionScope.winningSide eq 'left'}">
+								<c:out value="${sessionScope.leftItem.name}"></c:out> wins!
+							</c:if>
+							<c:if test="${sessionScope.winningSide eq 'right'}">
+								<c:out value="${sessionScope.rightItem.name}"></c:out> wins!
+							</c:if>
+							<c:if test="${sessionScope.winningSide eq 'tie'}">
+								Its a tie!
+							</c:if>
+						</h3>
 					</div>
 					<div class="row row-buffer">
 						<button type="button" class="btn btn-primary">Scoring</button>
@@ -121,14 +133,16 @@
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<div class="positionRelativeContainer nopadding">
+				<c:if test="${sessionScope.winningSide eq 'right'}">
 					<span class="label label-success bannerOverlay">Winner</span>
+					</c:if>
 					<div class="numberCircle bannerOverlay">
 						<p id="ratingNumber">85</p>
 					</div>
 					<div id="rightPic">
 						<img id="thesauce"
 							class="img-responsive img-circle center-block resultImage"
-							src="imageservlet/smith.png">
+							src="${sessionScope.rightItem.picPath}">
 					</div>
 				</div>
 			</div>
@@ -136,19 +150,28 @@
 		<div class="row" id="bottomRow">
 			<div id="leftName"
 				class="hidden-xs hidden-sm col-md-5 col-lg-5 centerAlign">
-				<h3>Drizzy Drake</h3>
+				<h3>
+					<c:out value="${sessionScope.leftItem.name}"></c:out>
+				</h3>
 			</div>
-			<div id="leftName2" class="col-xs-6 col-sm-6 hidden-md hidden-lg centerAlign">
-				<h3 class="verticalAlign">Argyle Sock Monkey</h3>
+			<div id="leftName2"
+				class="col-xs-6 col-sm-6 hidden-md hidden-lg centerAlign">
+				<h3 class="verticalAlign">
+					<c:out value="${sessionScope.leftItem.name}"></c:out>
+				</h3>
 			</div>
-			<div
-				class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
+			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div id="rightName"
 				class="hidden-xs hidden-sm col-md-5 col-lg-5 centerAlign">
-				<h3>Drizzy Drake</h3>
+				<h3>
+					<c:out value="${sessionScope.rightItem.name}"></c:out>
+				</h3>
 			</div>
-			<div id="rightName2" class="col-xs-6 col-sm-6 hidden-md hidden-lg centerAlign">
-				<h3>Argyle Sock Monkey</h3>
+			<div id="rightName2"
+				class="col-xs-6 col-sm-6 hidden-md hidden-lg centerAlign">
+				<h3>
+					<c:out value="${sessionScope.rightItem.name}"></c:out>
+				</h3>
 			</div>
 		</div>
 
@@ -208,7 +231,7 @@
 				</div>
 			</div>
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="tile green center-block">
@@ -235,7 +258,7 @@
 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
 									<div class="progress-bar blue stripes">
-										 <span class="floatRight" style="width: 10%"></span>
+										<span class="floatRight" style="width: 10%"></span>
 									</div>
 								</div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
@@ -248,7 +271,7 @@
 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
 									<div class="progress-bar pink stripes">
-										 <span class="floatRight" style="width: 40%"></span>
+										<span class="floatRight" style="width: 40%"></span>
 									</div>
 								</div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
@@ -261,8 +284,8 @@
 					</div>
 				</div>
 			</div>
-			
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="tile red center-block">
@@ -302,7 +325,7 @@
 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
 									<div class="progress-bar pink stripes">
-										 <span class="floatRight" style="width: 20%"></span>
+										<span class="floatRight" style="width: 20%"></span>
 									</div>
 								</div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
@@ -315,8 +338,8 @@
 					</div>
 				</div>
 			</div>
-			
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="tile green center-block">
@@ -369,8 +392,8 @@
 					</div>
 				</div>
 			</div>
-			
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="tile green center-block">
@@ -397,7 +420,7 @@
 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
 									<div class="progress-bar blue stripes">
-										 <span class="floatRight" style="width: 48%"></span>
+										<span class="floatRight" style="width: 48%"></span>
 									</div>
 								</div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
@@ -410,7 +433,7 @@
 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
 									<div class="progress-bar pink stripes">
-										 <span class="floatRight" style="width: 60%"></span>
+										<span class="floatRight" style="width: 60%"></span>
 									</div>
 								</div>
 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">

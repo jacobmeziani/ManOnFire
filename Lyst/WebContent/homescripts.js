@@ -21,7 +21,7 @@ $(document).ready(function() {
 		$("#vsButtonMobile").fadeOut( "slow" );
 		var category = $("#currentCategory").attr("value"); 
 		var list = $("#isCategoryList").attr("value"); 
-		$.get("bro",{"random":true, "currentCategory" : category, "isList":list}, function(html) {
+		$.get("bro",{"action":"newRandom", "currentCategory" : category, "isList":list}, function(html) {
 			var parsed = $('<div/>').append(html);
 			$("#leftPic").html(parsed.find("#leftPic"));
 			$("#leftPic").fadeIn( "slow");
@@ -50,7 +50,7 @@ $(document).ready(function() {
 });
 
 function goToVsScreen(){
-	$.get("bro", "vs=true", function(json) {
+	$.get("bro", {"action":"vs"}, function(json) {
 		sliderInit = false;
 		var obj = JSON.parse(json);
 		attributes = obj.attributes;
@@ -62,7 +62,7 @@ function goToVsScreen(){
 		for (i=0;i<attributeSize;i++){
 			scorePositions[i]=5;
 		}
-		$.get("bro", "vsDisplay=true", function(html) {
+		$.get("bro", {"action":"sliderDisplay"}, function(html) {
 			var parsed = $('<div/>').append(html);
 
 			$("#bottomRow").html(parsed.find("#sliderRow"));
@@ -80,10 +80,15 @@ function goToVsScreen(){
 				previousAttribute();
 			});
 			$("#quitButton").click(function(){
-				$.get( "bro", "initial=true", function( data ) {
+				$.get( "bro", {"action":"initial"}, function( data ) {
 					var newDoc = document.open("text/html", "replace");
 					newDoc.write(data);
 					newDoc.close();
+					});
+			});
+			$("#submitRatingsButton").click(function(){
+				$.get( "bro", {"action" : "results" , "scores":scorePositions}, function( data ) {
+					window.location.href = 'results.jsp';
 					});
 			});
 		});
