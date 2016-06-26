@@ -40,7 +40,7 @@ public class ListHandler extends HttpServlet {
      */
     public ListHandler() {
         super();
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub"
     }
 
 	/**
@@ -101,6 +101,7 @@ public class ListHandler extends HttpServlet {
 			single_list.put("ListID", item.getInt("Id"));
 			return_lists.put(single_list);
 		}
+		
 		json.put("lists", return_lists);
 		
 		} catch (Exception e) {e.printStackTrace();}
@@ -124,7 +125,6 @@ public class ListHandler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 	
 	/**Returns an array of length <code>n_lists</code> of random list numbers

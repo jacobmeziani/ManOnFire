@@ -40,7 +40,7 @@ public class ImageServlet extends HttpServlet {
     // Actions ------------------------------------------------------------------------------------
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    	System.out.println("inside image servlet");
         // Get requested image by path info.
         String requestedImage = request.getPathInfo();
 

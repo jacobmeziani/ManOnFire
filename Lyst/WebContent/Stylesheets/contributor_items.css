@@ -1,0 +1,11 @@
+#mainbody {
+	width: 100%;
+	border-left: 1px solid;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+	border-color: #ddd;
+	padding: 10px;
+	padding-bottom: 40px;
+}
+
+li {cursor: pointer;}

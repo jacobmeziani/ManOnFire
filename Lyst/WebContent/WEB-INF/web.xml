@@ -26,4 +26,14 @@
     <servlet-name>ListHandler</servlet-name>
     <url-pattern>/ListHandler</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ContributorServlet</display-name>
+    <servlet-name>ContributorServlet</servlet-name>
+    <servlet-class>Servlets.ContributorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContributorServlet</servlet-name>
+    <url-pattern>/ContributorServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
