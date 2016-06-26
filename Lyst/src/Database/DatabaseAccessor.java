@@ -205,10 +205,13 @@ public class DatabaseAccessor {
 		String name = item1.getString("ItemName");
 		String picPath = item1.getString("PicPath");
 		String belongingList = item1.getString("BelongingList");
-		LystItem firstItem = new LystItem(name, belongingList, picPath);		
+		int listId = item1.getInt("ListID");
+		int itemId = item1.getInt("ItemID");
+		LystItem firstItem = new LystItem(name, belongingList, picPath, listId, itemId);		
 		name = item2.getString("ItemName");
 		picPath = item2.getString("PicPath");
-		LystItem secondItem = new LystItem(name, belongingList, picPath);
+		itemId = item2.getInt("ItemID");
+		LystItem secondItem = new LystItem(name, belongingList, picPath, listId, itemId);
 		lystItems[0] = listToPullFrom;
 		lystItems[1] = firstItem;
 		lystItems[2] = secondItem;

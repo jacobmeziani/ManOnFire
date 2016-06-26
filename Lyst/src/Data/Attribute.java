@@ -1,6 +1,7 @@
 package Data;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class Attribute implements Serializable {
@@ -8,16 +9,23 @@ public class Attribute implements Serializable {
 
 	public String name;
 
-	public String picPath;
+	public int ranking;
 
-	public ArrayList<Attribute> attributes;
+	public int rating;
 
-	public String belongingList;
+	public BigInteger wins;
+	
+	public BigInteger entries;
+	
+	public BigInteger points;
 
-	public Attribute(String name, String belongingList, String picPath) {
+	public Attribute(String name, int ranking,int rating, BigInteger wins, BigInteger entries, BigInteger points) {
 		this.name = name;
-		this.belongingList = belongingList;
-		this.picPath = picPath;
+		this.ranking = ranking;
+		this.rating = rating;
+		this.wins = wins;		
+		this.entries = entries;		
+		this.points = points;
 	}
 
 	public String getName() {
@@ -28,20 +36,44 @@ public class Attribute implements Serializable {
 		this.name = name;
 	}
 	
-	public String getBelongingList() {
-		return belongingList;
+	public int getRanking() {
+		return ranking;
 	}
 
-	public void setBelongingList(String belongingList) {
-		this.belongingList = belongingList;
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
 	}
 	
-	public String getPicPath() {
-		return picPath;
+	public int getRating() {
+		return rating;
 	}
 
-	public void setPicPath(String picPath) {
-		this.picPath = picPath;
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+	
+	public BigInteger getWins() {
+		return wins;
+	}
+
+	public void setWins(BigInteger wins) {
+		this.wins = wins;
+	}
+	
+	public BigInteger getEntries() {
+		return entries;
+	}
+
+	public void setEntries(BigInteger entries) {
+		this.entries = entries;
+	}
+	
+	public BigInteger getPoints() {
+		return points;
+	}
+
+	public void setPoints(BigInteger points) {
+		this.points = points;
 	}
 
 }
