@@ -37,6 +37,10 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
+		.vsImage{
+	height: 400px;
+	width: 400px;
+}
 }
 
 /* Landscape tablets and medium desktops */
@@ -51,6 +55,10 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
+			.vsImage{
+	height: 400px;
+	width: 400px;
+}
 }
 
 /* Portrait tablets and small desktops */
@@ -65,6 +73,10 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
+			.vsImage{
+	height: 300px;
+	width: 300px;
+}
 }
 
 /* Landscape phones and portrait tablets */
@@ -79,6 +91,10 @@ h2 {
 	h3 {
 		font-size: 20px;
 	}
+			.vsImage{
+	height: 300px;
+	width: 300px;
+}
 }
 
 /* Portrait phones and smaller */
@@ -96,6 +112,10 @@ h2 {
 	.imageDoBoys{
 	height: 50px;
 	width: 50px;
+}
+		.vsImage{
+	height: 200px;
+	width: 200px;
 }
 
 .imageDoBoys2{
@@ -141,7 +161,7 @@ h2 {
 	width: 30px;
 	height: 30px;
 	text-align: center;
-	padding: 6px 0;
+	padding: 0px 0;
 	font-size: 12px;
 	line-height: 1.428571429;
 	border-radius: 30px;
@@ -156,7 +176,7 @@ h2 {
 .btn-circle.btn-xl {
 	width: 50px;
 	height: 50px;
-	padding: 10px 16px;
+/* 	padding: 30px 36px; */
 	font-size: 24px;
 	line-height: 1.33;
 	border-radius: 70px;

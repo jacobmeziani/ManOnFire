@@ -10,7 +10,7 @@
 <body>
 			<div id="leftPic">
 				<img id="thesauce" src="${sessionScope.leftItem.picPath}"
-					class="img-responsive center-block"></img>
+					class="img-responsive img-circle center-block vsImage"></img>
 			</div>
 			<div id="list">
 					<h3 id="test2">
@@ -19,7 +19,7 @@
 			</div>
 			<div id="rightPic">
 				<img src="${sessionScope.rightItem.picPath}"
-					class="img-responsive center-block"></img>
+					class="img-responsive img-circle center-block vsImage"></img>
 			</div>
 			<div id="leftName">
 				<h3>

@@ -20,10 +20,11 @@ public class LystItem implements Serializable {
 
 	public String belongingList;
 
-	public LystItem(String name, String belongingList, String picPath, int listId, int itemId) {
+	public LystItem(String name, String belongingList, String picPath,int overallRating, int listId, int itemId) {
 		this.name = name;
 		this.belongingList = belongingList;
 		this.picPath = picPath;
+		this.overallRating = overallRating;
 		this.itemId = itemId;
 		this.listId = listId;
 	}

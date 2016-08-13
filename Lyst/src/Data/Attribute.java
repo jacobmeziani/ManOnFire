@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-public class Attribute implements Serializable {
+public class Attribute implements Serializable, Comparable<Attribute> {
 	private static final long serialVersionUID = 1L;
 
 	public String name;
@@ -18,14 +18,17 @@ public class Attribute implements Serializable {
 	public BigInteger entries;
 	
 	public BigInteger points;
+	
+	private int attributeNumber;
 
-	public Attribute(String name, int ranking,int rating, BigInteger wins, BigInteger entries, BigInteger points) {
+	public Attribute(String name, int attributeNumber, int ranking,int rating, BigInteger wins, BigInteger entries, BigInteger points) {
 		this.name = name;
 		this.ranking = ranking;
 		this.rating = rating;
 		this.wins = wins;		
 		this.entries = entries;		
 		this.points = points;
+		this.attributeNumber = attributeNumber;
 	}
 
 	public String getName() {
@@ -74,6 +77,18 @@ public class Attribute implements Serializable {
 
 	public void setPoints(BigInteger points) {
 		this.points = points;
+	}
+
+	public int getAttributeNumber() {
+		return attributeNumber;
+	}
+
+	public void setAttributeNumber(int attributeNumber) {
+		this.attributeNumber = attributeNumber;
+	}
+
+	public int compareTo(Attribute a) {
+		return attributeNumber - a.attributeNumber;
 	}
 
 }

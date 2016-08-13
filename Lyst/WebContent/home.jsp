@@ -97,7 +97,7 @@
 			<div 
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 						<div id="leftPic" class="testing">
-							<img class="img-responsive center-block "
+							<img class="img-responsive img-circle center-block vsImage "
 								src="${sessionScope.leftItem.picPath}">
 						</div>
 			</div>
@@ -116,7 +116,7 @@
 			<div
 				class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 						<div id="rightPic" class="testing"> 
-							<img class="img-responsive center-block"
+							<img class="img-responsive img-circle center-block vsImage"
 								src="${sessionScope.rightItem.picPath}">
 						</div>
 			</div>
