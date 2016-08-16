@@ -59,6 +59,8 @@ public class FullReader {
 		}
 	}
 	
+	
+	
 	public static void scanItems() {
 		hm = new HashMap();
 		//DBA
@@ -312,6 +314,21 @@ public class FullReader {
 	
 	public static Table getCategoriesTable() {return categoriesTable;}
 	
+static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,String creator) {
+		
+		Item item = null;
+
+		item = new Item ()
+					.withPrimaryKey("Id",listid)
+					.withString("ListName", listname)
+					.withList("Attributes", attributes)
+					.withString("PicPath",processString(picpath))
+					.withString("Contributor",creator)
+					.withNumber("ListSize",listsize);
+
+		
+		listsTable.putItem(item);
+	}
 	static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,List<String> items) {
 		
 		Item item = null;
@@ -342,7 +359,6 @@ public class FullReader {
 		}
 		
 		listsTable.putItem(item);
-
 	}
 	
 	static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,List<String> items,List<Integer> stringpackage) {
@@ -404,6 +420,21 @@ public class FullReader {
 		String returnbro = idstring.substring((idstring.length()-10));
 		return returnbro;
 	} 
+	
+	public static int insertContributorList(String listname,List<String> attributes,String creator) {
+		//for use by automated ContributorServlet methods
+		db = new DatabaseAccessor (false);
+		counterTable = db.getDDB().getTable("Counter");
+		listsTable = db.getDDB().getTable("Lists");
+		list_id_counter = counterTable.getItem("Name","ListID").getNumber("counter").intValue();
+		item_id_counter = counterTable.getItem("Name","ItemID").getNumber("counter").intValue();
+		int tempcounter = list_id_counter;
+		insertList(tempcounter,listname,attributes,null,0,creator);
+		list_id_counter++;
+		terminate();
+		return tempcounter;
+	}
+	
 
 	static void writeConflicts () {
 		//writes conflicts --> conflicts are times when an item being imported is already in the DB. the program will use that item number to continue
