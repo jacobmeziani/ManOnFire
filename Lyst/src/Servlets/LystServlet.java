@@ -20,7 +20,9 @@ import Data.CategoryDB;
 import Data.HTMLCategory;
 import Data.Lyst;
 import Data.LystItem;
+import Data.Attribute;
 import Database.DatabaseAccessor;
+import Display.ResultAttributes;
 import Html.HtmlWriter;
 
 /**
@@ -44,34 +46,26 @@ public class LystServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String requestAction = getParameter(request);
+		String requestAction = request.getParameter("action");
 		System.out.println(requestAction);
 		HttpSession session = request.getSession();
 		DatabaseAccessor d = new DatabaseAccessor();
 
-		if (requestAction.equals("random") || requestAction.equals("initial")) 
-		{
-//			String currentCategory = (String) session.getAttribute("CurrentCategory");
-//			if (currentCategory == null || currentCategory.isEmpty()) {
-//				currentCategory = "Everything";
-//				session.setAttribute("CurrentCategory", "Everything");
-//			}
+		if (requestAction.equals("newRandom") || requestAction.equals("initial")) {
+			getParameter(request);
 			String currentCategory = "Everything";
 			boolean list = false;
-			if(requestAction.equals("random")){
-			currentCategory = request.getParameter("currentCategory");
-			String listString = request.getParameter("isList");
-			if(listString.equals("true")){
-				list = true;
+			if (requestAction.equals("newRandom")) {
+				currentCategory = request.getParameter("currentCategory");
+				String listString = request.getParameter("isList");
+				if (listString.equals("true")) {
+					list = true;
+				}
 			}
-			}
-			Object[] items = d.getNextCombatants(currentCategory,list);
+			Object[] items = d.getNextCombatants(currentCategory, list);
 			session.setAttribute("currentList", items[0]);
 			session.setAttribute("leftItem", items[1]);
 			session.setAttribute("rightItem", items[2]);
-			// session.setAttribute("CurrentCategory",
-			// ((String)request.getParameter("CurrentCategory")));
-			//session.setAttribute("CategoryHTML", null);
 			String testing_categories = (String) session.getAttribute("CategoryHTML");
 
 			if (testing_categories == null) {
@@ -79,25 +73,29 @@ public class LystServlet extends HttpServlet {
 				session.setAttribute("CategoryHTML", category_html);
 			}
 
-			if (requestAction.equals("initial")) 
-			{
+			if (requestAction.equals("initial")) {
 				request.getRequestDispatcher("/home.jsp").forward(request, response);
-			} 
-			else 
-			{
+			} else {
 				request.getRequestDispatcher("/newmatchup.jsp").forward(request, response);
 			}
-			
-		}
-		else if (requestAction.equals("vs")) 
-		{
-			LystItem leftItem = (LystItem)session.getAttribute("leftItem");
-			LystItem rightItem = (LystItem)session.getAttribute("rightItem");
-			Lyst currentList = (Lyst)session.getAttribute("currentList");
-			//return attributes, from DB to load up the js
+
+		} else if (requestAction.equals("vs")) {
+			LystItem leftItem = (LystItem) session.getAttribute("leftItem");
+			LystItem rightItem = (LystItem) session.getAttribute("rightItem");
+			Lyst currentList = (Lyst) session.getAttribute("currentList");
+			// return attributes, from DB to load up the js
 			Object[] data = d.getAttributesAndStringPackages(currentList);
-			ArrayList<String> attributes = (ArrayList<String>)data[0];
-			ArrayList<Integer> stringPackages = (ArrayList<Integer>)data[1];
+			ArrayList<String> attributeNames = (ArrayList<String>) data[0];
+			ArrayList<ResultAttributes> attributes = new ArrayList<ResultAttributes>();
+
+			// add overall because it is not included in the rating game part
+			for (int i = 0; i < attributeNames.size(); i++) {
+				ResultAttributes attr = new ResultAttributes();
+				attr.setName(attributeNames.get(i));
+				attributes.add(attr);
+			}
+			session.setAttribute("attributes", attributes);
+			ArrayList<Integer> stringPackages = (ArrayList<Integer>) data[1];
 			JSONObject json = new JSONObject();
 			try {
 				json.put("attributes", attributes);
@@ -110,11 +108,100 @@ public class LystServlet extends HttpServlet {
 			}
 			PrintWriter out = response.getWriter();
 			out.print(json.toString());
-			
-		}
-		else if (requestAction.equals("vsDisplay")) 
-		{
+
+		} else if (requestAction.equals("sliderDisplay")) {
 			request.getRequestDispatcher("/slider.jsp").forward(request, response);
+		} else if (requestAction.equals("results")) {
+			getParameter(request);
+			String[] requestScores = request.getParameterValues("scores[]");
+			int[] scores = new int[requestScores.length];
+
+			// Convert string items to ints and also compute the winner
+			int winCounter = 0;
+			for (int i = 0; i < requestScores.length; i++) {
+				int currentScore = Integer.parseInt(requestScores[i]);
+				winCounter += (currentScore - 5);
+				scores[i] = currentScore;
+			}
+			if (winCounter < 0) {
+				// Left item wins
+				session.setAttribute("winningSide", "left");
+			} else if (winCounter > 0) {
+				// Right item wins
+				session.setAttribute("winningSide", "right");
+			} else {
+				// Tie
+				session.setAttribute("winningSide", "tie");
+			}
+			LystItem leftItem = (LystItem) session.getAttribute("leftItem");
+			LystItem rightItem = (LystItem) session.getAttribute("rightItem");
+			ArrayList<Attribute> leftWorldAttributes = d.getItemAttributes(leftItem);
+			ArrayList<Attribute> rightWorldAttributes = d.getItemAttributes(rightItem);
+			ArrayList<ResultAttributes> attributes = (ArrayList<ResultAttributes>) session.getAttribute("attributes");
+
+			// Add overall to the attributes and scores
+			ResultAttributes attr = new ResultAttributes();
+			attr.setName("Overall");
+			attributes.add(0, attr);
+			int[] resultScores = new int[scores.length+1];
+			resultScores[0] = winCounter;
+			for(int i = 0; i < scores.length; i++){
+				resultScores[i+1] = scores[i];
+			}
+
+			// figure this bs out
+			for (int i = 0; i < attributes.size(); i++) {
+				attributes.get(i).setLeftItemWorldScore(leftWorldAttributes.get(i).rating);
+				attributes.get(i).setRightItemWorldScore(rightWorldAttributes.get(i).rating);
+				
+				//Normalize the overall rating
+				if(i==0){
+					if(winCounter >= 10){
+						resultScores[i] = 10;
+					}
+					else if(winCounter >= 8){
+						resultScores[i] = 9;
+					}
+					else if(winCounter >= 6){
+						resultScores[i] = 8;
+					}
+					else if(winCounter >= 4){
+						resultScores[i] = 7;
+					}
+					else if(winCounter >= 1){
+						resultScores[i] = 6;
+					}
+					else if(winCounter >= 0){
+						resultScores[i] = 5;
+					}
+					else if(winCounter >= -2){
+						resultScores[i] = 4;
+					}
+					else if(winCounter >= -4){
+						resultScores[i] = 3;
+					}
+					else if(winCounter >= -6){
+						resultScores[i] = 2;
+					}
+					else if(winCounter >= -8){
+						resultScores[i] = 1;
+					}
+					else{
+						resultScores[i] = 0;
+					}
+					
+				}
+				int userScore = resultScores[i]-5;
+				if(userScore<0){
+					attributes.get(i).setLeftItemUserScore(-userScore);
+					attributes.get(i).setRightItemUserScore(0);
+				}
+				else{
+					attributes.get(i).setRightItemUserScore(userScore);
+					attributes.get(i).setLeftItemUserScore(0);
+				}
+				
+			}
 		}
 	}
 
@@ -142,8 +229,8 @@ public class LystServlet extends HttpServlet {
 
 	public String getParameter(HttpServletRequest req) {
 		Enumeration<String> a = req.getParameterNames();
-		if (a.hasMoreElements()) {
-			return a.nextElement();
+		while (a.hasMoreElements()) {
+			System.out.println(a.nextElement());
 		}
 		return "";
 	}

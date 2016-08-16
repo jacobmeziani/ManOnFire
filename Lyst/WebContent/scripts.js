@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	$.get( "bro", "initial=true", function( data ) {
+	$.get( "bro", {"action":"initial"}, function( data ) {
 		var newDoc = document.open("text/html", "replace");
 		newDoc.write(data);
 		newDoc.close();

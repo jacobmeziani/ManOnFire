@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
@@ -69,9 +70,12 @@ public class AttributeImport {
 				String itemname = item.getString("ItemName");
 				System.out.println(item.getString("ItemName"));
 				int itemid = item.getNumber("ItemID").intValue();
+				Random rand = new Random();
+				int rating = rand.nextInt(100);
 				Item newitem = new Item()
 						.withPrimaryKey("ItemID",itemid,"ListAttribute",encoded)
-						.withNumber("Rating",100)
+						.withNumber("Rating",rating)
+						.withNumber("Ranking",1)
 						.withNumber("Entries",0)
 						.withNumber("Points",0)
 						.withNumber("Wins",0)
