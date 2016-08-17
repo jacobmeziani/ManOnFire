@@ -20,17 +20,60 @@ public class Attribute implements Serializable, Comparable<Attribute> {
 	public BigInteger points;
 	
 	private int attributeNumber;
+	
+	private double average;
+	
+	private int listId;
+	
+	private int itemId;
 
-	public Attribute(String name, int attributeNumber, int ranking,int rating, BigInteger wins, BigInteger entries, BigInteger points) {
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public int getListId() {
+		return listId;
+	}
+
+	public void setListId(int listId) {
+		this.listId = listId;
+	}
+
+	public double getAverage() {
+		return average;
+	}
+
+	public void setAverage(double average) {
+		this.average = average;
+	}
+
+	public Attribute(int itemId, String name, int listId, int attributeNumber,
+			int ranking,int rating, BigInteger wins, BigInteger entries, BigInteger points, double average) {
 		this.name = name;
+		this.itemId = itemId;
 		this.ranking = ranking;
 		this.rating = rating;
 		this.wins = wins;		
 		this.entries = entries;		
 		this.points = points;
 		this.attributeNumber = attributeNumber;
+		this.listId = listId;
+		this.average = average;
 	}
 
+	public void computeAverage(){
+		if (entries.doubleValue() !=0){
+			average = points.doubleValue()/entries.doubleValue();
+		}
+		else{
+			average = 0;
+		}
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -88,7 +131,15 @@ public class Attribute implements Serializable, Comparable<Attribute> {
 	}
 
 	public int compareTo(Attribute a) {
-		return attributeNumber - a.attributeNumber;
+		// We want to return descending 
+		double result = a.average - average;
+		if(result > 0){
+			return 1;
+		}
+		else if(result <0){
+			return -1;
+		}
+		return 0;
 	}
 
 }

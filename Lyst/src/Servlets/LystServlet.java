@@ -20,10 +20,10 @@ import Data.CategoryDB;
 import Data.HTMLCategory;
 import Data.Lyst;
 import Data.LystItem;
+import Data.RatingsProcessor;
 import Data.Attribute;
 import Database.DatabaseAccessor;
 import Display.ResultAttributes;
-import Html.HtmlWriter;
 
 /**
  * Servlet implementation class Authentication
@@ -200,8 +200,11 @@ public class LystServlet extends HttpServlet {
 					attributes.get(i).setRightItemUserScore(userScore);
 					attributes.get(i).setLeftItemUserScore(0);
 				}
-				
 			}
+			
+			Lyst currentList = (Lyst) session.getAttribute("currentList");
+			RatingsProcessor p = new RatingsProcessor(currentList.getListName(), resultScores,leftWorldAttributes,rightWorldAttributes);
+			p.start();
 		}
 	}
 

@@ -9,21 +9,25 @@ public class LystItem implements Serializable {
 	public String name;
 
 	public String picPath;
-	
+
 	public int overallRating;
-	
+
 	public int itemId;
-	
+
 	public int listId;
 
 	public ArrayList<Attribute> attributes;
 
 	public String belongingList;
 
-	public LystItem(String name, String belongingList, String picPath,int overallRating, int listId, int itemId) {
+	public LystItem(String name, String belongingList, String picPath, int overallRating, int listId, int itemId) {
 		this.name = name;
 		this.belongingList = belongingList;
-		this.picPath = picPath;
+		if (picPath != null) {
+			this.picPath = picPath;
+		} else {
+			this.picPath = "empty";
+		}
 		this.overallRating = overallRating;
 		this.itemId = itemId;
 		this.listId = listId;
@@ -36,7 +40,7 @@ public class LystItem implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public int getOverallRating() {
 		return overallRating;
 	}
@@ -44,7 +48,7 @@ public class LystItem implements Serializable {
 	public void setOverallRating(int ovr) {
 		this.overallRating = ovr;
 	}
-	
+
 	public int getItemId() {
 		return itemId;
 	}
@@ -52,7 +56,7 @@ public class LystItem implements Serializable {
 	public void setItemId(int id) {
 		this.itemId = id;
 	}
-	
+
 	public int getListId() {
 		return listId;
 	}
@@ -76,7 +80,7 @@ public class LystItem implements Serializable {
 	public void setPicPath(String picPath) {
 		this.picPath = picPath;
 	}
-	
+
 	public ArrayList<Attribute> getAttributes() {
 		return attributes;
 	}

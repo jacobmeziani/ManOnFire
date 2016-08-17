@@ -196,11 +196,11 @@ public class FullReader {
 			item_id_counter++;
 		}
 
-		Random rand = new Random();
-		int overall = rand.nextInt(100);
+//		Random rand = new Random();
+//		int overall = rand.nextInt(100);
 		Item item = new Item().withPrimaryKey("ItemName", itemname, "BelongingList", list)
-				.withNumber("Overall", overall).withNumber("ItemID", itemid).withString("PicPath", picpath)
-				.withNumber("ListID", listid);
+				.withNumber("Overall", 100).withNumber("ItemID", itemid).withString("PicPath", picpath)
+				.withNumber("ListID", listid).withNumber("AverageScore", 0);
 		listItemsTable.putItem(item);
 
 		attributeEntry(listid, 0, itemid, "Overall");
@@ -215,11 +215,11 @@ public class FullReader {
 
 	static void attributeEntry(int listid, int att, int itemid, String attributename) {
 		String codestring = encodeString(listid, att);
-		Random rand = new Random();
-		int rating = rand.nextInt(100);
+//		Random rand = new Random();
+//		int rating = rand.nextInt(100);
 		Item item = new Item().withPrimaryKey("ItemID", itemid, "ListAttribute", codestring)
-				.withNumber("Rating", rating).withNumber("Ranking", 1).withNumber("Entries", 0).withNumber("Points", 0)
-				.withNumber("Wins", 0).withString("AttributeName", attributename);
+				.withNumber("Rating", 100).withNumber("Ranking", 1).withNumber("Entries", 0).withNumber("Points", 0)
+				.withNumber("Wins", 0).withString("AttributeName", attributename).withNumber("AverageScore", 0);
 		attributeTable.putItem(item);
 	}
 
