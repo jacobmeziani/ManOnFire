@@ -62,6 +62,18 @@ public class DatabaseAccessor {
 			buildMaps();
 		}
 	}
+	
+	public DatabaseAccessor(boolean lite) {
+		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
+		AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("jmeziani"));
+		dbClient.setRegion(usWest2);
+		client = dbClient;
+		dynamoDB = new DynamoDB(dbClient);
+		
+		if ((CategoryListIDs == null)&(!lite)) {
+			buildMaps();
+		}
+	}
 
 	private void buildMaps() {
 		Table categories = dynamoDB.getTable("Categories");

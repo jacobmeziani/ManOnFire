@@ -30,7 +30,6 @@ $(document).ready(function(){
 	});
 	
 	function getAttributes() {
-		alert('in hurr');
 		var jsonObject = {};
 		var list = $("#list_name").val();
 		var att = 1;
@@ -46,6 +45,7 @@ $(document).ready(function(){
 		jsonObject["user"] = username;
 		jsonObject["listname"] = list;
 		jsonObject["attributes"] = jsonList;
+		alert(JSON.stringify(jsonObject));
 		return JSON.stringify(jsonObject);
 	};
 	

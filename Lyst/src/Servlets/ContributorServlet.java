@@ -1,6 +1,8 @@
 package Servlets;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -11,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import com.amazonaws.util.json.JSONArray;
 import com.amazonaws.util.json.JSONObject;
 //import com.amazonaws.util.json.
-
+import importing.FullReader;
 
 import Data.Contributor;
 
@@ -80,7 +82,8 @@ public class ContributorServlet extends HttpServlet {
 		try {
 			JSONObject jsonObject = new JSONObject(type);
 			String user = jsonObject.getString("user");
-			System.out.println(user);
+			JSONObject attributes = jsonObject.getJSONObject("attributes");
+			System.out.println(attributes);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
