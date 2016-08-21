@@ -36,6 +36,32 @@ public class LystItem implements Serializable {
 	public String getName() {
 		return name;
 	}
+	
+	public String getNameUrl() {
+		String[] nameSplit = name.split(" ");
+		String nameUrl ="";
+		for (int i=0; i<nameSplit.length; i++){
+			if(i==0){
+				nameUrl += nameSplit[i];}
+				else{
+					nameUrl +="_"+ nameSplit[i];	
+				}
+		}
+		return nameUrl;
+	}
+	
+	public String getListUrl() {
+		String[] listSplit = belongingList.split(" ");
+		String listUrl ="";
+		for (int i=0; i<listSplit.length; i++){
+			if(i==0){
+			listUrl += listSplit[i];}
+			else{
+				listUrl +="_"+ listSplit[i];	
+			}
+		}
+		return listUrl;
+	}
 
 	public void setName(String name) {
 		this.name = name;

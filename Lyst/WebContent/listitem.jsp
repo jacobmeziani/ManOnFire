@@ -27,9 +27,7 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="/Lyst/vsStyle.css">
-<link rel="stylesheet" type="text/css" href="/Lyst/testCss.css">
-<script src="/Lyst/april3.js"></script>
-<script src="/Lyst/sliderScript.js"></script>
+<link rel="stylesheet" type="text/css" href="/Lyst/listitemStyle.css">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
@@ -67,12 +65,12 @@
 	<div class="container-fluid" id="main-body">
 		<div class="row">
 			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-				<h3 class="centerAlign">Leonardo Dicaprio</h3>
-				<p class="centerAlign listText">Actors</p>
+				<h3 class="centerAlign"><c:out value="${sessionScope.currentItem.name}"></c:out></h3>
+				<p class="centerAlign listText"><c:out value="${sessionScope.currentItem.belongingList}"></c:out></p>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-4 col-lg-4">
 				<img class="img-circle center-block detailImage"
-					src="/Lyst/imageservlet/dicaps.jpg"">
+					src="/Lyst/imageservlet/<c:out value="${sessionScope.currentItem.picPath}"/>">
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 				<button type="button" id="fullList"
@@ -85,7 +83,7 @@
 		<div class="row">
 			<div class="hidden-lg hidden-md col-sm-12 col-xs-12">
 				<img class="img-circle center-block detailImage"
-					src="/Lyst/imageservlet/dicaps.jpg"">
+					src="/Lyst/imageservlet/<c:out value="${sessionScope.currentItem.picPath}"/>">
 			</div>
 		</div>
 		<div class="row">
@@ -97,100 +95,26 @@
 				<p class="centerAlign attributeText">Ranking</p>
 			</div>
 		</div>
+		<c:forEach var="i" items="${sessionScope.itemAttributes}">
 		<div class="row rowPadding">
 			<div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
 			</div>
 			<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
-				<p class="centerAlign attributeText">Overall</p>
+				<p class="centerAlign attributeText"><c:out value="${i.name}"/></p>
 			</div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="progress-bar green stripes">
-					<span class="floatLeft" style="width: 95%"></span>
+					<span class="floatLeft" style="width: <c:out value="${i.rating}"/>%"></span>
 				</div>
 			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">95</p>
+			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+				<p class="centerAlign ratingNumber"><c:out value="${i.rating}"/></p>
 			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">2nd</p>
-			</div>
-		</div>
-		<div class="row rowPadding">
-			<div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
-			</div>
-			<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
-				<p class="centerAlign attributeText">Roles</p>
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
-				<div class="progress-bar green stripes">
-					<span class="floatLeft" style="width: 89%"></span>
-				</div>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">89</p>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">6th</p>
+			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+				<p class="centerAlign ratingNumber"><c:out value="${i.getRankingString()}"/></p>
 			</div>
 		</div>
-		<div class="row rowPadding">
-			<div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
-			</div>
-			<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
-				<p class="centerAlign attributeText">Movies</p>
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
-				<div class="progress-bar green stripes">
-					<span class="floatLeft" style="width: 88%"></span>
-				</div>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">88</p>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">5th</p>
-			</div>
-		</div>
-		<div class="row rowPadding">
-			<div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
-			</div>
-			<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
-				<p class="centerAlign attributeText">Looks</p>
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
-				<div class="progress-bar green stripes">
-					<span class="floatLeft" style="width: 85%"></span>
-				</div>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">85</p>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">15th</p>
-			</div>
-		</div>
-		<div class="row rowPadding">
-			<div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
-			</div>
-			<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
-				<p class="centerAlign attributeText">Charisma</p>
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
-				<div class="progress-bar green stripes">
-					<span class="floatLeft" style="width: 97%"></span>
-				</div>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">97</p>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-				<p class="centerAlign ratingNumber">1st</p>
-			</div>
-		</div>
-		
-
-
-
+</c:forEach>
 	</div>
 </body>
 </html>

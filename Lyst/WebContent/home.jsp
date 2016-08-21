@@ -14,7 +14,6 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="jquery.validate.min.js"></script>
 <script src="homescripts.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
@@ -83,9 +82,9 @@
 		<div id="labels" class="row row-buffer">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<span><h4 class="centerAlign">Current Category is: </h4></span>
-				<span><h4 id = "showCategory" class="centerAlign">Everything</h4></span>
-				<input type = "hidden" id="currentCategory" value = "Everything">
-				<input type = "hidden" id="isCategoryList" value = "false">
+				<span><h4 id = "showCategory" class="centerAlign">${sessionScope.categoryName}</h4></span>
+				<input type = "hidden" id="currentCategory" value = "${sessionScope.currentCategory}">
+				<input type = "hidden" id="isCategoryList" value = "${sessionScope.isList}">
 				
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
@@ -98,7 +97,7 @@
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 						<div id="leftPic" class="testing">
 							<img class="img-responsive img-circle center-block vsImage "
-								src="${sessionScope.leftItem.picPath}">
+								src="imageservlet/<c:out value="${sessionScope.leftItem.picPath}"/>">
 						</div>
 			</div>
 			<div id="centerContent" class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
@@ -117,7 +116,7 @@
 				class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 						<div id="rightPic" class="testing"> 
 							<img class="img-responsive img-circle center-block vsImage"
-								src="${sessionScope.rightItem.picPath}">
+								src="imageservlet/<c:out value="${sessionScope.rightItem.picPath}"/>">
 						</div>
 			</div>
 		</div>

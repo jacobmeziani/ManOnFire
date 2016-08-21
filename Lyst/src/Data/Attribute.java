@@ -27,6 +27,19 @@ public class Attribute implements Serializable, Comparable<Attribute> {
 	
 	private int itemId;
 
+	public String getRankingString(){
+		if(ranking%10 ==1){
+			return ranking +"st";
+		}
+		else if(ranking%10 ==2){
+			return ranking +"nd";
+		}
+		else if(ranking%10 ==3){
+			return ranking +"rd";
+		}
+		return ranking +"th";
+	}
+	
 	public int getItemId() {
 		return itemId;
 	}

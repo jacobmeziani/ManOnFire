@@ -9,7 +9,7 @@
 </head>
 <body>
 			<div id="leftPic">
-				<img id="thesauce" src="${sessionScope.leftItem.picPath}"
+				<img id="thesauce" src="imageservlet/<c:out value="${sessionScope.leftItem.picPath}"/>"
 					class="img-responsive img-circle center-block vsImage"></img>
 			</div>
 			<div id="list">
@@ -18,7 +18,7 @@
 					</h3>
 			</div>
 			<div id="rightPic">
-				<img src="${sessionScope.rightItem.picPath}"
+				<img src="imageservlet/<c:out value="${sessionScope.rightItem.picPath}"/>"
 					class="img-responsive img-circle center-block vsImage"></img>
 			</div>
 			<div id="leftName">

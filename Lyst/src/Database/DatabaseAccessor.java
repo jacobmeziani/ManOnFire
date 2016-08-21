@@ -457,6 +457,7 @@ public class DatabaseAccessor {
 			return lysts;
 	}
 
+	//Gets all attributes for a specific list, like all Overalls for the Villains list
 	public ArrayList<Attribute> getAttributes(int listNumber, int attributeNumber) {
 		String listAttribute = listNumber+"-"+attributeNumber;
 		Table listItems = dynamoDB.getTable("Attributes");
@@ -561,5 +562,18 @@ public class DatabaseAccessor {
 			catch(Exception e){
 				System.out.println(e.getMessage());
 			}
+	}
+
+	public LystItem getListItem(String belongingList, String itemName) {
+		// TODO Auto-generated method stub
+		Table table = dynamoDB.getTable("ListItems");
+		Item item = table.getItem("ItemName", itemName,"BelongingList",belongingList);
+		String picPath = item.getString("PicPath");
+		int listId = item.getInt("ListID");
+		int itemId = item.getInt("ItemID");
+		int overall = item.getInt("Overall");
+		LystItem lystItem = new LystItem(itemName, belongingList, picPath, overall, listId, itemId);
+		return lystItem;
+		
 	}
 }

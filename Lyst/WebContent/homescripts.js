@@ -88,15 +88,15 @@ function goToVsScreen() {
 				previousAttribute();
 			});
 			$("#quitButton").click(function() {
+				$(this).attr("disabled", "disabled");
 				$.get("bro", {
-					"action" : "initial"
-				}, function(data) {
-					var newDoc = document.open("text/html", "replace");
-					newDoc.write(data);
-					newDoc.close();
+					"action" : "navigatingBack"
+				}, function(html) {
+					window.location.href = 'home.jsp';
 				});
-			});
+			})
 			$("#submitRatingsButton").click(function() {
+				$(this).attr("disabled", "disabled");
 				scorePositions[currentAttributeIndex] = currentSelection;
 				$.get("bro", {
 					"action" : "results",
