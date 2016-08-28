@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
@@ -26,6 +27,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
 
@@ -37,7 +39,10 @@ import Data.Attribute;
 import Servlets.OutOfListsException;
 
 public class DatabaseAccessor {
-
+	
+	static String rating_name = "Rating";
+	static String ranking_name = "Ranking";
+	
 	private DynamoDB dynamoDB;
 	Random random = new Random();
 	static AmazonDynamoDBClient client;
@@ -67,6 +72,15 @@ public class DatabaseAccessor {
 			buildMaps();
 		}
 	}
+	
+	public String[] getAttributes(int list_id) {
+		Table lists = dynamoDB.getTable("Lists");
+		
+		Item item = lists.getItem("Id",list_id);
+		List<String> atts = item.getList("Attributes");
+		String[] returnDude = new String[atts.size()];
+		return  atts.toArray(returnDude);
+	}
 
 	private void buildMaps() {
 		Table categories = dynamoDB.getTable("Categories");
@@ -86,6 +100,8 @@ public class DatabaseAccessor {
 				CategoryListIDs.put(name, null);
 			}
 		}
+		
+		
 
 		CategoryDB cdb = new CategoryDB(new DatabaseAccessor());
 		HTMLCategory top = HTMLCategory.buildit(cdb);
@@ -108,6 +124,57 @@ public class DatabaseAccessor {
 		// ScanResult result = client.scan(scanrequest);
 		return categories.scan();
 	}
+	
+
+	public ArrayList<Map<String,Object>> getRankedListItems(int listid, int attributeNeeded, int lastRankingDelivered, int nextRankingUp) {
+		Table attributes = dynamoDB.getTable("Attributes");
+		
+//		Map<String,String> expressionAttributeNames = new HashMap<String, String>();
+//		expressionAttributeNames.put("#ranking", "Ranking");
+//		expressionAttributeNames.put("#rating", "Rating");
+//		
+		
+		String listidsubstring = Integer.toString(listid) + '-';
+		Map<String,Object>expressionAttributeValues = new HashMap<String,Object>();
+		expressionAttributeValues.put(":r0", lastRankingDelivered);
+		expressionAttributeValues.put(":r1", nextRankingUp);
+		expressionAttributeValues.put(":lid", listidsubstring);
+		
+		ScanSpec spec = new ScanSpec()
+				.withFilterExpression("begins_with(ListAttribute, :lid) and Ranking BETWEEN :r0 AND :r1")
+				.withValueMap(expressionAttributeValues);
+		
+		ArrayList <Map<String,Object>> returnSauce = new ArrayList <Map<String,Object>> (); //TODO: rename plz
+		
+		try {
+			ItemCollection<ScanOutcome> items = attributes.scan(spec);
+			int count = items.getTotalScannedCount();
+			System.out.println(count);
+			Iterator<Item> iter = items.iterator();
+			Map<String,Object> tempMap;
+			while (iter.hasNext()) {
+				Item item = iter.next();
+				tempMap = new HashMap<String,Object>();
+				tempMap.put("Rating",item.getInt("Rating"));
+				tempMap.put("ItemID", item.getInt("ItemID"));
+				tempMap.put("Ranking", item.getInt("Ranking"));
+				tempMap.put("AttributeName", item.getString("AttributeName"));
+				String templistattribute = item.getString("ListAttribute");
+				String tempattributenumber = templistattribute.split("-")[1];
+				int attributeNumber = Integer.parseInt(tempattributenumber);
+				tempMap.put("AttributeNumber", attributeNumber);
+				
+				returnSauce.add(tempMap);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("shit went down sorry papo");
+			e.printStackTrace();
+		}
+		System.out.println(returnSauce.toString());
+		return returnSauce;
+	}
+	
 
 	public ItemCollection<ScanOutcome> getLists() {
 		Table lists = dynamoDB.getTable("Lists");
@@ -363,10 +430,12 @@ public class DatabaseAccessor {
 		return returnAttributes;
 	}
 
-	// public static void main (String [] args ) {
-	// DatabaseAccessor db = new DatabaseAccessor();
+	public static void main (String [] args ) {
+	 DatabaseAccessor db = new DatabaseAccessor();
+	 db.getRankedListItems(11,2, 3, 6);
 	// System.out.println(db.random);
 	// System.out.println(db.dynamodb);
 	// System.out.println(DatabaseAccessor.dynamoDB);
 	// }
+	}
 }
