@@ -29,12 +29,21 @@ public class Attribute implements Serializable, Comparable<Attribute> {
 
 	public String getRankingString(){
 		if(ranking%10 ==1){
+			if(ranking ==11){
+				return ranking +"th";
+			}
 			return ranking +"st";
 		}
 		else if(ranking%10 ==2){
+			if(ranking ==12){
+				return ranking +"th";
+			}
 			return ranking +"nd";
 		}
 		else if(ranking%10 ==3){
+			if(ranking ==13){
+				return ranking +"th";
+			}
 			return ranking +"rd";
 		}
 		return ranking +"th";

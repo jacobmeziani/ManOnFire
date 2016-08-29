@@ -37,10 +37,11 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
-		.vsImage{
-	height: 400px;
-	width: 400px;
-}
+	.vsImage {
+		height: 400px;
+		width: 400px;
+		opacity:0;
+	}
 }
 
 /* Landscape tablets and medium desktops */
@@ -55,10 +56,11 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
-			.vsImage{
-	height: 400px;
-	width: 400px;
-}
+	.vsImage {
+		height: 400px;
+		width: 400px;
+		opacity:0;
+	}
 }
 
 /* Portrait tablets and small desktops */
@@ -73,10 +75,11 @@ h2 {
 	h3 {
 		font-size: 30px;
 	}
-			.vsImage{
-	height: 300px;
-	width: 300px;
-}
+	.vsImage {
+		height: 300px;
+		width: 300px;
+		opacity:0;
+	}
 }
 
 /* Landscape phones and portrait tablets */
@@ -91,10 +94,11 @@ h2 {
 	h3 {
 		font-size: 20px;
 	}
-			.vsImage{
-	height: 300px;
-	width: 300px;
-}
+	.vsImage {
+		height: 300px;
+		width: 300px;
+		opacity:0;
+	}
 }
 
 /* Portrait phones and smaller */
@@ -109,19 +113,19 @@ h2 {
 	h3 {
 		font-size: 15px;
 	}
-	.imageDoBoys{
-	height: 50px;
-	width: 50px;
-}
-		.vsImage{
-	height: 200px;
-	width: 200px;
-}
-
-.imageDoBoys2{
-	height: 50px;
-	width: 100px;
-}
+	.imageDoBoys {
+		height: 50px;
+		width: 50px;
+	}
+	.vsImage {
+		height: 200px;
+		width: 200px;
+		opacity:0;
+	}
+	.imageDoBoys2 {
+		height: 50px;
+		width: 100px;
+	}
 }
 
 .btn-red {
@@ -167,6 +171,7 @@ h2 {
 	border-radius: 30px;
 	background: #C20021;
 	color: white;
+	outline: none;
 }
 
 .btn-circle:hover {
@@ -176,7 +181,7 @@ h2 {
 .btn-circle.btn-xl {
 	width: 50px;
 	height: 50px;
-/* 	padding: 30px 36px; */
+	/* 	padding: 30px 36px; */
 	font-size: 24px;
 	line-height: 1.33;
 	border-radius: 70px;
@@ -184,6 +189,11 @@ h2 {
 	diplay: block;
 	position: relative;
 	box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+	outline: none;
+}
+
+.btn-circle.btn-xl:active {
+	box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #000;
 }
 
 .glyphicon-repeat {
@@ -207,20 +217,35 @@ h2 {
 	z-index: -1;
 	border-radius: 50%;
 	box-shadow: inset 0px 8px 48px #ddd;
+	outline: none;
 }
 
 .row-buffer {
 	margin-bottom: 20px;
 }
 
-.row-buffer-top{
+.row-buffer-top {
 	margin-top: 50px;
-	pointer-events:none;
+	pointer-events: none;
 }
-
 
 h4 {
 	font-size: 10px;
+}
+
+.vsImage{
+	 -webkit-transition: opacity 150ms;
+    -moz-transition: opacity 150ms;
+    -ms-transition: opacity 150ms;
+    transition: opacity 150ms;
+}
+
+.btn:active {
+   outline: none !important;
+}
+
+.vsImage.loaded{
+	opacity:1;
 }
 
 .imageDoBoys {

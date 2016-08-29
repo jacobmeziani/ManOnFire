@@ -54,7 +54,7 @@ public class ItemImport {
 			}
 			
 			FullReader.updateListSize(listid, counter);
-			FullReader.terminate();
+			FullReader.terminate(false);
 			fileReader.close();
 		} catch (Exception e) {
 			e.printStackTrace();

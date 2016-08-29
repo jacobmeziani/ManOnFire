@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
@@ -41,7 +44,6 @@ import Data.HTMLCategory;
 import Data.Lyst;
 import Data.LystItem;
 import Data.Attribute;
-import Servlets.OutOfListsException;
 
 public class DatabaseAccessor {
 
@@ -53,7 +55,16 @@ public class DatabaseAccessor {
 
 	public DatabaseAccessor() {
 		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
-		AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("jmeziani"));
+		DefaultAWSCredentialsProviderChain  providesauce = new DefaultAWSCredentialsProviderChain ();
+		AmazonDynamoDBClient dbClient;
+		try{
+			AWSCredentials creds = providesauce.getCredentials();
+			dbClient = new AmazonDynamoDBClient(creds);
+		}
+		catch(Exception e){
+			dbClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("jmeziani"));
+		}
+		
 		dbClient.setRegion(usWest2);
 		client = dbClient;
 		dynamoDB = new DynamoDB(dbClient);
@@ -122,6 +133,7 @@ public class DatabaseAccessor {
 	}
 
 	public ArrayList<Lyst> getRandomLists(String category, int numberOfLists) { // drama
+		System.out.println("Okman here we are. The category is" +category);
 		BatchGetItemOutcome outcome = getRandomListsFromDatabase(category, numberOfLists);
 
 		ArrayList<Lyst> lysts = new ArrayList<Lyst>();
@@ -271,6 +283,11 @@ public class DatabaseAccessor {
 	@SuppressWarnings("unchecked")
 	private BatchGetItemOutcome getRandomListsFromDatabase(String category, int numberOfLists) {
 
+		System.out.println("Okman here we are again. The category is" +category);
+		System.out.println("We gone enter the categories ids array, printing now:");
+		for(int i=0; i<CategoryListIDs.size(); i++){
+			System.out.println(CategoryListIDs.get(i));
+		}
 		ArrayList<Integer> temp = CategoryListIDs.get(category);
 		ArrayList<Integer> listArray = (ArrayList<Integer>) temp.clone();
 		int largest = listArray.size();
@@ -290,8 +307,7 @@ public class DatabaseAccessor {
 		return outcome;
 	}
 
-	public ArrayList<Integer> getRandomListNumbers(String category, ArrayList<Integer> delivered, int n_lists)
-			throws OutOfListsException {
+	public ArrayList<Integer> getRandomListNumbers(String category, ArrayList<Integer> delivered, int n_lists) {
 
 		ArrayList<Integer> allPossible = (ArrayList<Integer>) CategoryListIDs.get(category).clone();
 		Random rando = new Random();
@@ -314,10 +330,10 @@ public class DatabaseAccessor {
 					break;
 				}
 			}
-			return new_lists;
 		} catch (Exception e) { // methinks think this is unused
-			throw new OutOfListsException();
+			e.printStackTrace();
 		}
+		return new_lists;
 	}
 
 	public List<Item> getListIDsFromCategoryTable(Integer[] ids_to_get) {

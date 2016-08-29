@@ -48,7 +48,7 @@ public class ListHandler extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		
-		n_lists = 2;  // <---- set number of lists to retrieve at every retrieval 
+		n_lists =6;  // <---- set number of lists to retrieve at every retrieval 
 			}
 
 	/**

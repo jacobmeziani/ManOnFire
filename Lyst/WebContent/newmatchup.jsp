@@ -9,8 +9,8 @@
 </head>
 <body>
 			<div id="leftPic">
-				<img id="thesauce" src="imageservlet/<c:out value="${sessionScope.leftItem.picPath}"/>"
-					class="img-responsive img-circle center-block vsImage"></img>
+				<img id="thesauce" src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.leftItem.picPath}"/>"
+					class="img-responsive img-circle center-block vsImage" onload="imgLoaded(this)"></img>
 			</div>
 			<div id="list">
 					<h3 id="test2">
@@ -18,8 +18,8 @@
 					</h3>
 			</div>
 			<div id="rightPic">
-				<img src="imageservlet/<c:out value="${sessionScope.rightItem.picPath}"/>"
-					class="img-responsive img-circle center-block vsImage"></img>
+				<img src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.rightItem.picPath}"/>"
+					class="img-responsive img-circle center-block vsImage" onload="imgLoaded(this)"></img>
 			</div>
 			<div id="leftName">
 				<h3>

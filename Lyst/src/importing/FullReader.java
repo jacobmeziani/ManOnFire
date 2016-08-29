@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.Set;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
@@ -61,8 +62,10 @@ public class FullReader {
 		}
 	}
 
-	
-	
+	public static int getCurrentListId() {
+		return list_id_counter;
+	}
+
 	public static void scanItems() {
 		hm = new HashMap();
 		// DBA
@@ -71,9 +74,10 @@ public class FullReader {
 		while (iterator.hasNext()) {
 			Item listitem = iterator.next();
 			String name = listitem.getString("ItemName");
+			String belongingList = listitem.getString("BelongingList");
 			try {
 				int id = listitem.getNumber("ItemID").intValue();
-				hm.put(name, id);
+				hm.put(name + belongingList, id);
 			} catch (Exception e) {
 				continue;
 			}
@@ -140,6 +144,44 @@ public class FullReader {
 		listsTable.updateItem("Id", listid, "set #L = #L + :val1", expressionAttributeNames, expressionAttributeValues);
 	}
 
+	static String processString(String input) {
+		String result = "imageservlet/" + input;
+		return result;
+	}
+
+	static boolean addItemToDB(String itemname, String list, int listid, List<String> attributes, String picpath,
+			List<Double> attributeValues) {
+		int itemid;
+		boolean newItem = false;
+		try {
+			Integer tempid = (Integer) hm.get(itemname + list);
+			itemid = tempid;
+			String tempstring = itemname + "," + list + "," + tempid;
+			conflicts.add(tempstring);
+		} catch (NullPointerException e) {
+			itemid = item_id_counter;
+			hm.put(itemname + list, item_id_counter);
+			item_id_counter++;
+			newItem = true;
+
+			Item item = new Item().withPrimaryKey("ItemName", itemname, "BelongingList", list)
+					.withNumber("Overall", 100).withNumber("ItemID", itemid).withString("PicPath", picpath)
+					.withNumber("ListID", listid).withNumber("AverageScore", 0);
+			listItemsTable.putItem(item);
+
+			double overallAverage = 0;
+			for (int att_value = 0; att_value < attributes.size(); att_value++) {
+				double currentAttributeValue = attributeValues.get(att_value);
+				attributeEntry(listid, att_value + 1, itemid, attributes.get(att_value), currentAttributeValue);
+				overallAverage += currentAttributeValue;
+			}
+			overallAverage = overallAverage / attributes.size();
+			attributeEntry(listid, 0, itemid, "Overall", overallAverage);
+		}
+
+		return newItem;
+	}
+
 	static int itemEntry(String itemname, String list, int listid, List<String> attributes) {
 		int itemid;
 		try {
@@ -178,11 +220,6 @@ public class FullReader {
 		return itemid;
 	}
 
-	static String processString(String input) {
-		String result = "imageservlet/" + input;
-		return result;
-	}
-
 	static int itemEntry(String itemname, String list, int listid, List<String> attributes, String picpath) {
 		int itemid;
 		try {
@@ -198,11 +235,11 @@ public class FullReader {
 			item_id_counter++;
 		}
 
-//		Random rand = new Random();
-//		int overall = rand.nextInt(100);
-		Item item = new Item().withPrimaryKey("ItemName", itemname, "BelongingList", list)
-				.withNumber("Overall", 100).withNumber("ItemID", itemid).withString("PicPath", picpath)
-				.withNumber("ListID", listid).withNumber("AverageScore", 0);
+		// Random rand = new Random();
+		// int overall = rand.nextInt(100);
+		Item item = new Item().withPrimaryKey("ItemName", itemname, "BelongingList", list).withNumber("Overall", 100)
+				.withNumber("ItemID", itemid).withString("PicPath", picpath).withNumber("ListID", listid)
+				.withNumber("AverageScore", 0);
 		listItemsTable.putItem(item);
 
 		attributeEntry(listid, 0, itemid, "Overall");
@@ -217,11 +254,20 @@ public class FullReader {
 
 	static void attributeEntry(int listid, int att, int itemid, String attributename) {
 		String codestring = encodeString(listid, att);
-//		Random rand = new Random();
-//		int rating = rand.nextInt(100);
-		Item item = new Item().withPrimaryKey("ItemID", itemid, "ListAttribute", codestring)
-				.withNumber("Rating", 100).withNumber("Ranking", 1).withNumber("Entries", 0).withNumber("Points", 0)
-				.withNumber("Wins", 0).withString("AttributeName", attributename).withNumber("AverageScore", 0);
+		// Random rand = new Random();
+		// int rating = rand.nextInt(100);
+		Item item = new Item().withPrimaryKey("ItemID", itemid, "ListAttribute", codestring).withNumber("Rating", 100)
+				.withNumber("Ranking", 1).withNumber("Entries", 0).withNumber("Points", 0).withNumber("Wins", 0)
+				.withString("AttributeName", attributename).withNumber("AverageScore", 0);
+		attributeTable.putItem(item);
+	}
+
+	static void attributeEntry(int listid, int att, int itemid, String attributename, double attributeValue) {
+		String codestring = encodeString(listid, att);
+		Item item = new Item().withPrimaryKey("ItemID", itemid, "ListAttribute", codestring).withNumber("Rating", 100)
+				.withNumber("Ranking", 1).withNumber("Entries", 1).withNumber("Points", attributeValue)
+				.withNumber("Wins", 1).withString("AttributeName", attributename)
+				.withNumber("AverageScore", attributeValue);
 		attributeTable.putItem(item);
 	}
 
@@ -298,26 +344,26 @@ public class FullReader {
 		}
 		return 0;
 	}
-	
-	public static Table getCategoriesTable() {return categoriesTable;}
-	
-static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,String creator) {
-		
+
+	public static Table getCategoriesTable() {
+		return categoriesTable;
+	}
+
+	static void insertList(int listid, String listname, List<String> attributes, String picpath, int listsize,
+			String creator) {
+
 		Item item = null;
 
-		item = new Item ()
-					.withPrimaryKey("Id",listid)
-					.withString("ListName", listname)
-					.withList("Attributes", attributes)
-					.withString("PicPath",processString(picpath))
-					.withString("Contributor",creator)
-					.withNumber("ListSize",listsize);
+		item = new Item().withPrimaryKey("Id", listid).withString("ListName", listname)
+				.withList("Attributes", attributes).withString("PicPath", processString(picpath))
+				.withString("Contributor", creator).withNumber("ListSize", listsize);
 
-		
 		listsTable.putItem(item);
 	}
-	static void insertList (int listid, String listname, List<String> attributes, String picpath, int listsize,List<String> items) {
-		
+
+	static void insertList(int listid, String listname, List<String> attributes, String picpath, int listsize,
+			List<String> items) {
+
 		Item item = null;
 		if (items != null) {
 			item = new Item().withPrimaryKey("Id", listid).withString("ListName", listname)
@@ -367,6 +413,54 @@ static void insertList (int listid, String listname, List<String> attributes, St
 		}
 	}
 
+	// Inserts list to db and adds categories to db
+	static void insertListAndCategories(int listid, String listname, List<String> attributes, String picpath,
+			int listsize, List<Integer> stringpackage, List<String> categories) {
+		Item item;
+		if (stringpackage.size() != attributes.size()) {
+			System.out.println("String Package non-matching array lengths at: " + listname);
+		} else {
+			item = new Item().withPrimaryKey("Id", listid).withString("ListName", listname)
+					.withList("Attributes", attributes).withString("PicPath", picpath)
+					.withList("StringPackage", stringpackage).withNumber("ListSize", listsize);
+
+			listsTable.putItem(item);
+		}
+		for (int i = 0; i < categories.size(); i++) {
+			String categoryName = categories.get(i);
+			Set<BigDecimal> listIds = new HashSet<BigDecimal>();
+			Set<String> subCategories = new HashSet<String>();
+			Item cat = categoriesTable.getItem("CategoryName", categoryName);
+			if (cat != null) {
+				listIds = cat.getNumberSet("ListIds");
+				subCategories = cat.getStringSet("SubCategories");
+
+				if (listIds == null) {
+					listIds = new HashSet<BigDecimal>();
+				}
+				if (subCategories == null) {
+					subCategories = new HashSet<String>();
+				}
+
+			}
+			listIds.add(new BigDecimal(listid));
+			if (i != (categories.size() - 1)) {
+				subCategories.add(categories.get(i + 1));
+			}
+
+			item = new Item().withPrimaryKey("CategoryName", categoryName);
+			if (subCategories.size() > 0) {
+				item.withStringSet("SubCategories", subCategories);
+			}
+			if (listIds.size() > 0) {
+				item.withBigDecimalSet("ListIds", listIds);
+			}
+
+			categoriesTable.putItem(item);
+		}
+
+	}
+
 	public static int getListNumber(String in) {
 		String newint = in.substring(0, 10);
 		return Integer.parseInt(newint);
@@ -396,34 +490,32 @@ static void insertList (int listid, String listname, List<String> attributes, St
 		String returnbro = idstring.substring((idstring.length() - 10));
 		return returnbro;
 	}
-	
 
-	public static int insertContributorList(String listname,List<String> attributes,String creator) {
-		//for use by automated ContributorServlet methods
-		db = new DatabaseAccessor (false);
+	public static int insertContributorList(String listname, List<String> attributes, String creator) {
+		// for use by automated ContributorServlet methods
+		db = new DatabaseAccessor(false);
 		counterTable = db.getDDB().getTable("Counter");
 		listsTable = db.getDDB().getTable("Lists");
-		list_id_counter = counterTable.getItem("Name","ListID").getNumber("counter").intValue();
-		item_id_counter = counterTable.getItem("Name","ItemID").getNumber("counter").intValue();
+		list_id_counter = counterTable.getItem("Name", "ListID").getNumber("counter").intValue();
+		item_id_counter = counterTable.getItem("Name", "ItemID").getNumber("counter").intValue();
 		int tempcounter = list_id_counter;
-		insertList(tempcounter,listname,attributes,null,0,creator);
+		insertList(tempcounter, listname, attributes, null, 0, creator);
 		list_id_counter++;
-		terminate();
+		terminate(false);
 		return tempcounter;
 	}
-	
 
 	static void writeConflicts() {
 		// writes conflicts --> conflicts are times when an item being imported
 		// is already in the DB. the program will use that item number to
 		// continue
-	
 
 		try {
 
 			FileWriter writer = new FileWriter("Maintenance/Outputs/conflicts.csv");
 			for (String line : conflicts) {
 				writer.write(line);
+				System.out.println(line);
 				writer.write("\n");
 			}
 			writer.close();
@@ -432,9 +524,12 @@ static void insertList (int listid, String listname, List<String> attributes, St
 		}
 	}
 
-	public static void terminate() {
+	public static void terminate(boolean newList) {
 		Counter.updateCounter("ItemID", item_id_counter, counterTable);
+		if(newList){
+			list_id_counter++;
 		Counter.updateCounter("ListID", list_id_counter, counterTable);
+		}
 	}
 
 	static void readCategories(String filename) {
@@ -447,7 +542,7 @@ static void insertList (int listid, String listname, List<String> attributes, St
 		Parser("Maintenance/Inputs/drama_import_test.csv");
 		// System.out.println(item.getString("BelongingList"));
 		writeConflicts();
-		terminate();
+		terminate(false);
 
 	}
 }

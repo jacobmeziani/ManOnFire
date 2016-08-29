@@ -27,41 +27,34 @@
 <link rel="stylesheet" type="text/css" href="vsStyle.css">
 <link rel="stylesheet" type="text/css" href="resultsStyle.css">
 <script src="resultScripts.js"></script>
+<script src="menuScript.js"></script>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-				<nav class="navbar navbar-default" role="navigation">
-				<div class="row">
-					<div class="hidden-xs col-sm-3 col-md-3 col-lg-3">
-						<img class="imageDoBoys2" src="imageservlet/Drawing(5).png"></img>
-					</div>
-					<div class="col-xs-3 hidden-sm hidden-md hidden-lg">
-						<img class="imageDoBoys" src="imageservlet/Drawing(9).png"></img>
-					</div>
-					<div class="col-xs-6 hidden-sm hidden-md hidden-lg">
-						<img class="imageDoBoys2 center-block"
-							src="imageservlet/Drawing(10).png"></img>
-					</div>
-					<div class="hidden-xs col-sm-6 col-md-6 col-lg-6 parent">
-						<input class="searchbar child" placeholder="Search..." />
-					</div>
-					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-						<img class="imageDoBoys pull-right"
-							src="imageservlet/Drawing(7).png"></img>
-					</div>
-					<div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-						<input class="searchbar" placeholder="Search..." />
-					</div>
-				</div>
-				</nav>
+		<div class="row rowPadding well well-sm">
+			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+				<a data-toggle="tooltip" data-placement="bottom" title="View Lists"
+					><img
+					class="img-responsive topButton"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/listLogo.png"></a>
 			</div>
+			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<img class="theLogo center-block" src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/logo.png">
+			</div>
+			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
+			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pull-right">
+				<a id="rateMenuButton" data-toggle="tooltip" data-placement="bottom" title="Rate!"
+					><img
+					class="img-responsive topButton pull-right"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/vsLogo.png"> </a>
+			</div>
+
 		</div>
 	</div>
-	<div class="container-fluid" id="main-body">
+	<div class="container-fluid extraRowPadding" id="main-body">
 		<div id="contextButtons" class="row">
 			<div id="topLeftButton"
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
@@ -106,7 +99,7 @@
 					<div id="leftPic">
 						<a href="bro/<c:out value="${sessionScope.leftItem.getListUrl()}"/>/<c:out value="${sessionScope.leftItem.getNameUrl()}"/>"> <img id="thesauce"
 							class="img-responsive img-circle center-block resultImage"
-							src="imageservlet/<c:out value="${sessionScope.leftItem.picPath}"/>"></a>
+							src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.leftItem.picPath}"/>"></a>
 					</div>
 				</div>
 			</div>
@@ -126,9 +119,6 @@
 							</c:if>
 						</h3>
 					</div>
-					<div class="row row-buffer">
-						<button type="button" class="btn btn-primary">Scoring</button>
-					</div>
 				</div>
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
@@ -145,7 +135,7 @@
 					<a href="bro/<c:out value="${sessionScope.rightItem.getListUrl()}"/>/<c:out value="${sessionScope.rightItem.getNameUrl()}"/>">
 						<img id="thesauce"
 							class="img-responsive img-circle center-block resultImage"
-							src="imageservlet/<c:out value="${sessionScope.rightItem.picPath}"/>"></a>
+							src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.rightItem.picPath}"/>"></a>
 					</div>
 				</div>
 			</div>

@@ -22,8 +22,8 @@
 		<div id="topLeftButton"
 			class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 			<button id="previousAttributeButton" type="button"
-				class="hidden btn btn-circle btn-xl center-block">
-				<span class="glyphicon glyphicon-circle-arrow-left"></span>
+				class="hidden btn btn-circle btn-xl center-block" onclick="this.blur();">
+				<span class="glyphicon glyphicon-hand-left"></span>
 			</button>
 			<button id="quitButton" type="button"
 				class="btn btn-circle btn-xl center-block">
@@ -34,8 +34,8 @@
 		<div id="topRightButton"
 			class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 			<button type="button" id="nextAttributeButton"
-				class="btn btn-circle btn-xl center-block">
-				<span class="glyphicon glyphicon-thumbs-up"></span>
+				class="btn btn-circle btn-xl center-block" onclick="this.blur();">
+				<span class="glyphicon glyphicon-hand-right"></span>
 			</button>
 			<button type="button" id="submitRatingsButton"
 				class="hidden btn btn-circle btn-xl center-block">
@@ -52,7 +52,7 @@
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<h4 id="accurateText" class="centerAlign">Accurate!</h4>
+				<h4 id="accurateText" class="centerAlign">Next</h4>
 				<h4 id="submitText" class="hidden centerAlign">Submit!</h4>
 			</div>
 		</div>
@@ -88,7 +88,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="hidden-xs hidden-sm col-md-1 col-lg-1">
 				<button type="button" id="leftButton"
-					class="btn slider-btn-circle center-block">
+					class="btn slider-btn-circle center-block" onclick="this.blur();">
 					<span class="glyphicon glyphicon-chevron-left"></span>
 				</button>
 			</div>
@@ -97,7 +97,7 @@
 			</div>
 			<div class="hidden-xs hidden-sm col-md-1 col-lg-1">
 				<button type="button" id="rightButton"
-					class="btn slider-btn-circle center-block">
+					class="btn slider-btn-circle center-block" onclick="this.blur();">
 					<span class="glyphicon glyphicon-chevron-right"></span>
 				</button>
 			</div>

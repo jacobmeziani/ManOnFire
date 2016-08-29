@@ -12,13 +12,13 @@ var sliderInit;
 $(document).ready(function() {
 
 	$("#randomButton").click(function() {
-		$("#leftPic").fadeOut("slow");
 		$("#rightPic").fadeOut("slow");
 		$("#leftName").fadeOut("slow");
 		$("#rightName").fadeOut("slow");
 		$("#rightName2").fadeOut("slow");
 		$("#leftName2").fadeOut("slow");
 		$("#vsButtonMobile").fadeOut("slow");
+		$("#leftPic").fadeOut("slow",function(){
 		var category = $("#currentCategory").attr("value");
 		var list = $("#isCategoryList").attr("value");
 		$.get("bro", {
@@ -41,6 +41,7 @@ $(document).ready(function() {
 			$("#rightName2").fadeIn("slow");
 			$("#leftName2").fadeIn("slow");
 			$("#vsButtonMobile").fadeIn("slow");
+		});
 		});
 	})
 
@@ -294,3 +295,9 @@ function previousAttribute() {
 		$("#quitButton").toggleClass('hidden');
 	}
 }
+
+function imgLoaded(img){
+    var $img = $(img);
+ 
+    $img.addClass('loaded');
+};
