@@ -2,7 +2,6 @@ package manipulation;
 
 public class Matchup {
 	
-	
 	static void run (Element winner, Element loser, int rating) {
 		winner.printstuff();
 		loser.printstuff();

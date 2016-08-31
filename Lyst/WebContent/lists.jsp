@@ -106,7 +106,8 @@
 
 			</div>
 		</div>
- -->	</div><div class="container-fluid main-body" id = "spinnerbody">
+ -->	</div>
+ <div class="container-fluid main-body" id = "spinnerbody">
  
 		<div class="spinner">
 			<div class="rect1"></div>

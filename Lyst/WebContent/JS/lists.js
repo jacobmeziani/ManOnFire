@@ -236,8 +236,6 @@ $(document).ready(function() {
 		})
 		return delivered_in;
 		
-		
-	
 	};
 	
 	//buildRow("picpath","best titties in south florida","titties","yaboy");

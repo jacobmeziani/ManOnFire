@@ -73,13 +73,15 @@ public class DatabaseAccessor {
 		}
 	}
 	
-	public String[] getAttributes(int list_id) {
+	public List<String> getAttributes(int list_id) {
 		Table lists = dynamoDB.getTable("Lists");
 		
 		Item item = lists.getItem("Id",list_id);
 		List<String> atts = item.getList("Attributes");
-		String[] returnDude = new String[atts.size()];
-		return  atts.toArray(returnDude);
+		return atts;
+//		String[] returnDude = new String[atts.size()];
+//		String[] returnSauce = (String[]) atts.toArray();
+//		return  returnSauce;
 	}
 
 	private void buildMaps() {
@@ -125,8 +127,25 @@ public class DatabaseAccessor {
 		return categories.scan();
 	}
 	
+	public String getItemName(int itemid) {  //TODO: must return pic path as well sorry
+		//
+		Table items = dynamoDB.getTable("ListItems");
+		ScanSpec spec = new ScanSpec()
+				.withFilterExpression("ItemID = :id")
+				.withValueMap(new ValueMap()
+						.withNumber(":id", itemid));
+		ItemCollection<ScanOutcome> listitems = items.scan(spec);
+		
+		Iterator <Item> iter =listitems.iterator();
+		Item item = iter.next();
+		
+		String itemname = item.getString("ItemName");
+		return itemname;
+		
+	}
+	
 
-	public ArrayList<Map<String,Object>> getRankedListItems(int listid, int attributeNeeded, int lastRankingDelivered, int nextRankingUp) {
+	public ArrayList<Map<String,Object>> getRankedIDs(int listid, int attributeNeeded, int lastRankingDelivered, int nextRankingUp) {
 		Table attributes = dynamoDB.getTable("Attributes");
 		
 //		Map<String,String> expressionAttributeNames = new HashMap<String, String>();
@@ -134,7 +153,7 @@ public class DatabaseAccessor {
 //		expressionAttributeNames.put("#rating", "Rating");
 //		
 		
-		String listidsubstring = Integer.toString(listid) + '-';
+		String listidsubstring = Integer.toString(listid) + "-" + Integer.toString(attributeNeeded);
 		Map<String,Object>expressionAttributeValues = new HashMap<String,Object>();
 		expressionAttributeValues.put(":r0", lastRankingDelivered);
 		expressionAttributeValues.put(":r1", nextRankingUp);
@@ -158,11 +177,7 @@ public class DatabaseAccessor {
 				tempMap.put("Rating",item.getInt("Rating"));
 				tempMap.put("ItemID", item.getInt("ItemID"));
 				tempMap.put("Ranking", item.getInt("Ranking"));
-				tempMap.put("AttributeName", item.getString("AttributeName"));
-				String templistattribute = item.getString("ListAttribute");
-				String tempattributenumber = templistattribute.split("-")[1];
-				int attributeNumber = Integer.parseInt(tempattributenumber);
-				tempMap.put("AttributeNumber", attributeNumber);
+				
 				
 				returnSauce.add(tempMap);
 			}
@@ -174,6 +189,49 @@ public class DatabaseAccessor {
 		System.out.println(returnSauce.toString());
 		return returnSauce;
 	}
+	
+	/**
+	 * 
+	 * @param itemID
+	 * @param listid
+	 * @return
+	 */
+	public ArrayList<Map<String, Object>> getAttributeItem(int itemID, int listid) {
+		Table attributes = dynamoDB.getTable("Attributes");
+		
+		String listidstring = Integer.toString(listid) + "-";
+		
+		QuerySpec spec = new QuerySpec().withKeyConditionExpression("ItemID = :v_id and begins_with(ListAttribute, :v_listId)")
+				.withValueMap(new ValueMap()
+						.withNumber(":v_id", itemID)
+						.withString(":v_listId", listidstring));
+		
+		ItemCollection<QueryOutcome> returnedattributes = attributes.query(spec);
+		int count = returnedattributes.getTotalCount();
+
+		ArrayList<Map<String, Object>> returnSauce = new ArrayList<Map<String, Object>> (count);
+		
+		Map<String, Object> itemMap;
+		
+		Iterator<Item> iterator = returnedattributes.iterator();
+		Item item = null;
+		while (iterator.hasNext()) {
+			item = iterator.next();
+
+			itemMap = new HashMap<String, Object>();
+			
+			String temp = item.getString("ListAttribute");
+			int attributeNumber = Integer.parseInt(temp.split("-")[1]);
+			
+			itemMap.put("AttributeNumber", attributeNumber);
+			itemMap.put("Rating", item.getInt("Rating"));
+			itemMap.put("Ranking", item.getInt("Ranking"));
+			
+			returnSauce.add(attributeNumber, itemMap);
+		}
+		return returnSauce;
+	}
+	
 	
 
 	public ItemCollection<ScanOutcome> getLists() {
@@ -402,7 +460,8 @@ public class DatabaseAccessor {
 
 		ArrayList<Attribute> returnAttributes = new ArrayList<Attribute>();
 		Table table = dynamoDB.getTable("Attributes");
-
+		
+		
 		QuerySpec spec = new QuerySpec().withKeyConditionExpression("ItemID = :v_id and begins_with(ListAttribute, :v_listId)")
 				.withValueMap(new ValueMap()
 						.withNumber(":v_id", item.getItemId())
@@ -430,9 +489,13 @@ public class DatabaseAccessor {
 		return returnAttributes;
 	}
 
+	@SuppressWarnings("unused")
 	public static void main (String [] args ) {
-	 DatabaseAccessor db = new DatabaseAccessor();
-	 db.getRankedListItems(11,2, 3, 6);
+	 DatabaseAccessor db = new DatabaseAccessor(true);
+//	 ArrayList<Map<String,Object>> thing =  db.getRankedIDs(0, 0, 1, 5);
+//	 ArrayList<Map<String, Object>> returnSauce = db.getAttributeItem(10, 0);
+//	 System.out.println(returnSauce.toString());
+	 //db.getRankedListItems(11,0, 3, 6);
 	// System.out.println(db.random);
 	// System.out.println(db.dynamodb);
 	// System.out.println(DatabaseAccessor.dynamoDB);

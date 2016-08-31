@@ -36,4 +36,16 @@
     <servlet-name>ContributorServlet</servlet-name>
     <url-pattern>/ContributorServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>this servlet handles populating each individual list with peoples</description>
+    <display-name>MoneyServlet</display-name>
+    <servlet-name>MoneyServlet</servlet-name>
+    <servlet-class>Servlets.MoneyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MoneyServlet</servlet-name>
+    <url-pattern>/MoneyServlet</url-pattern>
+    <url-pattern>/lyst/</url-pattern>
+    <url-pattern>/lyst</url-pattern>
+  </servlet-mapping>
 </web-app>

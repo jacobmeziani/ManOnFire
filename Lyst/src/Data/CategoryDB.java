@@ -27,7 +27,7 @@ public class CategoryDB {
 		while(iterator.hasNext()) {
 			Item cat = iterator.next();
 			String name = (String)cat.get("CategoryName");
-			LinkedHashSet<String> subCats = (LinkedHashSet<String>) cat.get("subCategories");
+			LinkedHashSet<String> subCats = (LinkedHashSet<String>) cat.get("SubCategories");
 			LinkedHashSet<BigDecimal> subLysts = (LinkedHashSet<BigDecimal>) cat.get("ListIds");
 			temp = new Category(name,subCats,subLysts);
 			categories.add(temp);
