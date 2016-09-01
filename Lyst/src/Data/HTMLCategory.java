@@ -100,8 +100,10 @@ public class HTMLCategory {
 	}
 	
 	public String HTMLWriter() {
+		System.out.println("bruhh");
 		System.out.println(this.name);
 		if (this.leaf==true) {
+			System.out.println("inhere1");
 			if (subLysts!=null) {
 			String html_opening_li = "<li class = \"menu-item children finalcategory\"><a class=\"showmethemoney \">"+this.name+"</a>\n";
 			String html_opening_ul = "<ul class = \"showmethemoney\">\n";
@@ -118,7 +120,9 @@ public class HTMLCategory {
 			return html;
 			}
 		} else if (this.leaf==false) {
+			System.out.println("in here 3");
 			if (this.name.equals("Everything")) {
+				System.out.println("inhere2");
 				String top_ul = "<ul id =\"top-nav\" class=\"showmethemoney\">\n";
 				String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\"><span class=\"glyphicon glyphicon-remove\"></span>Close</a></li>\n";
 				String html_first_li = "<li class = \"menu-item final\"><a class=\"showmethemoney\">Everything</a></li>\n";

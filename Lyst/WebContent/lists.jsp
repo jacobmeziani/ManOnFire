@@ -46,6 +46,42 @@
 	</div>
 	</nav>
 	<div class="container-fluid main-body" id = "main-body">
+
+		<!-- <div class="col-md-6">
+			<div class="item-desktop">
+				<img class="img-responsive" src="imageservlet/dicaps.png">
+				<div class="show-info">
+					<span>Current Category: Sports</span> <span>Current Leader:
+						poster on curry</span>
+				</div>
+				<div class="showlist-desktop">Lebron's Best Dunks of 2015</div>
+
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="item-desktop">
+				<img class="img-responsive" src="imageservlet/dicaps.png">
+				<div class="show-info">
+					<span>Current Category: Sports</span> <span>Current Leader:
+						poster on curry</span>
+				</div>
+				<div class="showlist-desktop">Lebron's Best Dunks of 2015</div>
+
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="item-desktop">
+				<img class="img-responsive" src="imageservlet/dicaps.png">
+				<div class="show-info">
+					<span>Current Category: Sports</span> <span>Current Leader:
+						poster on curry</span>
+				</div>
+				<div class="showlist-desktop">Lebron's Best Dunks of 2015</div>
+
+			</div>
+		</div>
+ -->	</div>
+ <div class="container-fluid main-body" id = "spinnerbody">
 </div><div class="container-fluid main-body" id = "spinnerbody">
  
 		<div class="spinner">
