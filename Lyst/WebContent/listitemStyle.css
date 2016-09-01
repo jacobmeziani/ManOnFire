@@ -1,0 +1,169 @@
+/* Large desktops and laptops */
+@media
+(
+min-width
+:
+1200px)
+{
+.detailImage {
+	height: 400px;
+	width: 400px;
+}
+
+.ratingNumber{
+	font-size: 34px;
+	margin-top:-14px;
+}
+
+}
+
+/* Landscape tablets and medium desktops */
+@media
+(
+min-width
+:
+992px)
+and
+(max-width:
+1199px)
+{
+.detailImage {
+	height: 400px;
+	width: 400px;
+}
+
+.ratingNumber{
+	font-size: 34px;
+	margin-top:-14px;
+}
+}
+
+/* Portrait tablets and small desktops */
+@media
+(
+min-width
+:
+768px)
+and
+(max-width:
+991px)
+{
+.detailImage {
+	height: 300px;
+	width: 300px;
+}
+
+.ratingNumber{
+	font-size: 26px;
+	margin-top:-8px;
+}
+
+}
+
+/* Landscape phones and portrait tablets */
+@media ( max-width : 767px) {
+	.detailImage {
+		height: 300px;
+		width: 300px;
+	}
+	
+.listText{
+	font-size: 10px;
+}
+.ratingNumber{
+	font-size: 26px;
+	margin-top:-8px;
+}
+}
+
+/* Portrait phones and smaller */
+@media
+(
+max-width
+:
+480px)
+{
+.detailImage {
+	height: 200px;
+	width: 200px;
+}
+
+.listText{
+	font-size: 10px;
+}
+
+.ratingNumber{
+	font-size: 20px;
+	margin-top:-4px;
+}
+}
+
+.attributeText{
+	font-size: 18px;
+}
+
+.progress {
+	background: rgba(255, 250, 250, 1);
+	border: 0px solid rgba(245, 245, 245, 1);
+	border-radius: 0px;
+	height: 35px;
+}
+
+.progress-bar-custom {
+	background: rgba(115, 102, 255, 1);
+}
+
+.progress-bar {
+	background-color: #1a1a1a;
+	height: 25px;
+	width: 100%;
+	padding: 5px;
+	/*     -moz-border-radius: 5px; */
+	/*     -webkit-border-radius: 5px; */
+	/*     border-radius: 5px; */
+	-moz-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+	-webkit-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+	box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+	position: relative;
+}
+
+.progress-bar span {
+	display: block;
+	height: 100%;
+	background-color: #777;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	-webkit-transition: width .4s ease-in-out;
+	-moz-transition: width .4s ease-in-out;
+	-ms-transition: width .4s ease-in-out;
+	-o-transition: width .4s ease-in-out;
+	transition: width .4s ease-in-out;
+}
+
+.progress-bar .floatRight {
+	float: right;
+}
+
+.progress-bar .floatLeft {
+	float: left;
+}
+
+.blue span {
+	background-color: #34c2e3;
+}
+
+.green span {
+	background-color: #00B16A;
+}
+
+.pink span {
+	background-color: #D24D57;
+}
+
+.rowPadding{
+	padding-top: 12px;
+}

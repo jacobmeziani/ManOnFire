@@ -2,7 +2,6 @@
 	background-color: #C20021;
 	border-color: #C20021;
 }
-
 .navbar-default .navbar-brand {
 	color: #ecf0f1;
 }
@@ -130,13 +129,65 @@
   top: 50%;
   transform: translateY(50%);
 }
+/* Large desktops and laptops */
+@media ( min-width : 1200px) {
+.topButton{
+	height: 50px;
+	width: 50px;
+}
+}
 
+/* Landscape tablets and medium desktops */
+@media ( min-width : 992px) and (max-width: 1199px) {
+.topButton{
+	height: 40px;
+	width: 40px;
+}
+}
+
+/* Portrait tablets and small desktops */
+@media ( min-width : 768px) and (max-width: 991px) {
+.topButton{
+	height: 30px;
+	width: 30px;
+}
+}
+
+/* Landscape phones and portrait tablets */
+@media ( max-width : 767px) {
+.topButton{
+	height: 30px;
+	width: 30px;
+}
+}
 /* Portrait phones and smaller */
 @media ( max-width : 480px) {
-	
+
+.topButton{
+	height: 30px;
+	width: 30px;
+}
 	.searchbar{
 	width: 415px;
 	height: 40px;
 	border-radius:0px;
 	}
+}
+
+.theLogo{
+	margin-top:10px;
+	height: 25px;
+	width: 65px;
+}
+
+.rowPadding{
+	padding-top: 12px;
+}
+
+.extraRowPadding{
+	padding-top: 30px;
+}
+
+#rateMenuButton{
+	cursor:pointer;
 }

@@ -11,11 +11,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.BatchGetItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.BatchWriteItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Item;
@@ -25,18 +29,22 @@ import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
+import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
+import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 
 import Data.CategoryDB;
 import Data.HTMLCategory;
 import Data.Lyst;
 import Data.LystItem;
 import Data.Attribute;
-import Servlets.OutOfListsException;
 
 public class DatabaseAccessor {
 	
@@ -51,7 +59,16 @@ public class DatabaseAccessor {
 
 	public DatabaseAccessor() {
 		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
-		AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("jmeziani"));
+		DefaultAWSCredentialsProviderChain  providesauce = new DefaultAWSCredentialsProviderChain ();
+		AmazonDynamoDBClient dbClient;
+		try{
+			AWSCredentials creds = providesauce.getCredentials();
+			dbClient = new AmazonDynamoDBClient(creds);
+		}
+		catch(Exception e){
+			dbClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("jmeziani"));
+		}
+		
 		dbClient.setRegion(usWest2);
 		client = dbClient;
 		dynamoDB = new DynamoDB(dbClient);
@@ -240,6 +257,7 @@ public class DatabaseAccessor {
 	}
 
 	public ArrayList<Lyst> getRandomLists(String category, int numberOfLists) { // drama
+		System.out.println("Okman here we are. The category is" +category);
 		BatchGetItemOutcome outcome = getRandomListsFromDatabase(category, numberOfLists);
 
 		ArrayList<Lyst> lysts = new ArrayList<Lyst>();
@@ -389,6 +407,11 @@ public class DatabaseAccessor {
 	@SuppressWarnings("unchecked")
 	private BatchGetItemOutcome getRandomListsFromDatabase(String category, int numberOfLists) {
 
+		System.out.println("Okman here we are again. The category is" +category);
+		System.out.println("We gone enter the categories ids array, printing now:");
+		for(int i=0; i<CategoryListIDs.size(); i++){
+			System.out.println(CategoryListIDs.get(i));
+		}
 		ArrayList<Integer> temp = CategoryListIDs.get(category);
 		ArrayList<Integer> listArray = (ArrayList<Integer>) temp.clone();
 		int largest = listArray.size();
@@ -408,8 +431,7 @@ public class DatabaseAccessor {
 		return outcome;
 	}
 
-	public ArrayList<Integer> getRandomListNumbers(String category, ArrayList<Integer> delivered, int n_lists)
-			throws OutOfListsException {
+	public ArrayList<Integer> getRandomListNumbers(String category, ArrayList<Integer> delivered, int n_lists) {
 
 		ArrayList<Integer> allPossible = (ArrayList<Integer>) CategoryListIDs.get(category).clone();
 		Random rando = new Random();
@@ -432,10 +454,10 @@ public class DatabaseAccessor {
 					break;
 				}
 			}
-			return new_lists;
 		} catch (Exception e) { // methinks think this is unused
-			throw new OutOfListsException();
+			e.printStackTrace();
 		}
+		return new_lists;
 	}
 
 	public List<Item> getListIDsFromCategoryTable(Integer[] ids_to_get) {
@@ -476,22 +498,35 @@ public class DatabaseAccessor {
 			String name = attribute.getString("AttributeName");
 			int ranking = attribute.getBigInteger("Ranking").intValue();
 			int rating = attribute.getBigInteger("Rating").intValue();
+			double average = attribute.getDouble("AverageScore");
 			BigInteger wins = attribute.getBigInteger("Wins");
 			BigInteger entries = attribute.getBigInteger("Entries");
 			BigInteger points  = attribute.getBigInteger("Points");
+			String listIdString = attribute.getString("ListAttribute").split("-")[0];
 			String attributeNumberString = attribute.getString("ListAttribute").split("-")[1];
+			int listId = Integer.parseInt(listIdString);
 			int attributeNumber = Integer.parseInt(attributeNumberString);
-			Attribute att = new Attribute(name,attributeNumber,ranking,rating,wins,entries,points);
+			Attribute att = new Attribute(item.getItemId(), name,listId,attributeNumber,ranking,rating,wins,entries,points, average);
 			returnAttributes.add(att);
 		}
 		
-		Collections.sort(returnAttributes);
+		  Attribute temp;
+	        for(int i=0; i < returnAttributes.size()-1; i++){
+	 
+	            for(int j=1; j < returnAttributes.size()-i; j++){
+	                if(returnAttributes.get(j-1).getAttributeNumber() > returnAttributes.get(j).getAttributeNumber()){
+	                    temp=returnAttributes.get(j-1);
+	                    returnAttributes.add(j-1, returnAttributes.get(j));
+	                    returnAttributes.add(j,temp);
+	                }
+	            }
+	        }
 		return returnAttributes;
 	}
 
 	@SuppressWarnings("unused")
-	public static void main (String [] args ) {
-	 DatabaseAccessor db = new DatabaseAccessor(true);
+//	public static void main (String [] args ) {
+//	 DatabaseAccessor db = new DatabaseAccessor(true);
 //	 ArrayList<Map<String,Object>> thing =  db.getRankedIDs(0, 0, 1, 5);
 //	 ArrayList<Map<String, Object>> returnSauce = db.getAttributeItem(10, 0);
 //	 System.out.println(returnSauce.toString());
@@ -500,5 +535,197 @@ public class DatabaseAccessor {
 	// System.out.println(db.dynamodb);
 	// System.out.println(DatabaseAccessor.dynamoDB);
 	// }
+	//Puts the modified attributes passed in back into the DB
+	public void UpdateAttributes(ArrayList<Attribute> currentAttributes) {
+		
+		ArrayList<Attribute> attributes = new ArrayList(currentAttributes);
+		try{
+		ArrayList<Item> attributesToPut = new ArrayList<Item>();
+		int threshold = 25;
+		while(!attributes.isEmpty()){
+			if(attributes.size()<threshold){
+				threshold = attributes.size();
+			}
+			for(int i = 0; i< threshold; i++){
+			Attribute currentAttr = attributes.get(i);
+			String listAttribute = currentAttr.getListId()+"-"+currentAttr.getAttributeNumber();
+			Item item = new Item().withPrimaryKey("ItemID", currentAttr.getItemId(), "ListAttribute", listAttribute)
+					.withNumber("Rating",currentAttr.getRating() ).withNumber("Ranking", currentAttr.getRanking()).
+					withNumber("Entries", currentAttr.getEntries()).withNumber("Points", currentAttr.getPoints())
+					.withNumber("Wins", currentAttr.getWins()).withString("AttributeName", currentAttr.getName()).withDouble("AverageScore", currentAttr.getAverage());
+			attributesToPut.add(item);
+			}
+			
+		TableWriteItems tableWrite = new TableWriteItems("Attributes").withItemsToPut(attributesToPut);
+		BatchWriteItemOutcome outcome = dynamoDB.batchWriteItem(tableWrite);
+		
+		do {
+
+            // Check for unprocessed keys which could happen if you exceed provisioned throughput
+
+            Map<String, List<WriteRequest>> unprocessedItems = outcome.getUnprocessedItems();
+
+            if (outcome.getUnprocessedItems().size() == 0) {
+                System.out.println("No unprocessed items found");
+               for (int i=0; i<threshold;i++){
+            	   System.out.println("Inserted " + attributes.get(0).getItemId());
+            	   attributes.remove(0);
+               }
+            } else {
+                System.out.println("Retrieving the unprocessed items");
+                outcome = dynamoDB.batchWriteItemUnprocessed(unprocessedItems);
+            }
+
+        } while (outcome.getUnprocessedItems().size() > 0);
+		attributesToPut.clear();
+		}
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	public ArrayList<Lyst> getAllLists(){
+		ArrayList<Lyst> lysts = new ArrayList<Lyst>();
+		
+		ScanRequest scanRequest = new ScanRequest()
+			    .withTableName("Lists");
+
+			ScanResult result = client.scan(scanRequest);
+			for (Map<String, AttributeValue> item : result.getItems()){
+				String name = (String) item.get("ListName").getS();
+				int index = Integer.parseInt(item.get("Id").getN());
+				List<AttributeValue> attributesA = item.get("Attributes").getL();
+				ArrayList<String> attributes = new ArrayList<String>();
+				for (int i=0; i< attributesA.size(); i++){
+					attributes.add(attributesA.get(i).getS());
+				}
+				int size = Integer.parseInt(item.get("ListSize").getN());
+				String picPath = item.get("PicPath").getS();
+				Lyst lyst = new Lyst(name, index, attributes, size, picPath);
+				lysts.add(lyst);
+			}
+			return lysts;
+	}
+
+	//Gets all attributes for a specific list, like all Overalls for the Villains list
+	public ArrayList<Attribute> getAttributes(int listNumber, int attributeNumber) {
+		String listAttribute = listNumber+"-"+attributeNumber;
+		Table listItems = dynamoDB.getTable("Attributes");
+		Index index = listItems.getIndex("ListAttribute-index");
+		QuerySpec spec = new QuerySpec().withKeyConditionExpression("ListAttribute = :v_listAttribute")
+				.withValueMap(new ValueMap().withString(":v_listAttribute", listAttribute));
+
+		ItemCollection<QueryOutcome> items = index.query(spec);
+		Iterator<Item> iter = items.iterator();
+		
+		ArrayList<Attribute> returnAttributes = new ArrayList<Attribute>();
+		while(iter.hasNext()){
+			Item attribute = iter.next();
+			String name = attribute.getString("AttributeName");
+			int itemId = attribute.getInt("ItemID");
+			int ranking = attribute.getBigInteger("Ranking").intValue();
+			int rating = attribute.getBigInteger("Rating").intValue();
+			double average = attribute.getDouble("AverageScore");
+			BigInteger wins = attribute.getBigInteger("Wins");
+			BigInteger entries = attribute.getBigInteger("Entries");
+			BigInteger points  = attribute.getBigInteger("Points");
+			Attribute att = new Attribute(itemId, name,listNumber,attributeNumber,ranking,rating,wins,entries,points, average);
+			returnAttributes.add(att);
+		}
+		return returnAttributes;
+	}
+
+	public void updateOverallRatings(ArrayList<Attribute> currentAttributes, String listName) {
+		Table listItems = dynamoDB.getTable("ListItems");
+		ArrayList<LystItem> lystItems = new ArrayList<LystItem>();
+		
+		Index index = listItems.getIndex("BelongingList-index");
+		QuerySpec spec = new QuerySpec().withKeyConditionExpression("BelongingList = :v_belong")
+				.withValueMap(new ValueMap().withString(":v_belong", listName));
+
+		ItemCollection<QueryOutcome> items = index.query(spec);
+		Iterator<Item> iter = items.iterator();
+		
+		while(iter.hasNext()){
+			Item item = iter.next();
+			String name = item.getString("ItemName");
+			String picPath = item.getString("PicPath");
+			String belongingList = item.getString("BelongingList");
+			int listId = item.getInt("ListID");
+			int itemId = item.getInt("ItemID");
+			int overall = item.getInt("Overall");
+			LystItem lystItem = new LystItem(name, belongingList, picPath, overall, listId, itemId);
+			lystItems.add(lystItem);
+		}
+		
+		for(int i=0; i< lystItems.size(); i++){
+			for(int j=0; j< currentAttributes.size(); j++){
+				if(lystItems.get(i).itemId == currentAttributes.get(j).getItemId()){
+					lystItems.get(i).overallRating = currentAttributes.get(j).rating;
+					break;
+				}
+			}
+		}
+		updateListItems(lystItems);
+	}
+	
+	public void updateListItems(ArrayList<LystItem> lystItems){
+		try{
+			ArrayList<Item> lystItemsToPut = new ArrayList<Item>();
+			int threshold = 25;
+			while(!lystItems.isEmpty()){
+				if(lystItems.size()<threshold){
+					threshold = lystItems.size();
+				}
+				for(int i = 0; i< threshold; i++){
+				LystItem currentLystItem = lystItems.get(i);
+				Item item = new Item().withPrimaryKey("ItemName", currentLystItem.name, "BelongingList", currentLystItem.belongingList)
+						.withNumber("ItemID",currentLystItem.itemId ).withNumber("ListID", currentLystItem.listId).
+						withNumber("Overall", currentLystItem.overallRating).withString("PicPath", currentLystItem.picPath);
+				lystItemsToPut.add(item);
+				}
+				
+			TableWriteItems tableWrite = new TableWriteItems("ListItems").withItemsToPut(lystItemsToPut);
+			BatchWriteItemOutcome outcome = dynamoDB.batchWriteItem(tableWrite);
+			
+			do {
+
+	            // Check for unprocessed keys which could happen if you exceed provisioned throughput
+
+	            Map<String, List<WriteRequest>> unprocessedItems = outcome.getUnprocessedItems();
+
+	            if (outcome.getUnprocessedItems().size() == 0) {
+	                System.out.println("No unprocessed items found");
+	               for (int i=0; i<threshold;i++){
+	            	   System.out.println("Inserted " + lystItems.get(0).getItemId());
+	            	   lystItems.remove(0);
+	               }
+	            } else {
+	                System.out.println("Retrieving the unprocessed items");
+	                outcome = dynamoDB.batchWriteItemUnprocessed(unprocessedItems);
+	            }
+
+	        } while (outcome.getUnprocessedItems().size() > 0);
+			lystItemsToPut.clear();
+			}
+			}
+			catch(Exception e){
+				System.out.println(e.getMessage());
+			}
+	}
+
+	public LystItem getListItem(String belongingList, String itemName) {
+		// TODO Auto-generated method stub
+		Table table = dynamoDB.getTable("ListItems");
+		Item item = table.getItem("ItemName", itemName,"BelongingList",belongingList);
+		String picPath = item.getString("PicPath");
+		int listId = item.getInt("ListID");
+		int itemId = item.getInt("ItemID");
+		int overall = item.getInt("Overall");
+		LystItem lystItem = new LystItem(itemName, belongingList, picPath, overall, listId, itemId);
+		return lystItem;
+		
 	}
 }

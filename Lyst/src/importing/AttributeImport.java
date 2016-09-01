@@ -71,10 +71,9 @@ public class AttributeImport {
 				System.out.println(item.getString("ItemName"));
 				int itemid = item.getNumber("ItemID").intValue();
 				Random rand = new Random();
-				int rating = rand.nextInt(100);
 				Item newitem = new Item()
 						.withPrimaryKey("ItemID",itemid,"ListAttribute",encoded)
-						.withNumber("Rating",rating)
+						.withNumber("Rating",100)
 						.withNumber("Ranking",1)
 						.withNumber("Entries",0)
 						.withNumber("Points",0)

@@ -32,32 +32,6 @@
 
 </head>
 <body>
-<!-- <script id = "item-template" type "text/template">
-<div class="item-desktop" id="tester">
-<div class="row">
-	<div class="col-md-3">picpath</div>
-	<div class="col-md-6">
-		<div class="list-name-description">
-		{{list_name}}	</div>
-		<div class="current-leader-description">
-			Current Leader: {{curent_leader}}
-		</div>
-	</div>
-	<div class="col-md-3 category-name-description">Category: {{category}}</div>
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-</script>
- -->
 	<nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="btn-group" role="group">
@@ -108,6 +82,7 @@
 		</div>
  -->	</div>
  <div class="container-fluid main-body" id = "spinnerbody">
+</div><div class="container-fluid main-body" id = "spinnerbody">
  
 		<div class="spinner">
 			<div class="rect1"></div>

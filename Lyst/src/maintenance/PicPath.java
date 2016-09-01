@@ -170,7 +170,7 @@ public class PicPath {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//writeListReport();
+		writeListReport();
 		//updatePaths("Maintenance/Outputs/list_picpaths.csv");
 	}
 

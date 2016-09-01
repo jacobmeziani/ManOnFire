@@ -14,8 +14,6 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="jquery.validate.min.js"></script>
-<script src="homescripts.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <link rel="stylesheet"
@@ -28,58 +26,51 @@
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="vsStyle.css">
 <link rel="stylesheet" type="text/css" href="resultsStyle.css">
-<script src="april3.js"></script>
-<script src="sliderScript.js"></script>
+<script src="resultScripts.js"></script>
+<script src="menuScript.js"></script>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-				<nav class="navbar navbar-default" role="navigation">
-				<div class="row">
-					<div class="hidden-xs col-sm-3 col-md-3 col-lg-3">
-						<img class="imageDoBoys2" src="imageservlet/Drawing(5).png"></img>
-					</div>
-					<div class="col-xs-3 hidden-sm hidden-md hidden-lg">
-						<img class="imageDoBoys" src="imageservlet/Drawing(9).png"></img>
-					</div>
-					<div class="col-xs-6 hidden-sm hidden-md hidden-lg">
-						<img class="imageDoBoys2 center-block"
-							src="imageservlet/Drawing(10).png"></img>
-					</div>
-					<div class="hidden-xs col-sm-6 col-md-6 col-lg-6 parent">
-						<input class="searchbar child" placeholder="Search..." />
-					</div>
-					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-						<img class="imageDoBoys pull-right"
-							src="imageservlet/Drawing(7).png"></img>
-					</div>
-					<div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-						<input class="searchbar" placeholder="Search..." />
-					</div>
-				</div>
-				</nav>
+		<div class="row rowPadding well well-sm">
+			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+				<a data-toggle="tooltip" data-placement="bottom" title="View Lists"
+					><img
+					class="img-responsive topButton"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/listLogo.png"></a>
 			</div>
+			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<img class="theLogo center-block" src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/logo.png">
+			</div>
+			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
+			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pull-right">
+				<a id="rateMenuButton" data-toggle="tooltip" data-placement="bottom" title="Rate!"
+					><img
+					class="img-responsive topButton pull-right"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/vsLogo.png"> </a>
+			</div>
+
 		</div>
 	</div>
-	<div class="container-fluid" id="main-body">
+	<div class="container-fluid extraRowPadding" id="main-body">
 		<div id="contextButtons" class="row">
 			<div id="topLeftButton"
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<button id="quitButton" type="button"
-					class="btn btn-circle btn-xl center-block"><span
-					class="glyphicon glyphicon-eye-close"></span>
+				<button id="newShowdownButton" type="button"
+					class="btn btn-circle btn-xl center-block">
+					<span class="glyphicon glyphicon-eye-close"></span>
 				</button>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div id="topRightButton"
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<button type="button" id="fullList"
+				<a type="button" id="fullList" 
+				href="bro/<c:out value="${sessionScope.leftItem.getListUrl()}"/>"
 					class="btn btn-circle btn-xl center-block">
-					<span class="glyphicon glyphicon-list-alt"></span>
-				</button>
+					<span class="glyphicon glyphicon-list-alt aTag"></span>
+				</a>
 			</div>
 		</div>
 		<div id="labels" class="row row-buffer">
@@ -102,13 +93,13 @@
 					</c:if>
 					<div class="numberCircle">
 						<p id="ratingNumber">
-							<c:out value="${sessionScope.leftItem.overallRating}"></c:out>
+							<c:out value="${sessionScope.leftItem.overallRating}"/>
 						</p>
 					</div>
 					<div id="leftPic">
-						<img id="thesauce"
+						<a href="bro/<c:out value="${sessionScope.leftItem.getListUrl()}"/>/<c:out value="${sessionScope.leftItem.getNameUrl()}"/>"> <img id="thesauce"
 							class="img-responsive img-circle center-block resultImage"
-							src="${sessionScope.leftItem.picPath}">
+							src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.leftItem.picPath}"/>"></a>
 					</div>
 				</div>
 			</div>
@@ -128,9 +119,6 @@
 							</c:if>
 						</h3>
 					</div>
-					<div class="row row-buffer">
-						<button type="button" class="btn btn-primary">Scoring</button>
-					</div>
 				</div>
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
@@ -144,9 +132,10 @@
 						</p>
 					</div>
 					<div id="rightPic">
+					<a href="bro/<c:out value="${sessionScope.rightItem.getListUrl()}"/>/<c:out value="${sessionScope.rightItem.getNameUrl()}"/>">
 						<img id="thesauce"
 							class="img-responsive img-circle center-block resultImage"
-							src="${sessionScope.rightItem.picPath}">
+							src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.rightItem.picPath}"/>"></a>
 					</div>
 				</div>
 			</div>
@@ -204,67 +193,76 @@
 								</div>
 								<div class="row">
 									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-										<h3 class="title"><c:out value="${i.leftItemWorldScore}" /></h3>
+										<h3 class="title">
+											<c:out value="${i.leftItemWorldScore}" />
+										</h3>
 									</div>
 									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-										<h3 class="title"><c:out value="${i.rightItemWorldScore}" /></h3>
+										<h3 class="title">
+											<c:out value="${i.rightItemWorldScore}" />
+										</h3>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div>
 									<c:choose>
-									<c:when test="${!i.leftWorldWins}">
-									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
-										<div class="progress-bar blue stripes">	
-											World <span class="floatRight" style="width: 0%"></span>
-										</div>
-									</div>
-									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
-										<div class="progress-bar blue stripes">
-											<span class="floatLeft" style="width: <c:out value="${i.worldBarPercent}" />%"></span>
-										</div>
-									</div>
-									</c:when>
-									<c:otherwise>
-									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
-										<div class="progress-bar blue stripes">	
-											<span class="floatRight" style="width: <c:out value="${i.worldBarPercent}" />%"></span>
-										</div>
-									</div>
-									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
-										<div class="progress-bar blue stripes">
-											World <span class="floatLeft" style="width: 0%"></span>
-										</div>
-									</div>
-									</c:otherwise>
+										<c:when test="${!i.leftWorldWins}">
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+												<div class="progress-bar blue stripes">
+													World <span class="floatRight" style="width: 0%"></span>
+												</div>
+											</div>
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+												<div class="progress-bar blue stripes">
+													<span class="floatLeft"
+														style="width: <c:out value="${i.worldBarPercent}" />%"></span>
+												</div>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+												<div class="progress-bar blue stripes">
+													<span class="floatRight"
+														style="width: <c:out value="${i.worldBarPercent}" />%"></span>
+												</div>
+											</div>
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+												<div class="progress-bar blue stripes">
+													World <span class="floatLeft" style="width: 0%"></span>
+												</div>
+											</div>
+										</c:otherwise>
 									</c:choose>
 								</div>
 								<div class="row">
 									<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div>
 									<c:choose>
-									<c:when test="${!i.leftUserWins}">
-									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
-										<div class="progress-bar pink stripes">
-											You <span class="floatRight" style="width: 0%"></span>
-										</div>
-									</div>
-									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
-										<div class="progress-bar pink stripes">
-											<span class="floatLeft" style="width: <c:out value="${i.userBarPercent}" />%"></span>
-										</div>
-									</div>
-									</c:when>
-									<c:otherwise>
-									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
-										<div class="progress-bar pink stripes">
-											 <span class="floatRight" style="width: <c:out value="${i.userBarPercent}" />%"></span>
-										</div>
-									</div>
-									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
-										<div class="progress-bar pink stripes">
-											You <span class="floatLeft" style="width: 0%"></span>
-										</div>
-									</div></c:otherwise>
+										<c:when test="${!i.leftUserWins}">
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+												<div class="progress-bar pink stripes">
+													You <span class="floatRight" style="width: 0%"></span>
+												</div>
+											</div>
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+												<div class="progress-bar pink stripes">
+													<span class="floatLeft"
+														style="width: <c:out value="${i.userBarPercent}" />%"></span>
+												</div>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+												<div class="progress-bar pink stripes">
+													<span class="floatRight"
+														style="width: <c:out value="${i.userBarPercent}" />%"></span>
+												</div>
+											</div>
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+												<div class="progress-bar pink stripes">
+													You <span class="floatLeft" style="width: 0%"></span>
+												</div>
+											</div>
+										</c:otherwise>
 									</c:choose>
 								</div>
 							</div>
@@ -272,222 +270,6 @@
 					</div>
 				</div>
 			</c:forEach>
-			<!-- 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
-			<!-- 				<div class="row"> -->
-			<!-- 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
-			<!-- 						<div class="tile green center-block"> -->
-			<!-- 							<div class="row nopadding centerAlign"> -->
-			<!-- 								<h3 class="nopadding">Passing</h3> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row nopadding"> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<p class="itemName">Lebron James</p> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<p class="itemName">Steph Curry</p> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<h3 class="title">98</h3> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<h3 class="title">88</h3> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar blue stripes"> -->
-			<!-- 										<span class="floatRight" style="width: 10%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar blue stripes"> -->
-			<!-- 										World<span class="floatLeft" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar pink stripes"> -->
-			<!-- 										<span class="floatRight" style="width: 40%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar pink stripes"> -->
-			<!-- 										You<span class="floatLeft" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
-
-			<!-- 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
-			<!-- 				<div class="row"> -->
-			<!-- 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
-			<!-- 						<div class="tile red center-block"> -->
-			<!-- 							<div class="row nopadding centerAlign"> -->
-			<!-- 								<h3 class="nopadding">IQ</h3> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row nopadding"> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<p class="itemName">Lebron James</p> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<p class="itemName">Steph Curry</p> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<h3 class="title">95</h3> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<h3 class="title">96</h3> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar blue stripes"> -->
-			<!-- 										World <span class="floatRight" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar blue stripes"> -->
-			<!-- 										<span class="floatLeft" style="width: 1%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar pink stripes"> -->
-			<!-- 										<span class="floatRight" style="width: 20%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar pink stripes"> -->
-			<!-- 										You<span class="floatLeft" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
-
-			<!-- 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
-			<!-- 				<div class="row"> -->
-			<!-- 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
-			<!-- 						<div class="tile green center-block"> -->
-			<!-- 							<div class="row nopadding centerAlign"> -->
-			<!-- 								<h3 class="nopadding">Handles</h3> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row nopadding"> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<p class="itemName">Lebron James</p> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<p class="itemName">Steph Curry</p> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<h3 class="title">95</h3> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<h3 class="title">95</h3> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar blue stripes"> -->
-			<!-- 										World <span class="floatRight" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar blue stripes"> -->
-			<!-- 										<span class="floatLeft" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar pink stripes"> -->
-			<!-- 										You <span class="floatRight" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar pink stripes"> -->
-			<!-- 										<span class="floatLeft" style="width: 20%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
-
-			<!-- 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
-			<!-- 				<div class="row"> -->
-			<!-- 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
-			<!-- 						<div class="tile green center-block"> -->
-			<!-- 							<div class="row nopadding centerAlign"> -->
-			<!-- 								<h3 class="nopadding">Rebounding</h3> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row nopadding"> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<p class="itemName">Lebron James</p> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<p class="itemName">Steph Curry</p> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<h3 class="title">79</h3> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
-			<!-- 									<h3 class="title">33</h3> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar blue stripes"> -->
-			<!-- 										<span class="floatRight" style="width: 48%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar blue stripes"> -->
-			<!-- 										World<span class="floatLeft" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 							<div class="row"> -->
-			<!-- 								<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar pink stripes"> -->
-			<!-- 										<span class="floatRight" style="width: 60%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding"> -->
-			<!-- 									<div class="progress-bar pink stripes"> -->
-			<!-- 										You <span class="floatLeft" style="width: 0%"></span> -->
-			<!-- 									</div> -->
-			<!-- 								</div> -->
-			<!-- 							</div> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
-
 		</div>
 	</div>
 </body>
