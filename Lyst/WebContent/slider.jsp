@@ -22,13 +22,14 @@
 		<div id="topLeftButton"
 			class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 			<button id="previousAttributeButton" type="button"
-				class="hidden btn btn-circle btn-xl center-block" onclick="this.blur();">
+				class="hidden btn btn-circle btn-xl center-block"
+				onclick="this.blur();">
 				<span class="glyphicon glyphicon-hand-left"></span>
 			</button>
-			<button id="quitButton" type="button"
-				class="btn btn-circle btn-xl center-block">
-				<span class="glyphicon glyphicon-off"></span>
-			</button>
+			<a href="/" id="quitButton" type="button"
+				class="btn btn-circle btn-xl center-block"> <span
+				class="glyphicon glyphicon-off aTag"></span>
+			</a>
 		</div>
 		<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 		<div id="topRightButton"
@@ -68,7 +69,7 @@
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="sliderRow">
-			<div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
+		<div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
 			<div class="row">
 				<div class="col-xs-3 col-sm-3">
 					<button type="button" id="leftButtonMini"
@@ -76,7 +77,9 @@
 						<span class="glyphicon glyphicon-chevron-left"></span>
 					</button>
 				</div>
-				<div class="col-xs-6 col-sm-6"></div>
+				<div class="col-xs-6 col-sm-6">
+					<h3 class="centerAlign" id="attributeMobileTitle">Defense</h3>
+				</div>
 				<div class="col-xs-3 col-sm-3">
 					<button type="button" id="rightButtonMini"
 						class="btn slider-btn-circle center-block">

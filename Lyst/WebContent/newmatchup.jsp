@@ -9,38 +9,38 @@
 </head>
 <body>
 			<div id="leftPic">
-				<img id="thesauce" src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.leftItem.picPath}"/>"
+				<img id="thesauce" src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.leftItem.picPath}"/>"
 					class="img-responsive img-circle center-block vsImage" onload="imgLoaded(this)"></img>
 			</div>
 			<div id="list">
-					<h3 id="test2">
-						<c:out value="${sessionScope.leftItem.belongingList}"></c:out>
+					<h3 id="listNameH3">
+						<c:out value="${requestScope.leftItem.belongingList}"></c:out>
 					</h3>
 			</div>
 			<div id="rightPic">
-				<img src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.rightItem.picPath}"/>"
+				<img src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.rightItem.picPath}"/>"
 					class="img-responsive img-circle center-block vsImage" onload="imgLoaded(this)"></img>
 			</div>
 			<div id="leftName">
-				<h3>
-					<c:out value="${sessionScope.leftItem.name}"></c:out>
+				<h3 id="leftNameH3">
+					<c:out value="${requestScope.leftItem.name}"></c:out>
 				</h3>
 			</div>
 			<div id="rightName">
-				<h3>
-					<c:out value="${sessionScope.rightItem.name}"></c:out>
+				<h3 id="rightNameH3">
+					<c:out value="${requestScope.rightItem.name}"></c:out>
 				</h3>
 			</div>
 			
 			<div id="rightName2">
 				<h3 class="pull-left">
-					<c:out value="${sessionScope.rightItem.name}"></c:out>
+					<c:out value="${requestScope.rightItem.name}"></c:out>
 				</h3>
 			</div>
 			
 			<div id="leftName2">
 				<h3 class="pull-right verticalAlign">
-					<c:out value="${sessionScope.leftItem.name}"></c:out>
+					<c:out value="${requestScope.leftItem.name}"></c:out>
 				</h3>
 			</div>
 </body>

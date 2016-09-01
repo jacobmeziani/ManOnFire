@@ -35,21 +35,22 @@
 	<div class="container-fluid">
 		<div class="row rowPadding well well-sm">
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-				<a data-toggle="tooltip" data-placement="bottom" title="View Lists"
-					><img
+				<a data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
 					class="img-responsive topButton"
 					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/listLogo.png"></a>
 			</div>
 			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				<img class="theLogo center-block" src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/logo.png">
+				<img class="theLogo center-block"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/logo.png">
 			</div>
 			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pull-right">
-				<a id="rateMenuButton" data-toggle="tooltip" data-placement="bottom" title="Rate!"
-					><img
+				<a href="/" type="button" id="rateMenuButton" data-toggle="tooltip"
+					data-placement="bottom" title="Rate!"><img
 					class="img-responsive topButton pull-right"
-					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/vsLogo.png"> </a>
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/vsLogo.png">
+				</a>
 			</div>
 
 		</div>
@@ -58,18 +59,18 @@
 		<div id="contextButtons" class="row">
 			<div id="topLeftButton"
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<button id="newShowdownButton" type="button"
-					class="btn btn-circle btn-xl center-block">
-					<span class="glyphicon glyphicon-eye-close"></span>
-				</button>
+				<a href="/" id="newShowdownButton" type="button"
+					class="btn btn-circle btn-xl center-block"> <span
+					class="glyphicon glyphicon-eye-close aTag"></span>
+					</a>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div id="topRightButton"
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<a type="button" id="fullList" 
-				href="bro/<c:out value="${sessionScope.leftItem.getListUrl()}"/>"
-					class="btn btn-circle btn-xl center-block">
-					<span class="glyphicon glyphicon-list-alt aTag"></span>
+				<a type="button" id="fullList"
+					href="bro/<c:out value="${requestScope.leftItem.getListUrl()}"/>"
+					class="btn btn-circle btn-xl center-block"> <span
+					class="glyphicon glyphicon-list-alt aTag"></span>
 				</a>
 			</div>
 		</div>
@@ -88,18 +89,21 @@
 		<div class="row">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<div class="positionRelativeContainer nopadding">
-					<c:if test="${sessionScope.winningSide eq 'left'}">
+					<c:if test="${requestScope.winningSide eq 'left'}">
 						<span class="label label-success bannerOverlay">Winner</span>
 					</c:if>
 					<div class="numberCircle">
 						<p id="ratingNumber">
-							<c:out value="${sessionScope.leftItem.overallRating}"/>
+							<c:out value="${requestScope.leftItem.overallRating}" />
 						</p>
 					</div>
 					<div id="leftPic">
-						<a href="bro/<c:out value="${sessionScope.leftItem.getListUrl()}"/>/<c:out value="${sessionScope.leftItem.getNameUrl()}"/>"> <img id="thesauce"
+						<a
+							href="bro/<c:out value="${requestScope.leftItem.getListUrl()}"/>/<c:out value="${requestScope.leftItem.getNameUrl()}"/>">
+							<img id="thesauce"
 							class="img-responsive img-circle center-block resultImage"
-							src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.leftItem.picPath}"/>"></a>
+							src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.leftItem.picPath}"/>">
+						</a>
 					</div>
 				</div>
 			</div>
@@ -108,13 +112,13 @@
 				<div id="attributePhrases">
 					<div class="row row-buffer">
 						<h3 id="attributeTitle" class="centerAlign">
-							<c:if test="${sessionScope.winningSide eq 'left'}">
-								<c:out value="${sessionScope.leftItem.name}"></c:out> wins!
+							<c:if test="${requestScope.winningSide eq 'left'}">
+								<c:out value="${requestScope.leftItem.name}"></c:out> wins!
 							</c:if>
-							<c:if test="${sessionScope.winningSide eq 'right'}">
-								<c:out value="${sessionScope.rightItem.name}"></c:out> wins!
+							<c:if test="${requestScope.winningSide eq 'right'}">
+								<c:out value="${requestScope.rightItem.name}"></c:out> wins!
 							</c:if>
-							<c:if test="${sessionScope.winningSide eq 'tie'}">
+							<c:if test="${requestScope.winningSide eq 'tie'}">
 								Its a tie!
 							</c:if>
 						</h3>
@@ -123,19 +127,21 @@
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<div class="positionRelativeContainer nopadding">
-					<c:if test="${sessionScope.winningSide eq 'right'}">
+					<c:if test="${requestScope.winningSide eq 'right'}">
 						<span class="label label-success bannerOverlay">Winner</span>
 					</c:if>
 					<div class="numberCircle bannerOverlay">
 						<p id="ratingNumber">
-							<c:out value="${sessionScope.rightItem.overallRating}"></c:out>
+							<c:out value="${requestScope.rightItem.overallRating}"></c:out>
 						</p>
 					</div>
 					<div id="rightPic">
-					<a href="bro/<c:out value="${sessionScope.rightItem.getListUrl()}"/>/<c:out value="${sessionScope.rightItem.getNameUrl()}"/>">
-						<img id="thesauce"
+						<a
+							href="bro/<c:out value="${requestScope.rightItem.getListUrl()}"/>/<c:out value="${requestScope.rightItem.getNameUrl()}"/>">
+							<img id="thesauce"
 							class="img-responsive img-circle center-block resultImage"
-							src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.rightItem.picPath}"/>"></a>
+							src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.rightItem.picPath}"/>">
+						</a>
 					</div>
 				</div>
 			</div>
@@ -144,32 +150,32 @@
 			<div id="leftName"
 				class="hidden-xs hidden-sm col-md-5 col-lg-5 centerAlign">
 				<h3>
-					<c:out value="${sessionScope.leftItem.name}"></c:out>
+					<c:out value="${requestScope.leftItem.name}"></c:out>
 				</h3>
 			</div>
 			<div id="leftName2"
 				class="col-xs-6 col-sm-6 hidden-md hidden-lg centerAlign">
 				<h3 class="verticalAlign">
-					<c:out value="${sessionScope.leftItem.name}"></c:out>
+					<c:out value="${requestScope.leftItem.name}"></c:out>
 				</h3>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div id="rightName"
 				class="hidden-xs hidden-sm col-md-5 col-lg-5 centerAlign">
 				<h3>
-					<c:out value="${sessionScope.rightItem.name}"></c:out>
+					<c:out value="${requestScope.rightItem.name}"></c:out>
 				</h3>
 			</div>
 			<div id="rightName2"
 				class="col-xs-6 col-sm-6 hidden-md hidden-lg centerAlign">
 				<h3>
-					<c:out value="${sessionScope.rightItem.name}"></c:out>
+					<c:out value="${requestScope.rightItem.name}"></c:out>
 				</h3>
 			</div>
 		</div>
 
 		<div class="container-fluid">
-			<c:forEach var="i" items="${sessionScope.attributes}">
+			<c:forEach var="i" items="${requestScope.attributes}">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -182,12 +188,12 @@
 								<div class="row nopadding">
 									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 										<p class="itemName">
-											<c:out value="${sessionScope.leftItem.name}"></c:out>
+											<c:out value="${requestScope.leftItem.name}"></c:out>
 										</p>
 									</div>
 									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 										<p class="itemName">
-											<c:out value="${sessionScope.rightItem.name}"></c:out>
+											<c:out value="${requestScope.rightItem.name}"></c:out>
 										</p>
 									</div>
 								</div>

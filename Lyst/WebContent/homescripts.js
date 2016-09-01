@@ -1,13 +1,13 @@
 var attributes;
 var attributeSize;
-var leftItem;
-var rightItem;
 var stringPackage;
 var currentAttributeIndex = 0;
 var descriptors;
 var scorePositions;
 var currentSelection = 5;
 var sliderInit;
+var leftItemProps;
+var rightItemProps;
 
 $(document).ready(function() {
 
@@ -55,14 +55,21 @@ $(document).ready(function() {
 });
 
 function goToVsScreen() {
+	var listName = $.trim($("#listNameH3").text());
+	var leftItemName = $.trim($("#leftNameH3").text());
+	var rightItemName = $.trim($("#rightNameH3").text());
+	
 	$.get("bro", {
-		"action" : "vs"
+		"action" : "vs",
+		"listName" : listName,
+		"leftItemName" : leftItemName,
+		"rightItemName" : rightItemName
 	}, function(json) {
 		sliderInit = false;
 		var obj = JSON.parse(json);
 		attributes = obj.attributes;
-		leftItem = obj.leftItem;
-		rightItem = obj.rightItem;
+		leftItemProps = obj.leftItemProps;
+		rightItemProps = obj.rightItemProps;
 		stringPackage = obj.stringPackages;
 		attributeSize = attributes.length;
 		scorePositions = new Array();
@@ -79,7 +86,8 @@ function goToVsScreen() {
 			$("#contextButtons").html(parsed.find("#sliderTopButtons"));
 			$("#labels").html(parsed.find("#sliderTopButtonsLabels"));
 			$("#attributeTitle").html(attributes[currentAttributeIndex].name);
-			sliderFunc(leftItem, rightItem, attributes);
+			$("#attributeMobileTitle").html(attributes[currentAttributeIndex].name);
+			sliderFunc(leftItemProps[0], rightItemProps[0], attributes);
 			$("#descriptor").html(descriptors[5]);
 			$("#descriptorMobile").html(descriptors[5]);
 			$("#nextAttributeButton").click(function() {
@@ -88,22 +96,18 @@ function goToVsScreen() {
 			$("#previousAttributeButton").click(function() {
 				previousAttribute();
 			});
-			$("#quitButton").click(function() {
-				$(this).attr("disabled", "disabled");
-				$.get("bro", {
-					"action" : "navigatingBack"
-				}, function(html) {
-					window.location.href = 'home.jsp';
-				});
-			})
 			$("#submitRatingsButton").click(function() {
 				$(this).attr("disabled", "disabled");
 				scorePositions[currentAttributeIndex] = currentSelection;
 				$.get("bro", {
 					"action" : "results",
-					"scores" : scorePositions
+					"scores" : scorePositions,
+					"leftItemProps" : leftItemProps,
+					"rightItemProps" : rightItemProps
 				}, function(data) {
-					window.location.href = 'results.jsp';
+					var newDoc = document.open("text/html", "replace");
+					newDoc.write(data);
+					newDoc.close();
 				});
 			});
 		});
@@ -265,8 +269,9 @@ function nextAttribute() {
 	scorePositions[currentAttributeIndex] = currentSelection;
 	currentAttributeIndex++;
 	$("#attributeTitle").html(attributes[currentAttributeIndex].name);
+	$("#attributeMobileTitle").html(attributes[currentAttributeIndex].name);
 	currentSelection = scorePositions[currentAttributeIndex];
-	sliderFunc(leftItem, rightItem, attributes);
+	sliderFunc(leftItemProps[0], rightItemProps[0], attributes);
 	$("#descriptor").html(descriptors[currentSelection]);
 	if (currentAttributeIndex == (attributeSize - 1)) {
 		$("#accurateText").toggleClass('hidden');
@@ -285,8 +290,9 @@ function previousAttribute() {
 	}
 	currentAttributeIndex--;
 	$("#attributeTitle").html(attributes[currentAttributeIndex].name);
+	$("#attributeMobileTitle").html(attributes[currentAttributeIndex].name);
 	currentSelection = scorePositions[currentAttributeIndex];
-	sliderFunc(leftItem, rightItem, attributes);
+	sliderFunc(leftItemProps[0], rightItemProps[0], attributes);
 	$("#descriptor").html(descriptors[currentSelection]);
 	if (currentAttributeIndex == 0) {
 		$("#quitText").toggleClass('hidden');
@@ -301,3 +307,17 @@ function imgLoaded(img){
  
     $img.addClass('loaded');
 };
+
+// not used right now. mebe never
+function LystItem(name,belongingList,picPath,overallRating,listId,itemId){
+	this.name = name;
+	this.belongingList = belongingList;
+	if (picPath != null) {
+		this.picPath = picPath;
+	} else {
+		this.picPath = "empty";
+	}
+	this.overallRating = overallRating;
+	this.itemId = itemId;
+	this.listId = listId;
+}

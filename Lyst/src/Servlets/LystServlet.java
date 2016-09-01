@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +32,7 @@ import Display.ResultAttributes;
 @WebServlet("/lystservlet")
 public class LystServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String categoryHtml = "";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -50,54 +52,76 @@ public class LystServlet extends HttpServlet {
 		System.out.println(requestAction);
 		HttpSession session = request.getSession();
 		DatabaseAccessor d = new DatabaseAccessor();
+		Cookie[] freshBatch = request.getCookies();
 
 		if (requestAction != null) {
-			if (requestAction.equals("newRandom") || requestAction.equals("navigatingBack")
-					|| requestAction.equals("initial")) {
+			if (requestAction.equals("newRandom") || requestAction.equals("initial")) {
 
-				boolean list = false;
+				Boolean list = false;
 				String currentCategory = "Everything";
+				Cookie currentCategoryCookie = getCookie(freshBatch, "currentCategory");
+				if(currentCategoryCookie != null){
+					currentCategory = currentCategoryCookie.getValue();
+					Cookie isListCookie = getCookie(freshBatch, "isList");
+					if(isListCookie != null){
+					String listBool = getCookie(freshBatch, "isList").getValue();
+					if (listBool.equals("true")) {
+						list = true;
+					} else {
+						list = false;
+					}
+					}
+				}
 				if (requestAction.equals("newRandom")) {
 					currentCategory = request.getParameter("currentCategory");
 					String listString = request.getParameter("isList");
 					if (listString.equals("true")) {
 						list = true;
 					}
-				} else if (requestAction.equals("navigatingBack")) {
-					currentCategory = (String) session.getAttribute("currentCategory");
-					list = (Boolean) session.getAttribute("isList");
-				}
-
+				} 
 				Object[] items = d.getNextCombatants(currentCategory, list);
-				session.setAttribute("currentList", items[0]);
-				session.setAttribute("leftItem", items[1]);
-				session.setAttribute("rightItem", items[2]);
-				String testing_categories = (String) session.getAttribute("CategoryHTML");
+				Cookie storeListIdCookie = new Cookie("listId", Integer.valueOf(((Lyst)items[0]).getListIndex()).toString());
+				request.setAttribute("currentList", items[0]);
+				request.setAttribute("leftItem", items[1]);
+				request.setAttribute("rightItem", items[2]);
 
-				if (testing_categories == null) {
-					String category_html = d.getMenu();
-					session.setAttribute("CategoryHTML", category_html);
+				if (categoryHtml == "") {
+					categoryHtml = d.getMenu();
 				}
+				request.setAttribute("CategoryHTML", categoryHtml);
 
 				String categoryName = currentCategory;
 				if (list) {
-					categoryName = ((Lyst) session.getAttribute("currentList")).getListName();
+					categoryName = ((Lyst) request.getAttribute("currentList")).getListName();
 				}
-				session.setAttribute("categoryName", categoryName);
-				session.setAttribute("currentCategory", currentCategory);
-				session.setAttribute("isList", list);
+				request.setAttribute("categoryName", categoryName);
+				request.setAttribute("currentCategory", currentCategory);
+				request.setAttribute("isList", list);
+				Cookie storeCatNameCookie = new Cookie("categoryName", categoryName);
+				Cookie storeCategoryCookie = new Cookie("currentCategory", currentCategory);
+				Cookie storeIsListCookie = new Cookie("isList", list.toString());
+				response.addCookie(storeListIdCookie);
+				response.addCookie(storeCatNameCookie);
+				response.addCookie(storeCategoryCookie);
+				response.addCookie(storeIsListCookie);
 				if (requestAction.equals("initial")) {
 					request.getRequestDispatcher("/home.jsp").forward(request, response);
-				} else {
+				}else {
 					request.getRequestDispatcher("/newmatchup.jsp").forward(request, response);
 				}
 
 			} else if (requestAction.equals("vs")) {
-				LystItem leftItem = (LystItem) session.getAttribute("leftItem");
-				LystItem rightItem = (LystItem) session.getAttribute("rightItem");
-				Lyst currentList = (Lyst) session.getAttribute("currentList");
+				Cookie listIdCookie = getCookie(freshBatch,"listId");
+				String leftItemName = request.getParameter("leftItemName");
+				String rightItemName =  request.getParameter("rightItemName");
+				String listName = request.getParameter("listName");
+				Cookie listCookie = new Cookie("listName", listName);
+				response.addCookie(listCookie);
+				
+				LystItem leftItem = d.getListItem(listName, leftItemName);
+				LystItem rightItem = d.getListItem(listName, rightItemName);
 				// return attributes, from DB to load up the js
-				Object[] data = d.getAttributesAndStringPackages(currentList);
+				Object[] data = d.getAttributesAndStringPackages(Integer.parseInt(listIdCookie.getValue()));
 				ArrayList<String> attributeNames = (ArrayList<String>) data[0];
 				ArrayList<ResultAttributes> attributes = new ArrayList<ResultAttributes>();
 
@@ -108,14 +132,18 @@ public class LystServlet extends HttpServlet {
 					attr.setName(attributeNames.get(i));
 					attributes.add(attr);
 				}
-				session.setAttribute("attributes", attributes);
+				request.setAttribute("attributes", attributes);
 				ArrayList<Integer> stringPackages = (ArrayList<Integer>) data[1];
+				Object[] leftItemProps = new Object[]{leftItem.name, leftItem.belongingList,
+						leftItem.picPath,leftItem.overallRating, leftItem.listId, leftItem.itemId};
+				Object[] rightItemProps = new Object[]{rightItem.name, rightItem.belongingList,
+						rightItem.picPath,rightItem.overallRating, rightItem.listId, rightItem.itemId};
 				JSONObject json = new JSONObject();
 				try {
 					json.put("attributes", attributes);
 					json.put("stringPackages", stringPackages);
-					json.put("leftItem", leftItem.getName());
-					json.put("rightItem", rightItem.getName());
+					json.put("leftItemProps", leftItemProps);
+					json.put("rightItemProps", rightItemProps);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -126,6 +154,17 @@ public class LystServlet extends HttpServlet {
 			} else if (requestAction.equals("sliderDisplay")) {
 				request.getRequestDispatcher("/slider.jsp").forward(request, response);
 			} else if (requestAction.equals("results")) {
+				Cookie listNameCookie = getCookie(freshBatch,"listName");
+				String[] leftItemProps = request.getParameterValues("leftItemProps[]");
+				String[] rightItemProps = request.getParameterValues("rightItemProps[]");
+				LystItem leftItem = new LystItem(leftItemProps[0],leftItemProps[1],leftItemProps[2],
+						Integer.parseInt(leftItemProps[3]),Integer.parseInt(leftItemProps[4]),
+						Integer.parseInt(leftItemProps[5]));
+				LystItem rightItem = new LystItem(rightItemProps[0],rightItemProps[1],rightItemProps[2],
+						Integer.parseInt(rightItemProps[3]),Integer.parseInt(rightItemProps[4]),
+						Integer.parseInt(rightItemProps[5]));
+				Cookie listIdCookie = getCookie(freshBatch,"listId");
+				if(listNameCookie != null){
 				String[] requestScores = request.getParameterValues("scores[]");
 				int[] scores = new int[requestScores.length];
 
@@ -138,20 +177,32 @@ public class LystServlet extends HttpServlet {
 				}
 				if (winCounter < 0) {
 					// Left item wins
-					session.setAttribute("winningSide", "left");
+					request.setAttribute("winningSide", "left");
 				} else if (winCounter > 0) {
 					// Right item wins
-					session.setAttribute("winningSide", "right");
+					request.setAttribute("winningSide", "right");
 				} else {
 					// Tie
-					session.setAttribute("winningSide", "tie");
+					request.setAttribute("winningSide", "tie");
 				}
-				LystItem leftItem = (LystItem) session.getAttribute("leftItem");
-				LystItem rightItem = (LystItem) session.getAttribute("rightItem");
+
+				request.setAttribute("leftItem", leftItem);
+				request.setAttribute("rightItem", rightItem);
+				
+				
 				ArrayList<Attribute> leftWorldAttributes = d.getItemAttributes(leftItem);
 				ArrayList<Attribute> rightWorldAttributes = d.getItemAttributes(rightItem);
-				ArrayList<ResultAttributes> attributes = (ArrayList<ResultAttributes>) session
-						.getAttribute("attributes");
+				Object[] data = d.getAttributesAndStringPackages(Integer.parseInt(listIdCookie.getValue()));
+				ArrayList<String> attributeNames = (ArrayList<String>) data[0];
+				ArrayList<ResultAttributes> attributes = new ArrayList<ResultAttributes>();
+
+				// add overall because it is not included in the rating game
+				// part
+				for (int i = 0; i < attributeNames.size(); i++) {
+					ResultAttributes attr = new ResultAttributes();
+					attr.setName(attributeNames.get(i));
+					attributes.add(attr);
+				}
 
 				// Add overall to the attributes and scores
 				ResultAttributes attr = new ResultAttributes();
@@ -205,50 +256,52 @@ public class LystServlet extends HttpServlet {
 					}
 				}
 
-				Lyst currentList = (Lyst) session.getAttribute("currentList");
-				RatingsProcessor p = new RatingsProcessor(currentList.getListName(), resultScores, leftWorldAttributes,
+				request.setAttribute("attributes", attributes);
+				request.getRequestDispatcher("/results.jsp").forward(request, response);
+				String currentList = listNameCookie.getValue();
+				RatingsProcessor p = new RatingsProcessor(currentList, resultScores, leftWorldAttributes,
 						rightWorldAttributes);
 				p.start();
+				}
 			}
 		}
 		// look at url if no request action, used to view lists and list items
-		else{
+		else {
 			StringBuffer stringBuffer = request.getRequestURL();
 			String url = stringBuffer.toString();
 			String[] split = url.split("/");
-			String list= "";
+			String list = "";
 			String listItem = "";
-			for(int i=0; i<split.length; i++){
-				if(split[i].equals("bro")){
-					if(i+1<split.length){
-						list = split[i+1];
+			for (int i = 0; i < split.length; i++) {
+				if (split[i].equals("bro")) {
+					if (i + 1 < split.length) {
+						list = split[i + 1];
 					}
-					if(i+2<split.length){
-						listItem = split[i+2];
+					if (i + 2 < split.length) {
+						listItem = split[i + 2];
 					}
 				}
 			}
-			if(!listItem.equals("")){
-				//navigate to the item page
+			if (!listItem.equals("")) {
+				// navigate to the item page
 				String[] splitItem = listItem.split("_");
-				String itemName =splitItem[0];
-				for(int i=1; i< splitItem.length; i++){
-					itemName+=" "+splitItem[i];
+				String itemName = splitItem[0];
+				for (int i = 1; i < splitItem.length; i++) {
+					itemName += " " + splitItem[i];
 				}
 				String[] splitList = list.split("_");
-				String listName =splitList[0];
-				for(int i=1; i< splitList.length; i++){
-					listName+=" "+splitList[i];
+				String listName = splitList[0];
+				for (int i = 1; i < splitList.length; i++) {
+					listName += " " + splitList[i];
 				}
 				LystItem lystItem = d.getListItem(listName, itemName);
 				ArrayList<Attribute> itemAttributes = d.getItemAttributes(lystItem);
-				session.setAttribute("itemAttributes", itemAttributes);
-				session.setAttribute("currentItem", lystItem);
+				request.setAttribute("itemAttributes", itemAttributes);
+				request.setAttribute("currentItem", lystItem);
 				System.out.println("Oh hell yea");
 				request.getRequestDispatcher("/listitem.jsp").forward(request, response);
-			}
-			else{
-				//navigate to the list page
+			} else {
+				// navigate to the list page
 			}
 		}
 	}
@@ -282,5 +335,14 @@ public class LystServlet extends HttpServlet {
 	// }
 	// return "";
 	// }
+
+	public Cookie getCookie(Cookie[] batch, String cookieName) {
+		for (int i = 0; i < batch.length; i++) {
+			if (batch[i].getName().equals(cookieName)) {
+				return batch[i];
+			}
+		}
+		return null;
+	}
 
 }

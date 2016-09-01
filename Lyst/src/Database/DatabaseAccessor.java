@@ -346,9 +346,9 @@ public class DatabaseAccessor {
 		return items;
 	}
 
-	public Object[] getAttributesAndStringPackages(Lyst currentList) {
+	public Object[] getAttributesAndStringPackages(int listId) {
 		Table lists = dynamoDB.getTable("Lists");
-		Item list = lists.getItem("Id", currentList.getListIndex());
+		Item list = lists.getItem("Id", listId);
 		ArrayList<String> attributeList = (ArrayList<String>) list.get("Attributes");
 		ArrayList<Integer> stringList = (ArrayList<Integer>) list.get("StringPackage");
 		return new Object[] { attributeList, stringList };
@@ -592,4 +592,5 @@ public class DatabaseAccessor {
 		return lystItem;
 		
 	}
+
 }

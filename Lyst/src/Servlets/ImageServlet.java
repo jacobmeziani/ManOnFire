@@ -65,37 +65,37 @@ public class ImageServlet extends HttpServlet {
 
         // Decode the file name (might contain spaces and on) and prepare file object.
         URL url = new URL(imagePath+requestedImage);   
-        BufferedImage a = ImageIO.read(url);
-        Dimension imgSize = new Dimension(a.getWidth(), a.getHeight());
-        Dimension boundary = new Dimension(100, 100);
-        Dimension newSize = getScaledDimension(imgSize,boundary);
-        
-
-        // Init servlet response.
-        response.reset();
+//        BufferedImage a = ImageIO.read(url);
+//        Dimension imgSize = new Dimension(a.getWidth(), a.getHeight());
+//        Dimension boundary = new Dimension(100, 100);
+//        Dimension newSize = getScaledDimension(imgSize,boundary);
+//        
+//
+//        // Init servlet response.
+//        response.reset();
+//        
+//        Thumbnails.of(url)
+//        .size(newSize.width, newSize.height)
+//        .outputFormat("png")
+//        .toFile("tmp.png");
+//        
+//        File tmp = new File("tmp.png");
+//        // Get content type by filename.
+//        String contentType = getServletContext().getMimeType(tmp.getName());
+//
+//        // Check if file is actually an image (avoid download of other files by hackers!).
+//        // For all content types, see: http://www.w3schools.com/media/media_mimeref.asp
+//        if (contentType == null || !contentType.startsWith("image")) {
+//            // Do your thing if the file appears not being a real image.
+//            // Throw an exception, or send 404, or show default/warning image, or just ignore it.
+//            response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
+//            return;
+//        }
+//        response.setContentType(contentType);
+//        response.setHeader("Content-Length", String.valueOf(tmp.length()));
         
         Thumbnails.of(url)
-        .size(newSize.width, newSize.height)
-        .outputFormat("png")
-        .toFile("tmp.png");
-        
-        File tmp = new File("tmp.png");
-        // Get content type by filename.
-        String contentType = getServletContext().getMimeType(tmp.getName());
-
-        // Check if file is actually an image (avoid download of other files by hackers!).
-        // For all content types, see: http://www.w3schools.com/media/media_mimeref.asp
-        if (contentType == null || !contentType.startsWith("image")) {
-            // Do your thing if the file appears not being a real image.
-            // Throw an exception, or send 404, or show default/warning image, or just ignore it.
-            response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
-            return;
-        }
-        response.setContentType(contentType);
-        response.setHeader("Content-Length", String.valueOf(tmp.length()));
-        
-        Thumbnails.of(url)
-        .size(newSize.width, newSize.height)
+        .scale(.2)
         .outputFormat("png")
         .toOutputStream(response.getOutputStream());
         

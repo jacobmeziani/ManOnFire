@@ -28,7 +28,6 @@
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="/vsStyle.css">
 <link rel="stylesheet" type="text/css" href="/listitemStyle.css">
-<script src="menuScript.js"></script>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
@@ -47,10 +46,11 @@
 			</div>
 			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pull-right">
-				<a id="rateMenuButton" data-toggle="tooltip" data-placement="bottom" title="Rate!"
-					><img
+				<a href="/" type="button" id="rateMenuButton" data-toggle="tooltip"
+					data-placement="bottom" title="Rate!"><img
 					class="img-responsive topButton pull-right"
-					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/vsLogo.png"> </a>
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/vsLogo.png">
+				</a>
 			</div>
 
 		</div>
@@ -59,15 +59,15 @@
 		<div class="row">
 			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 				<h3 class="centerAlign">
-					<c:out value="${sessionScope.currentItem.name}"></c:out>
+					<c:out value="${requestScope.currentItem.name}"></c:out>
 				</h3>
 				<p class="centerAlign listText">
-					<c:out value="${sessionScope.currentItem.belongingList}"></c:out>
+					<c:out value="${requestScope.currentItem.belongingList}"></c:out>
 				</p>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-4 col-lg-4">
 				<img class="img-circle center-block detailImage"
-					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.currentItem.picPath}"/>">
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.currentItem.picPath}"/>">
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 				<button type="button" id="fullList"
@@ -80,7 +80,7 @@
 		<div class="row">
 			<div class="hidden-lg hidden-md col-sm-12 col-xs-12">
 				<img class="img-circle center-block detailImage"
-					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${sessionScope.currentItem.picPath}"/>">
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.currentItem.picPath}"/>">
 			</div>
 		</div>
 		<div class="row">
@@ -92,7 +92,7 @@
 				<p class="centerAlign attributeText">Ranking</p>
 			</div>
 		</div>
-		<c:forEach var="i" items="${sessionScope.itemAttributes}">
+		<c:forEach var="i" items="${requestScope.itemAttributes}">
 			<div class="row rowPadding">
 				<div class="hidden-xs col-sm-2 col-md-2 col-lg-2"></div>
 				<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
