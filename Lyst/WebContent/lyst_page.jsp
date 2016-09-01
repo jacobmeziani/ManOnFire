@@ -37,6 +37,13 @@
 
 	<div class="container-fluid">
 		<div id="mainbody">
+			<div id = "items">
+				<div id = "topbar">
+					<div class = "nameBox"></div>
+				</div>
+				<div id = "itemList">
+				</div>
+			</div>
 			<div class="container-fluid main-body" id = "spinnerbody">
 				<div class="spinner">
 					<div class="rect1"></div>
@@ -44,13 +51,6 @@
 					<div class="rect3"></div>
 					<div class="rect4"></div>
 					<div class="rect5"></div>
-				</div>
-			</div>
-			<div id = "items">
-				<div id = "topbar">
-					<div class = "nameBox"></div>
-				</div>
-				<div id = "itemList">
 				</div>
 			</div>
 		</div>

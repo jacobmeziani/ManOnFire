@@ -67,9 +67,10 @@ public class ListHandler extends HttpServlet {
 		String[] deliveredAsStrings = request.getParameterValues("delivered[]");
 		ArrayList<Integer> delivered = new ArrayList<Integer>();
 		if (deliveredAsStrings!=null) {
-		for (String string:deliveredAsStrings) {
+			for (String string:deliveredAsStrings) {
 			delivered.add(Integer.parseInt(string));
-		}}
+			}
+		}
 		ArrayList<Integer> result = null;
 		boolean is_final = true;
 		try {

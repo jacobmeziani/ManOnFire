@@ -228,8 +228,6 @@ $(document).ready(function() {
 				isFinal = man;
 				$(".spinner").addClass("hidden");
 				
-
-
 			}
 			
 			working = false;
