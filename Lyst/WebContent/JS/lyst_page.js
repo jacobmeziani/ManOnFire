@@ -24,7 +24,7 @@ function buildItem (picppath, itemname, itemid, scores) {
 			itemBox.append(pointCircle);
 			topLevel.append(itemBox);
 		}
-		$('#items').append(topLevel);
+		$('#itemList').append(topLevel);
 //		
 //		var picDiv = $("<div class = picDiv>");
 //		var pic = $("<img src = "+picpath+">");
@@ -64,7 +64,7 @@ function requestItems(listID, attributeNumber, nextRankingNeeded, action, lastSe
 			"ListID" : listID,
 			"Attribute":attributeNumber,
 			"NextRanking":nextRankingNeeded,
-			"lastRankDelivered":lastSent
+			"LastRankDelivered":lastSent
 		},
 		type: "GET",
 		dataType: "json",
@@ -86,7 +86,7 @@ function requestItems(listID, attributeNumber, nextRankingNeeded, action, lastSe
 			var itemname = item.ItemName;
 			var itemID = item.ItemID;
 			var ratings = item.Ratings;
-			
+	
 			buildItem(picpath, itemname, itemID, ratings);
 		}
 		
@@ -104,6 +104,21 @@ function requestItems(listID, attributeNumber, nextRankingNeeded, action, lastSe
 	return nextRankingNeeded;
 };
 
+function sortList(attributeID) {
+	if (attributeID == attributeWanted) {
+		alert("Already sorting by this attribute");
+		return;
+	}
+	$(".spinner").removeClass("hidden");
+	$("#itemList").empty();
+	
+	attributeWanted = attributeID;
+	isFinal = 0;
+	last_delivered = 0;
+	
+	last_delivered = requestItems(listID, attributeWanted, (number_to_fetch + last_delivered), "initialLoad", last_delivered);
+	
+};
 $(document).ready(function() {
 	
 	//hardcoded shiii
@@ -166,7 +181,7 @@ $(document).ready(function() {
 		    	if (!working) {
 		    		$(".spinner").removeClass("hidden");
 			    	working = true;
-			    	last_delivered = requestItems(listID, attributeWanted, (number_to_fetch + last_delivered), "load", 0);
+			    	last_delivered = requestItems(listID, attributeWanted, (number_to_fetch + last_delivered), "load", last_delivered);
 		    	}
 	    	} else {
 	    		console.log("out of items");
