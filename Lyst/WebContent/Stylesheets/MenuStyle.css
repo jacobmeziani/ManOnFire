@@ -3,21 +3,8 @@
 	list-style: none;
 	position: absolute;
 	z-index: 1032;
-	left: 150px;
 	margin: 0;
 	padding: 0;
-}
-
-.menubackground {
-	position: fixed;
-	background-color: gray;
-	opacity: .5;
-	width:150%;
-	height:120%;
-	z-index:1031;
-	top: -40px;
-	left: -300px;
-	
 }
 
 .list-item a {
@@ -116,4 +103,12 @@
 	display: none; !important
 }
 
+.final li a {
+	padding: 5px 5px;
+	background: black;
+	border: 1px solid #eee;
+	color: #fff;
+	height: 30px;
+	width: 200px;
+	font-size: 16px;}
 

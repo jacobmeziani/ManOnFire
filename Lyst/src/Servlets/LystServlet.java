@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.util.json.JSONArray;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
 
@@ -32,7 +35,8 @@ import Display.ResultAttributes;
 @WebServlet("/lystservlet")
 public class LystServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String categoryHtml = "";
+	private static String categoryHtml = "";
+	private static int n_lists = 6;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -53,6 +57,9 @@ public class LystServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		DatabaseAccessor d = new DatabaseAccessor();
 		Cookie[] freshBatch = request.getCookies();
+		if (categoryHtml == "") {
+			categoryHtml = d.getMenu();
+		}
 
 		if (requestAction != null) {
 			if (requestAction.equals("newRandom") || requestAction.equals("initial")) {
@@ -84,10 +91,6 @@ public class LystServlet extends HttpServlet {
 				request.setAttribute("currentList", items[0]);
 				request.setAttribute("leftItem", items[1]);
 				request.setAttribute("rightItem", items[2]);
-
-				if (categoryHtml == "") {
-					categoryHtml = d.getMenu();
-				}
 				request.setAttribute("CategoryHTML", categoryHtml);
 
 				String categoryName = currentCategory;
@@ -264,32 +267,100 @@ public class LystServlet extends HttpServlet {
 				p.start();
 				}
 			}
+			else if(requestAction.equals("viewLists")){
+				if (categoryHtml == null) {
+					categoryHtml = d.getMenu();
+				}
+				request.setAttribute("CategoryHTML", categoryHtml);
+				
+				JSONObject json = new JSONObject();
+				JSONArray return_lists = new JSONArray() ;
+				JSONObject single_list;
+				
+				String category = (String) request.getParameter("category");
+				if (category== null){
+					category = "Everything";
+				}
+				String[] deliveredAsStrings = request.getParameterValues("delivered[]");
+				ArrayList<Integer> delivered = new ArrayList<Integer>();
+				if (deliveredAsStrings!=null) {
+					for (String string:deliveredAsStrings) {
+					delivered.add(Integer.parseInt(string));
+					}
+				}
+				ArrayList<Integer> result = null;
+				boolean is_final = true;
+				try {
+					result = d.getRandomListNumbers(category,delivered,n_lists);
+					is_final = checkLastReturn(result);
+					if (is_final) {
+						try{
+							result.remove((int) n_lists);
+						} catch(Exception e) {}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println("Result: "+ result);
+				
+				response.addIntHeader("isFinal", (is_final?1:0));
+				
+				Integer ids_to_get[] = new Integer[result.size()];
+				ids_to_get = result.toArray(ids_to_get);
+				List<Item> items =  d.getListIDsFromCategoryTable(ids_to_get);
+				
+				try {
+				for (Item item:items) {
+					single_list = new JSONObject();
+					single_list.put("ListName", item.getString("ListName"));
+					single_list.put("PicPath", item.getString("PicPath"));
+					single_list.put("Category", "Current");//work here
+					single_list.put("CurrentLeader", "Lebron James"); //work here too
+					single_list.put("ListID", item.getInt("Id"));
+					return_lists.put(single_list);
+				}
+				
+				json.put("lists", return_lists);
+				
+				} catch (Exception e) {e.printStackTrace();}
+				
+				response.setContentType("application/json");
+				//response.getWriter().append("Served at: ").append(request.getContextPath());
+				response.getWriter().write(json.toString());
+			}
 		}
 		// look at url if no request action, used to view lists and list items
 		else {
 			StringBuffer stringBuffer = request.getRequestURL();
 			String url = stringBuffer.toString();
 			String[] split = url.split("/");
-			String list = "";
+			String identifier = "";
 			String listItem = "";
 			for (int i = 0; i < split.length; i++) {
 				if (split[i].equals("bro")) {
 					if (i + 1 < split.length) {
-						list = split[i + 1];
+						identifier = split[i + 1];
 					}
 					if (i + 2 < split.length) {
 						listItem = split[i + 2];
 					}
 				}
 			}
-			if (!listItem.equals("")) {
+			if(identifier.equals("lists")){
+				if (categoryHtml == null) {
+					categoryHtml = d.getMenu();
+				}
+				request.setAttribute("CategoryHTML", categoryHtml);
+				request.getRequestDispatcher("/NewFile.jsp").forward(request, response);
+			}
+			else if (!listItem.equals("")) {
 				// navigate to the item page
 				String[] splitItem = listItem.split("_");
 				String itemName = splitItem[0];
 				for (int i = 1; i < splitItem.length; i++) {
 					itemName += " " + splitItem[i];
 				}
-				String[] splitList = list.split("_");
+				String[] splitList = identifier.split("_");
 				String listName = splitList[0];
 				for (int i = 1; i < splitList.length; i++) {
 					listName += " " + splitList[i];
@@ -343,6 +414,13 @@ public class LystServlet extends HttpServlet {
 			}
 		}
 		return null;
+	}
+	
+	private static boolean checkLastReturn(ArrayList<Integer> input) {
+		if (input.size()==n_lists) {
+			return false;
+		}
+		return true;
 	}
 
 }

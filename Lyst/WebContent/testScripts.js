@@ -1,5 +1,3 @@
-
-
 $(document).ready(function() {
 	
 	var delivered = new Array() ;
@@ -8,22 +6,11 @@ $(document).ready(function() {
 	var isFinal = 0;
 	
 	delivered = requestLists(delivered,cat);
-
-	
-	if ("ontouchstart" in document.documentElement) {
-	    //document.documentElement.className += " touch";
-		//alert("touchscreen");
-		var touchscreen = true;
-	} else {
-	    //document.documentElement.className += " no-touch";
-		//alert("non-touchscreen");
-		var touchscreen = false;
-	}
 	
 	var window_width = $(window).width();
 	//////set mobile size
 	var mobile_size = 700;
-	
+	//-----------------------------
 	if (window_width<mobile_size) {
 		$("#top-nav").addClass("mobile");
 		
@@ -32,13 +19,13 @@ $(document).ready(function() {
 		$("#top-nav").find("ul").removeClass("showmethemoney");
 		$("#top-nav").find("ul").addClass("hidden");
 
-		$("#filterbutton").click(function()  {
+		$("#clicker").click(function()  {
 			$("#top-nav").removeClass("hidden");
 			$("#top-nav").addClass("showmethemoney");
 		});
 		$(".menu-item").click(function(event) {
 			event.stopPropagation();
-			if ($(this).hasAnyClass("final finalcategory")) {
+			if ($(this).hasClass("final")) {
 				//do something to set the category
 				//close everything hurr
 				$("#top-nav").find("ul").removeClass("showmethemoney");
@@ -51,20 +38,23 @@ $(document).ready(function() {
 					var newstringest = stringest.split("All ");
 					var curr_cat = newstringest[1];
 					$("#showCategory").html(curr_cat);
-					cat = curr_cat;
-		    		$(".spinner").removeClass("hidden");
-					delivered.length = 0;
-					$("#main-body").html("");
-					delivered = requestLists(delivered,cat);
+					$("#isCategoryList").val("false");
+					$("#currentCategory").val(curr_cat);
 				} else {
 					$("#showCategory").html($(this).find("a").html());
-					cat = $(this).find("a").html();
-		    		$(".spinner").removeClass("hidden");
-					delivered.length = 0;
-					$("#main-body").html("");
-					delivered = requestLists(delivered,cat);
+					if ($(this).hasClass("list-item")) {
+						var dbid = event.target.getAttribute("database-id");
+						$("#currentCategory").val(dbid);
+						$("#isCategoryList").val("true");
+					} else {
+						$("#currentCategory").val($(this).find("a").html());
+						$("#isCategoryList").val("false");
+					}
 				}
-				
+				$("#main-body").empty();
+				$(".spinner").removeClass("hidden");
+				delivered = [];
+				delivered = requestLists(delivered,cat);
 			} else if ($(this).hasClass("children")) {
 				//$("#top-nav").find("ul").removeClass("showmethemoney");
 				//$("#top-nav").find("ul").addClass("hidden");
@@ -92,6 +82,7 @@ $(document).ready(function() {
 		//shows for not mobile 
 	$("#top-nav").addClass("desk");
 	$(".closemenu").addClass("hide");
+	$("#top-nav").addClass("center-block");
 	$(".upmenu").addClass("hide");
 	var menu_ul = $("#top-nav");
 	var menu_offset = menu_ul.offsetHeight;
@@ -114,9 +105,7 @@ $(document).ready(function() {
 	$("#top-nav").find("ul").removeClass("showmethemoney");
 	$("#top-nav").find("ul").addClass("hidden");
 	//clicker functions go here 
-	$("#filterbutton").click(function() {
-		$(".menubackground").removeClass("hidden");
-		$(".menubackground").addClass("showmethemoney");
+	$("#clicker").click(function() {
 		if ($("#top-nav").hasClass("hidden")) {
 			$("#top-nav").removeClass("hidden");
 			$("#top-nav").addClass("showmethemoney");
@@ -128,33 +117,9 @@ $(document).ready(function() {
 			$("#top-nav").find("a").removeClass("selected");
 		}
 	});
-	
-	$(".menubackground").click(function () {
-		$(".menubackground").removeClass("showmethemoney");
-		$(".menubackground").addClass("hidden");
-		$("#top-nav").find("ul").removeClass("showmethemoney");
-		$("#top-nav").find("ul").addClass("hidden");
-		$("#top-nav").removeClass("showmethemoney");
-		$("#top-nav").addClass("hidden");
-		$("#top-nav").find("a").removeClass("selected");
-	});
-	
-	$("#categoryselect").click(function(){
-		$(".menubackground").removeClass("showmethemoney");
-		$(".menubackground").addClass("hidden");
-		$("#top-nav").find("ul").removeClass("showmethemoney");
-		$("#top-nav").find("ul").addClass("hidden");
-		$("#top-nav").removeClass("showmethemoney");
-		$("#top-nav").addClass("hidden");
-		$("#top-nav").find("a").removeClass("selected");
-	});
-
 	$(".menu-item").click(function (event) {
-
 		event.stopPropagation();
-		if ($(this).hasAnyClass("final finalcategory")) {
-			$(".menubackground").removeClass("showmethemoney");
-			$(".menubackground").addClass("hidden");
+		if ($(this).hasClass("final")) {
 			//do something to set the code
 			//do something more
 			if ($(this).hasClass("all_class")) { 
@@ -162,26 +127,31 @@ $(document).ready(function() {
 				var newstringest = stringest.split("All ");
 				var curr_cat = newstringest[1];
 				$("#showCategory").html(curr_cat);
-				cat = curr_cat;
-				delivered.length = 0;
-	    		$(".spinner").removeClass("hidden");
-				$("#main-body").html("");
-				delivered = requestLists(delivered,cat);
+				$("#isCategoryList").val("false");
+				$("#currentCategory").val(curr_cat);
 			} else {
 				$("#showCategory").html($(this).find("a").html());
-				cat = $(this).find("a").html();
-				delivered.length = 0;
-	    		$(".spinner").removeClass("hidden");
-				$("#main-body").html("");
-				delivered = requestLists(delivered,cat);
+				if ($(this).hasClass("list-item")) {
+					var dbid = event.target.getAttribute("database-id");
+					$("#currentCategory").val(dbid);
+					$("#isCategoryList").val("true");
+				} else {
+					$("#currentCategory").val($(this).find("a").html());
+					$("#isCategoryList").val("false");
+				}
 			}
+
 			
 			$("#top-nav").find("ul").removeClass("showmethemoney");
 			$("#top-nav").find("ul").addClass("hidden");
 			$("#top-nav").removeClass("showmethemoney");
 			$("#top-nav").addClass("hidden");	
 			$("#top-nav").find("a").removeClass("selected");
-		};
+			$("#main-body").empty();
+			$(".spinner").removeClass("hidden");
+			delivered = [];
+			delivered = requestLists(delivered,cat);
+		}
 		if ($(this).hasClass("children")) {
 			$(this).parent().find("a").removeClass("selected");
 			$(this).children("a").addClass("selected");
@@ -204,8 +174,9 @@ $(document).ready(function() {
 	
 	function requestLists (delivered_in,category_in) {
 		var xhr = $.ajax({
-			url: "ListHandler",
+			url: "bro",
 			data: {
+				"action" : "viewLists",
 				"category": category_in,
 				"delivered": delivered_in
 			},
