@@ -84,9 +84,11 @@ public class MoneyServlet extends HttpServlet {
 //			
 			//check for completed return. this is used by client side to stop fetching more results
 			int testLength = nextranking - lastrankdelivered;
-			
+			System.out.print("test length: ");
+			System.out.println(testLength);
+			System.out.println(lengthReturned);
 			boolean is_final;
-			if (testLength >= lengthReturned) {
+			if (testLength <= lengthReturned) {
 				//soooo this can break quite easily if the rankings change while hte list is being fetched.
 				//so i put in the greater than or equal to to basically cut our chances of it breaking in half
 				is_final = false;
@@ -139,7 +141,9 @@ public class MoneyServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
-				tempjsonitems[rankingAttributeWanted] = tempitem;
+				tempjsonitems = fixrankingbullshit(rankingAttributeWanted, tempjsonitems, tempitem);
+				
+				//tempjsonitems[rankingAttributeWanted] = tempitem;
 			}
 			
 			JSONArray JSONItems = null;
@@ -193,9 +197,11 @@ public class MoneyServlet extends HttpServlet {
 //			
 			//check for completed return. this is used by client side to stop fetching more results
 			int testLength = nextranking - lastrankdelivered;
-			
+			System.out.print("test length: ");
+			System.out.println(testLength);
+			System.out.println(lengthReturned);
 			boolean is_final;
-			if (testLength >= lengthReturned) {
+			if (testLength <= lengthReturned) {
 				//soooo this can break quite easily if the rankings change while hte list is being fetched.
 				//so i put in the greater than or equal to to basically cut our chances of it breaking in half
 				is_final = false;
@@ -248,7 +254,9 @@ public class MoneyServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
-				tempjsonitems[rankingAttributeWanted] = tempitem;
+				tempjsonitems = fixrankingbullshit(rankingAttributeWanted, tempjsonitems, tempitem);
+
+				//tempjsonitems[rankingAttributeWanted] = tempitem;
 			}
 			
 			JSONArray JSONItems = null;
@@ -272,6 +280,25 @@ public class MoneyServlet extends HttpServlet {
 			
 			response.getWriter().write(jsonObject.toString());
 			
+		}
+		
+	}
+	
+	private JSONObject[] fixrankingbullshit(int index, JSONObject[] inputArray, JSONObject item) {
+		
+		int total = inputArray.length;
+		
+		JSONObject current = null;
+		try {
+			current = inputArray[index];
+		} catch (Exception e) {
+			return fixrankingbullshit(0, inputArray, item);
+		}
+		if (current == null) {
+			inputArray[index] = item;
+			return inputArray;
+		} else {
+			return fixrankingbullshit(index + 1, inputArray, item);
 		}
 		
 	}
