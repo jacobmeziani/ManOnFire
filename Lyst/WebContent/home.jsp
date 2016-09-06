@@ -26,7 +26,7 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="vsStyle.css">
-<link rel="stylesheet" type="text/css" href="march29.css">
+<link rel="stylesheet" type="text/css" href="Stylesheets/MenuStyle.css">
 <link rel="stylesheet" type="text/css" href="sliderStyle.css">
 <script src="april3.js"></script>
 <script src="sliderScript.js"></script>
@@ -38,7 +38,7 @@
 	<div class="container-fluid">
 		<div class="row rowPadding well well-sm">
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-				<a data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
+				<a href="/bro/lists" data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
 					class="img-responsive topButton"
 					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/listLogo.png"></a>
 			</div>
@@ -66,7 +66,10 @@
 					class="btn btn-circle btn-xl center-block">
 					<span class="glyphicon glyphicon-th"></span>
 				</button>
-				${requestScope.CategoryHTML}
+				<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-5"></div>
+						<div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2">
+										${requestScope.CategoryHTML}
+										</div>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div id="topRightButton"

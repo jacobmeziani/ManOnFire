@@ -109,11 +109,11 @@ public class HTMLCategory {
 			String html_opening_ul = "<ul class = \"showmethemoney\">\n";
 			String up_html = "<li class = \"final upmenu\"><a class = \"showmethemoney\"><span class=\"glyphicon glyphicon-arrow-left\"></span>Back</a></li>\n";
 			String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\"><span class=\"glyphicon glyphicon-remove\"></span>Close</a></li>\n";
-			String html_first_li = "<li class = \"menu-item list-item final finalcategory all_class\"><a class=\"showmethemoney all_class\"> All "+this.name+"</a></li>\n";
+			String html_first_li = "<li class = \"menu-item list-item final finalcategory all_class\"><a class=\"showmethemoney all_class finalNode\"> All "+this.name+"</a></li>\n";
 			String html_lysts = "";
 			String temp;
 			for (ListServerInit list:subLysts) {
-				temp = "<li class = \"list-item menu-item final\"><a class = \"showmethemoney\" database-id=\"" + list.getID() + "\">"+list.getName()+"</a></li>\n";
+				temp = "<li class = \"list-item menu-item final\"><a class = \"showmethemoney finalNode\" database-id=\"" + list.getID() + "\">"+list.getName()+"</a></li>\n";
 				html_lysts = html_lysts+temp;
 			}
 			String html = html_opening_li+html_opening_ul+up_html+close_html+html_first_li+html_lysts+"</ul></li>\n";
@@ -125,7 +125,7 @@ public class HTMLCategory {
 				System.out.println("inhere2");
 				String top_ul = "<ul id =\"top-nav\" class=\"showmethemoney\">\n";
 				String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\"><span class=\"glyphicon glyphicon-remove\"></span>Close</a></li>\n";
-				String html_first_li = "<li class = \"menu-item final\"><a class=\"showmethemoney\">Everything</a></li>\n";
+				String html_first_li = "<li class = \"menu-item final\"><a class=\"showmethemoney finalNode\">Everything</a></li>\n";
 				String html_recurse = "";
 				String temp;
 				for (HTMLCategory category:subCategories) {
@@ -139,7 +139,7 @@ public class HTMLCategory {
 				String html_opening_ul = "<ul class = \"showmethemoney\">\n";
 				String up_html = "<li class = \"final upmenu\"><a class = \"showmethemoney\"><span class=\"glyphicon glyphicon-arrow-left\"></span>Back</a></li>\n";
 				String close_html = "<li class = \"final closemenu\"><a class = \"showmethemoney\"><span class=\"glyphicon glyphicon-remove\"></span>Close</a></li>\n";
-				String html_first_li = "<li class = \"menu-item final all_class\"><a class=\"showmethemoney\"> All "+this.name+"</a></li>\n";
+				String html_first_li = "<li class = \"menu-item final all_class\"><a class=\"showmethemoney finalNode\"> All "+this.name+"</a></li>\n";
 				String html_recurse = "";
 				String temp;
 				for (HTMLCategory category:subCategories) {

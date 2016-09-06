@@ -35,14 +35,14 @@
 	<div class="container-fluid">
 		<div class="row rowPadding well well-sm">
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-				<a data-toggle="tooltip" data-placement="bottom" title="View Lists"
-					><img
+				<a href="/bro/lists" data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
 					class="img-responsive topButton"
 					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/listLogo.png"></a>
 			</div>
 			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				<img class="theLogo center-block" src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/logo.png">
+				<img class="theLogo center-block"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/logo.png">
 			</div>
 			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pull-right">

@@ -20,11 +20,13 @@
 
 
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
-
-<script src="JS/lists.js"></script>
-<link rel="stylesheet" href="Stylesheets/lists.css">
-<link rel="stylesheet" href = "Stylesheets/MenuStyle.css">
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="stylesheet" type="text/css" href="/vsStyle.css">
+<script src="/JS/lists.js"></script>
+<link rel="stylesheet" href="/Stylesheets/lists.css">
+<link rel="stylesheet" href="/Stylesheets/MenuStyle.css">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,68 +34,54 @@
 
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container">
-		<div class="btn-group" role="group">
-			<button type="button" id="categoryselect" class="btn">
-				<span id="showCategory">Everything</span>
-			</button>
-			${sessionScope.CategoryHTML}
-			<div class = "menubackground hidden"></div>
-			<button type="button" id="filterbutton" class="btn"> <span class = "caret"></span></button>
+	<div class="container-fluid">
+		<div class="row rowPadding well well-sm">
+			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+				<a href="/bro/lists" data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
+					class="img-responsive topButton"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/listLogo.png"></a>
+			</div>
+			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<img class="theLogo center-block"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/logo.png">
+			</div>
+			<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
+			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pull-right">
+				<a href="/" type="button" id="rateMenuButton" data-toggle="tooltip"
+					data-placement="bottom" title="Rate!"><img
+					class="img-responsive topButton pull-right"
+					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/vsLogo.png">
+				</a>
+			</div>
 
 		</div>
 	</div>
-	</nav>
-	<div class="container-fluid main-body" id = "main-body">
-
-		<!-- <div class="col-md-6">
-			<div class="item-desktop">
-				<img class="img-responsive" src="imageservlet/dicaps.png">
-				<div class="show-info">
-					<span>Current Category: Sports</span> <span>Current Leader:
-						poster on curry</span>
+	<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<button id="clicker" type="button"
+						class="btn btn-circle btn-xl center-block">
+						<span class="glyphicon glyphicon-th"></span></button>
 				</div>
-				<div class="showlist-desktop">Lebron's Best Dunks of 2015</div>
+				<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class=" col-xs-5 col-sm-5 col-md-5 col-lg-5"></div>
+						<div class=" col-xs-2 col-sm-2 col-md-2 col-lg-2">
+										${requestScope.CategoryHTML}
+										</div>
+						<h4 id="showCategory" class ="centerAlign">Everything</h4>
+				</div>
+		<div class="container-fluid main-body" id = "main-body">
+	</div><div class="container-fluid main-body" id = "spinnerbody">
 
+			<div class="spinner">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
 			</div>
 		</div>
-		<div class="col-md-6">
-			<div class="item-desktop">
-				<img class="img-responsive" src="imageservlet/dicaps.png">
-				<div class="show-info">
-					<span>Current Category: Sports</span> <span>Current Leader:
-						poster on curry</span>
-				</div>
-				<div class="showlist-desktop">Lebron's Best Dunks of 2015</div>
 
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div class="item-desktop">
-				<img class="img-responsive" src="imageservlet/dicaps.png">
-				<div class="show-info">
-					<span>Current Category: Sports</span> <span>Current Leader:
-						poster on curry</span>
-				</div>
-				<div class="showlist-desktop">Lebron's Best Dunks of 2015</div>
-
-			</div>
-		</div>
- -->	</div>
- <div class="container-fluid main-body" id = "spinnerbody">
-</div><div class="container-fluid main-body" id = "spinnerbody">
- 
-		<div class="spinner">
-			<div class="rect1"></div>
-			<div class="rect2"></div>
-			<div class="rect3"></div>
-			<div class="rect4"></div>
-			<div class="rect5"></div>
-		</div>
-	</div>
-
-
+		
 
 </body>
 </html>

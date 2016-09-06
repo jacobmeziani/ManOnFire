@@ -308,7 +308,7 @@ $(document).ready(function() {
 			listUrl+= "_"+split[j];
 		}
 		}
-		var picLink = $("<a href = bro/"+listUrl+">"); 
+		var picLink = $("<a href ="+listUrl+">"); 
 		var pic = $("<img src = "+"https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/"+picpath+">");
 		pic.addClass("img-responsive");
 		pic.addClass("img-rounded");

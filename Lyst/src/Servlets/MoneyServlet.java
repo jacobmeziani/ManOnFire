@@ -111,7 +111,7 @@ public class MoneyServlet extends HttpServlet {
 				int itemID = (Integer) tempItemMap.get("ItemID");
 				rankingAttributeWanted = rankingAttributeWanted - smallestRankNeeded;  //finding out where to put it inside array
 				
-				String itemname = db.getItemName(itemID);  //TODO: must return picpath as well 
+				//String itemname = db.getItemName(itemID);  //TODO: must return picpath as well 
 				String picpath = "swaggyp";
 				ArrayList<Map<String, Object>> attributeList = db.getAttributeItem(itemID, listid);
 				
@@ -133,7 +133,7 @@ public class MoneyServlet extends HttpServlet {
 				//now to build the temp item to later add to array
 				
 				try {
-					tempitem.put("ItemName", itemname);
+					tempitem.put("ItemName", "");
 					tempitem.put("ItemID", itemID);
 					tempitem.put("PicPath", picpath);
 					tempitem.put("Ratings", itemAttributes);
@@ -224,7 +224,7 @@ public class MoneyServlet extends HttpServlet {
 				int itemID = (Integer) tempItemMap.get("ItemID");
 				rankingAttributeWanted = rankingAttributeWanted - smallestRankNeeded;  //finding out where to put it inside array
 				
-				String itemname = db.getItemName(itemID);  //TODO: must return picpath as well 
+				//String itemname = db.getItemName(itemID);  //TODO: must return picpath as well 
 				String picpath = "swaggyp";
 				ArrayList<Map<String, Object>> attributeList = db.getAttributeItem(itemID, listid);
 				
@@ -246,7 +246,7 @@ public class MoneyServlet extends HttpServlet {
 				//now to build the temp item to later add to array
 				
 				try {
-					tempitem.put("ItemName", itemname);
+					tempitem.put("ItemName", "");
 					tempitem.put("ItemID", itemID);
 					tempitem.put("PicPath", picpath);
 					tempitem.put("Ratings", itemAttributes);

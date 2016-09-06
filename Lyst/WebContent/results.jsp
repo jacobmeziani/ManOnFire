@@ -32,10 +32,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
-	<div class="container-fluid">
+		<div class="container-fluid">
 		<div class="row rowPadding well well-sm">
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-				<a data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
+				<a href="/bro/lists" data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
 					class="img-responsive topButton"
 					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/listLogo.png"></a>
 			</div>

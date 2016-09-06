@@ -144,7 +144,7 @@ public class DatabaseAccessor {
 		return categories.scan();
 	}
 	
-	public String getItemName(int itemid) {  //TODO: must return pic path as well sorry
+	public LystItem getItemName(int itemid) {  //TODO: must return pic path as well sorry
 		//
 		Table items = dynamoDB.getTable("ListItems");
 		ScanSpec spec = new ScanSpec()
@@ -157,7 +157,8 @@ public class DatabaseAccessor {
 		Item item = iter.next();
 		
 		String itemname = item.getString("ItemName");
-		return itemname;
+		String picPath = item.getString("PicPath");
+		return new LystItem(itemname, picPath);
 		
 	}
 	
@@ -243,6 +244,7 @@ public class DatabaseAccessor {
 			itemMap.put("AttributeNumber", attributeNumber);
 			itemMap.put("Rating", item.getInt("Rating"));
 			itemMap.put("Ranking", item.getInt("Ranking"));
+			itemMap.put("AttributeName", item.getString("AttributeName"));
 			
 			returnSauce.add(attributeNumber, itemMap);
 		}

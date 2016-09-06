@@ -1,21 +1,6 @@
-body {
-	background-color: #cccccc;
-/* 	background-color: #ff6666;
- */		font-family: Tahoma, Geneva, sans-serif;
-
-/* 	soft red : #FF5A5F;
-	selected : #C20021;
-	other red: #ff6666 */
-}
-
-.col-md-6 {
-	padding-bottom: 30px;
-	max-width: 500px;
-}
-
 
 .showlist-desktop {
-	color: #333333;
+	color: #000000;
 	transition: all 0.2s ease;
 	height: 80px;
 	width: 100%;
@@ -24,32 +9,27 @@ body {
 	opacity: 0.8;
 	text-align: center;
 	font-variant: small-caps;
-	padding-top: 20px;
 	position: absolute;
-	bottom: 10px;
 }
 
-#categoryselect,#categoryselect:hover {
-	z-index: 1032;
-	color: white;
-	width: 150px;
-	cursor: default;
-	background-color: #FF5A5F;
-}
+/* .imager{ */
+/* 	width: 400px; */
+/* 	height:300px; */
+/* } */
 
 
-#filterbutton {
-	border: none;
-	border-left: 2px solid;
-	border-color: #C20021;
-	height: 34px;
-	background-color: #FF5A5F;
+/* #filterbutton { */
+/* 	border: none; */
+/* 	border-left: 2px solid; */
+/* 	border-color: #C20021; */
+/* 	height: 34px; */
+/* 	background-color: #FF5A5F; */
 	
-}
+/* } */
 
-#filterbutton:hover {
-	background-color: #C20021;
-}
+/* #filterbutton:hover { */
+/* 	background-color: #C20021; */
+/* } */
 
 .show-info {
 	color: #333333;
@@ -101,29 +81,8 @@ button {
 
 
 .item-desktop {
-	position: relative;
-	padding: 10px;
-/* 	padding-left: 10px;
-	padding-top: 10px;
-	padding-right: 10px; */
-	padding-bottom: 90px;
-	border: 7 px solid;
-	border-color: #808080;
- 	background-color: white;
-	-moz-box-shadow: 3px 3px 4px #cc3300;
-	-webkit-box-shadow: 3px 3px 4px #cc00cc;
-	box-shadow: 3px 3px 4px #000000;
-	cursor: pointer;
+	margin-top: 100px;
 }
-
-.col-desk {
-	
-}
-
-.col-mob {
-	
-}
-
 
 .spinner {
   margin: 100px auto;

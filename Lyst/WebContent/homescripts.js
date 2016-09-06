@@ -12,37 +12,7 @@ var rightItemProps;
 $(document).ready(function() {
 
 	$("#randomButton").click(function() {
-		$("#rightPic").fadeOut("slow");
-		$("#leftName").fadeOut("slow");
-		$("#rightName").fadeOut("slow");
-		$("#rightName2").fadeOut("slow");
-		$("#leftName2").fadeOut("slow");
-		$("#vsButtonMobile").fadeOut("slow");
-		$("#leftPic").fadeOut("slow",function(){
-		var category = $("#currentCategory").attr("value");
-		var list = $("#isCategoryList").attr("value");
-		$.get("bro", {
-			"action" : "newRandom",
-			"currentCategory" : category,
-			"isList" : list
-		}, function(html) {
-			var parsed = $('<div/>').append(html);
-			$("#leftPic").html(parsed.find("#leftPic"));
-			$("#leftPic").fadeIn("slow");
-			$("#leftName").html(parsed.find("#leftName"));
-			$("#leftName").fadeIn("slow");
-			$("#list").html(parsed.find("#list"));
-			$("#rightPic").html(parsed.find("#rightPic"));
-			$("#rightPic").fadeIn("slow");
-			$("#rightName").html(parsed.find("#rightName"));
-			$("#rightName").fadeIn("slow");
-			$("#rightName2").html(parsed.find("#rightName2"));
-			$("#leftName2").html(parsed.find("#leftName2"));
-			$("#rightName2").fadeIn("slow");
-			$("#leftName2").fadeIn("slow");
-			$("#vsButtonMobile").fadeIn("slow");
-		});
-		});
+	newMatchup();
 	})
 
 	$("#vsButton").click(function() {
@@ -307,6 +277,40 @@ function imgLoaded(img){
  
     $img.addClass('loaded');
 };
+
+function newMatchup(){
+	$("#rightPic").fadeOut("slow");
+	$("#leftName").fadeOut("slow");
+	$("#rightName").fadeOut("slow");
+	$("#rightName2").fadeOut("slow");
+	$("#leftName2").fadeOut("slow");
+	$("#vsButtonMobile").fadeOut("slow");
+	$("#leftPic").fadeOut("slow",function(){
+	var category = $("#currentCategory").attr("value");
+	var list = $("#isCategoryList").attr("value");
+	$.get("bro", {
+		"action" : "newRandom",
+		"currentCategory" : category,
+		"isList" : list
+	}, function(html) {
+		var parsed = $('<div/>').append(html);
+		$("#leftPic").html(parsed.find("#leftPic"));
+		$("#leftPic").fadeIn("slow");
+		$("#leftName").html(parsed.find("#leftName"));
+		$("#leftName").fadeIn("slow");
+		$("#list").html(parsed.find("#list"));
+		$("#rightPic").html(parsed.find("#rightPic"));
+		$("#rightPic").fadeIn("slow");
+		$("#rightName").html(parsed.find("#rightName"));
+		$("#rightName").fadeIn("slow");
+		$("#rightName2").html(parsed.find("#rightName2"));
+		$("#leftName2").html(parsed.find("#leftName2"));
+		$("#rightName2").fadeIn("slow");
+		$("#leftName2").fadeIn("slow");
+		$("#vsButtonMobile").fadeIn("slow");
+	});
+	});
+}
 
 // not used right now. mebe never
 function LystItem(name,belongingList,picPath,overallRating,listId,itemId){

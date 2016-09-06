@@ -1,164 +1,127 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>top bar testing</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="style.css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<title>Insert title here</title>
+
+
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet">
+
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
+
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<link
+	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"
+	rel="stylesheet">
+
+<link href="testCss.css" rel="stylesheet">
+<link href="vsStyle.css" rel="stylesheet">
+
+
+
+
+
 </head>
-
 <body>
 
-<div class="container-fluid">
-	<div class ="well">
-		<div class ="row">
-			<div class= "col-md-2">
-				<img src="images/logo.png" class=img-thumbnail" alt="logo" width="71" height="40">
-			</div>
-			<div class= "col-md-6">
-				<div class = "input-group">
-					<input type="text" class="form-control" placeholder="Search..." aria-label = "search_term">
-					<div class="input-group-btn">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">All<span class="caret"></span></button>
-						<ul class="dropdown-menu dropdown-menu-right">
-							<li><a href="...">Categories</a></li>
-							<li><a href="...">Lysts</a></li>
-							<li><a href="...">Items</a></li>
-						</ul>
-					</div> 				
-				</div>
-			</div>
-			<div class = "col-md-2">
-					<button type="button" class="btn btn-default dropdown-toggle" aria-label="categories" ariahaspopup="true" data-toggle="dropdown">
-  						<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
-  						<span class="carat"></span>
-					</button>
-				<div class="dropdown-menu">
-					<ul class="col-md-5">
-						<li><button type="button" class="btn btn-default">Sports</button></li>
-						<li><button type="button" class="btn btn-default">Entertainment</button></li>
-					</ul>
-					<ul class="col-md-5">
-						<li><button type="button" class="btn btn-default">Nudes</button></li>
-						<li><button type="button" class="btn btn-default">Pornos</button></li>
-					</ul>
-				</div>
-			</div>
-			<div class= "col-md-2">
-			</div>
-	
-		</div>
-	</div>
-</div>
- 
-
-
-
-<body>
 	<div class="container-fluid">
-		<div class = "row">
-			<div class = "col-md-2">
-					<div class=navbar-header">
-			<a class="navbar-brand" href="index.jsp"> <img alt="logo" src="images/logo.png" height="30px"></a>
+		<!-- 				<div id="topbar"> -->
+		<!-- 					<div class="nameBox" style="width: 200px;"></div> -->
+		<!-- 					<div class="attributeBox"> -->
+		<!-- 						<span -->
+		<!-- 							class="glyphicon glyphicon-sort-by-attributes-alt sortButton" -->
+		<!-- 							id="sort0"></span> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="attributeBox"> -->
+		<!-- 						<span -->
+		<!-- 							class="glyphicon glyphicon-sort-by-attributes-alt sortButton" -->
+		<!-- 							id="sort1"></span> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="attributeBox"> -->
+		<!-- 						<span -->
+		<!-- 							class="glyphicon glyphicon-sort-by-attributes-alt sortButton" -->
+		<!-- 							id="sort2"></span> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="attributeBox"> -->
+		<!-- 						<span -->
+		<!-- 							class="glyphicon glyphicon-sort-by-attributes-alt sortButton" -->
+		<!-- 							id="sort3"></span> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="attributeBox"> -->
+		<!-- 						<span -->
+		<!-- 							class="glyphicon glyphicon-sort-by-attributes-alt sortButton" -->
+		<!-- 							id="sort4"></span> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="attributeBox"> -->
+		<!-- 						<span -->
+		<!-- 							class="glyphicon glyphicon-sort-by-attributes-alt sortButton" -->
+		<!-- 							id="sort5"></span> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="attributeBox"> -->
+		<!-- 						<span -->
+		<!-- 							class="glyphicon glyphicon-sort-by-attributes-alt sortButton" -->
+		<!-- 							id="sort6"></span> -->
+		<!-- 					</div> -->
+		<!-- 				</div> -->
+		<div class="row rowPadding itemInList">
+			<div class="col-xs-12 col-sm-2 col-md-2 itemBox">
+					<p class ="numberText">1</h3>
+					<img class="img-circle center-block listItemImage"
+						src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Villains/bane.jpg">
 			</div>
+			<div class ="col-xs-2 hidden-sm hidden-md hidden-lg"></div>
+			<div class="col-xs-10 col-sm-2 col-md-2 itemBox">
+				<h3 class="itemName">Bane Sauce</h3>
 			</div>
-			<div class= "col-md-6">
-			<div class = "navbar-form" role = "search"> -->
-			<div class = "input-group">
-					<input type="text" class="form-control" placeholder="Search..." aria-label = "search_term">
-					<div class="input-group-btn">
-						<button type="button" class="btn btn-default ">Submit</button>
-					</div> 				
-				</div>
+			<div class="col-xs-2 col-sm-1 col-md-1 attributeBox">
+				<div class="attributeName">Overall</div>
+				<span class="redRating center-block"><p class="ratingNumber">88</p></span>
 			</div>
+			<div class="col-xs-2 col-sm-1 col-md-1 attributeBox">
+				<div class="attributeName">Evil</div>
+				<span class="redRating center-block"><p class="ratingNumber">85</p></span>
 			</div>
-			<div class="col-md-2">
-				<button type="button" class="btn btn-default navbar-btn">Show Lysts</button>
+			<div class="col-xs-2 col-sm-1 col-md-1 attributeBox">
+				<div class="attributeName">Fighting</div>
+				<span class="redRating center-block"><p class="ratingNumber">91</p></span>
+			</div>
+			<div class="col-xs-2 col-sm-1 col-md-1 attributeBox">
+				<div class="attributeName">Charisma</div>
+				<span class="redRating center-block"><p class="ratingNumber">92</p></span>
+			</div>
+			<div class="col-xs-2 col-sm-1 col-md-1 attributeBox">
+				<div class="attributeName">Intimidating</div>
+				<span class="redRating center-block"><p class="ratingNumber">100</p></span>
+			</div>
+			<div class="col-xs-2 col-sm-1 col-md-1 attributeBox">
+				<div class="attributeName">Iconic</div>
+				<span class="redRating center-block"><p class="ratingNumber">77</p></span>
+			</div>
+			<div class="col-xs-2 col-sm-1 col-md-1 attributeBox">
+				<div class="attributeName">Iconic</div>
+				<span class="redRating center-block"><p class="ratingNumber">77</p></span>
+			</div>
+
+		</div>
+
+		<div id="spinnerbody" class="container-fluid main-body">
+			<div class="spinner hidden">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
 			</div>
 		</div>
 	</div>
-</nav>
-<!-- 		
-		<div class=navbar-header">
-			<a class="navbar-brand" href="/"><img alt="logo" src="images/logo.png" height="30px"></a>
-		</div>
-		<form class = "navbar-form" role="search">
-		
-			<div class="form-group">
-				<input type="text" class="form-control wider_search" placeholder="Search for lysts, items, or categories..." name="search_term">
-			</div>
-			<button type ="submit" class="btn btn-default">Search!</button>
-		</form>
-		 -->
-		
-		
-		
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	</div>
-</nav>
-
-
-
-
-
-
-<nav class="navbar navbar-default">
-	<div class = "container">
-		<div class ="row">
-			<div class= "col-md-2">
-				<div class=navbar-header">
-					<a class="navbar-brand" href="/"><img alt="logo" src="images/logo.png" height="30px"></a>		
-			</div>
-			</div>
-			<div class= "col-md-6">
-				<div class = "input-group">
-					<input type="text" class="form-control" placeholder="Search..." aria-label = "search_term">
-					<div class="input-group-btn">
-						<button type="button" class="btn btn-default ">Submit</button>
-					</div> 				
-				</div>
-			</div>
-			<div class = "col-md-2">
-					<button type="button" class="btn btn-default dropdown-toggle" aria-label="categories" ariahaspopup="true" data-toggle="dropdown">
-  						<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
-  						<span class="carat"></span>
-					</button>
-				<div class="dropdown-menu">
-					<ul class="col-md-5">
-						<li><button type="button" class="btn btn-default">Sports</button></li>
-						<li><button type="button" class="btn btn-default">Entertainment</button></li>
-					</ul>
-					<ul class="col-md-5">
-						<li><button type="button" class="btn btn-default">Nudes</button></li>
-						<li><button type="button" class="btn btn-default">Pornos</button></li>
-					</ul>
-				</div>
-			</div>
-			<div class= "col-md-2">
-				<button type="button" class="btn btn-default pull-right">About us!</button>
-			</div>
-		</div>
-	</div>
-</nav>
-
-
-
 </body>
 </html>

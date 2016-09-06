@@ -86,6 +86,13 @@ public class Attribute implements Serializable, Comparable<Attribute> {
 		this.listId = listId;
 		this.average = average;
 	}
+	
+	public Attribute(String name, int attributeNumber, int rating, int ranking){
+		this.name = name;
+		this.attributeNumber = attributeNumber;
+		this.rating = rating;
+		this.ranking = ranking;
+	}
 
 	public void computeAverage(){
 		if (entries.doubleValue() !=0){

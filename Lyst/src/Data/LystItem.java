@@ -3,7 +3,7 @@ package Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LystItem implements Serializable {
+public class LystItem implements Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	public String name;
@@ -32,6 +32,15 @@ public class LystItem implements Serializable {
 		this.itemId = itemId;
 		this.listId = listId;
 	}
+	
+	public LystItem(String name, String picPath) {
+		this.name = name;
+		if (picPath != null) {
+			this.picPath = picPath;
+		} else {
+			this.picPath = "empty";
+		}
+	}
 
 	public String getName() {
 		return name;
@@ -48,6 +57,15 @@ public class LystItem implements Serializable {
 				}
 		}
 		return nameUrl;
+	}
+	
+	public int getSelectedAttributeRanking(int attributeNumber){
+		for(int i=0; i< attributes.size(); i++){
+			if(attributes.get(i).getAttributeNumber() == attributeNumber){
+				return attributes.get(i).getRanking(); 
+			}
+		}
+		return 0;
 	}
 	
 	public String getListUrl() {
