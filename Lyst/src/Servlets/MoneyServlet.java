@@ -279,7 +279,7 @@ public class MoneyServlet extends HttpServlet {
 			}
 			
 			response.getWriter().write(jsonObject.toString());
-			
+		
 		}
 		
 	}

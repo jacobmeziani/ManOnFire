@@ -439,132 +439,17 @@ public class LystServlet extends HttpServlet {
 protected void serveLists(String action, HttpServletRequest request, HttpServletResponse response, DatabaseAccessor db) throws ServletException, IOException {
 		
 		if (action.equals("initialLoad")) {
-			
-			//first step -- getting the attributes for that particular list
+			response.setContentType("application/json");
 			String templistid = request.getParameter("ListID");
 			int listid = Integer.parseInt(templistid);
 			
 			String tempattributenumber = request.getParameter("Attribute");
-			final int attributenumber = Integer.parseInt(tempattributenumber);
-			String tempnextranking = request.getParameter("NextRanking");
-			int nextranking = Integer.parseInt(tempnextranking);
+			int attributenumber = Integer.parseInt(tempattributenumber);
 			
-			int lastrankdelivered = 0;
-			int smallestRankNeeded = lastrankdelivered + 1;
-			List<String> attributes = db.getAttributes(listid);
-			
-			ArrayList<Map<String, Object>> items = db.getRankedIDs(listid, attributenumber, smallestRankNeeded, nextranking);
-			
-			int lengthReturned = items.size();
-			JSONObject[] tempjsonitems = new JSONObject[lengthReturned];
-//			for (int ii = 0; ii < lengthReturned; ii++) {
-//				tempjsonitems.add(null);  //otherwise it breaks elsewhere
-//			}
-//			
-			//check for completed return. this is used by client side to stop fetching more results
-			int testLength = nextranking - lastrankdelivered;
-			System.out.print("test length: ");
-			System.out.println(testLength);
-			System.out.println(lengthReturned);
-			boolean is_final;
-			if (testLength <= lengthReturned) {
-				//soooo this can break quite easily if the rankings change while hte list is being fetched.
-				//so i put in the greater than or equal to to basically cut our chances of it breaking in half
-				is_final = false;
-			}
-			else {
-				is_final = true;
-			}
-			
-			response.addIntHeader("isFinal", (is_final?1:0));
-			
-			
-			Map<String, Object> tempItemMap;
-			JSONArray itemAttributes = null;
-
-			ArrayList<LystItem> lystItems = new ArrayList<LystItem>();
-			for (int i = 0; i < lengthReturned; i++) {
-				tempItemMap = items.get(i);
-				JSONObject tempitem = new JSONObject();
-				int rankingAttributeWanted = (Integer) tempItemMap.get("Ranking");
-				int itemID = (Integer) tempItemMap.get("ItemID");
-				rankingAttributeWanted = rankingAttributeWanted - smallestRankNeeded;  //finding out where to put it inside array
-				
-				LystItem tmpItem = db.getItem(itemID); 
-				String itemname = tmpItem.name; 
-				String picpath = tmpItem.picPath;
-				String belongingList = tmpItem.belongingList;
-				ArrayList<Map<String, Object>> attributeList = db.getAttributeItem(itemID, listid);
-				
-				itemAttributes = new JSONArray();
-				int num_attributes = attributeList.size();
-				Map<String, Object> tempAttMap;
-				
-				ArrayList<Attribute> attributeArrayList = new ArrayList<Attribute>();
-				for (int j = 0; j < num_attributes; j++) {
-					tempAttMap = attributeList.get(j);
-					int attributeNumber = (Integer)tempAttMap.get("AttributeNumber");
-					int ranking = (Integer)tempAttMap.get("Ranking");
-					int rating = (Integer)tempAttMap.get("Rating");
-					String attributeName = (String)tempAttMap.get("AttributeName");
-					if (attributeNumber != j)  {
-						System.out.println("Something might be wrongo");
-					}
-					
-					Attribute attToAdd = new Attribute(attributeName, attributeNumber, rating, ranking);
-					attributeArrayList.add(attToAdd);
-					itemAttributes.put(rating);
-				}
-				//now to build the temp item to later add to array
-				
-				LystItem item;
-				try {
-					item = new LystItem(itemname, belongingList, picpath, 0,listid,itemID);
-					item.attributes = attributeArrayList;
-					item.currentlySortedAttributeNumber = attributenumber;
-					lystItems.add(item);
-					tempitem.put("ItemName", itemname);
-					tempitem.put("ItemID", itemID);
-					tempitem.put("PicPath", picpath);
-					tempitem.put("Ratings", itemAttributes);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				
-				tempjsonitems = fixrankingbullshit(rankingAttributeWanted, tempjsonitems, tempitem);
-				
-			}
-			
-			   Comparator<LystItem> attributeComparator = new Comparator<LystItem>() {         
-
-				    public int compare(LystItem i1, LystItem i2) {             
-				    	Attribute a1 = null;
-				    	Attribute a2= null;
-				    	for(int i = 0; i< i1.attributes.size(); i++){
-				    		if(i1.attributes.get(i).getAttributeNumber() == attributenumber){
-				    			a1 = i1.attributes.get(i);
-				    		}
-				    	}
-				    	for(int i = 0; i< i1.attributes.size(); i++){
-				    		if(i2.attributes.get(i).getAttributeNumber() == attributenumber){
-				    			a2 = i2.attributes.get(i);
-				    		}
-				    	}
-				    	
-				    	return a1.getRanking() - a2.getRanking();       
-
-				    }     
-
-				  };
-			
-			lystItems.sort(attributeComparator);
-			request.setAttribute("lystItems", lystItems);
-			
-			request.getRequestDispatcher("/thelist.jsp").forward(request, response);
 			
 		} else if (action.equals("load")) {
 			
-			response.setContentType("application/json");
+			response.setContentType("html");
 			//first step -- getting the attributes for that particular list
 			String templistid = request.getParameter("ListID");
 			int listid = Integer.parseInt(templistid);

@@ -9,29 +9,22 @@
             document.cookie = name + "=" + value + expires + "; path=/";
         }
 
-function requestItems(listID, attributeNumber, nextRankingNeeded, action, lastSent) {
+function requestItems(listID, attributeNumber, itemsToGet) {
+	//TODO: HURR
+	//
 	
-//	$.get("bro", {
-//		"action" : action,
-//		"ListID" : listID,
-//		"Attribute":attributeNumber,
-//		"NextRanking":nextRankingNeeded,
-//		"LastRankDelivered":lastSent
-//	}, function(html) {
-//		var parsed = $('<div/>').append(html);
-//		$("#thatList").append(parsed.find("#thatList"));
-//	});
-//	
-//	
+	//items to get will just be a string of 10 or whatever many item ids
+	
+	
 	working =true;
+	
 	var xhr = $.ajax({
 		url:"bro",
 		data: {
-			"action": action,
+			"action": "load",
 			"ListID" : listID,
 			"Attribute":attributeNumber,
-			"NextRanking":nextRankingNeeded,
-			"LastRankDelivered":lastSent
+			"ItemsToGet":itemsToGet
 		},
 		type: "GET",
 		dataType: "html",
@@ -75,6 +68,28 @@ function requestItems(listID, attributeNumber, nextRankingNeeded, action, lastSe
 	return nextRankingNeeded;
 };
 
+
+function requestInitial(listID, attributeNumber) {
+	//initial data load that brings up the sorted list of the item IDs neeeded
+	var xhr = $.ajax({
+		url:"bro",
+		data: {
+			"action": "initialLoad",
+			"ListID" : listID,
+			"Attribute":attributeNumber
+		},
+		type: "GET",
+		dataType: "application/json",
+	})
+	.done(function(json, textStatus, xhr) {
+		var returnedList = json.sortedItemeIDs;
+		working = false;
+	});
+	
+	return returnedList;
+}
+
+
 function sortList(attributeID) {
 	if (attributeID == attributeWanted) {
 		alert("Already sorting by this attribute");
@@ -84,6 +99,7 @@ function sortList(attributeID) {
 	$("#itemList").empty();
 	
 	attributeWanted = attributeID;
+	
 	isFinal = 0;
 	last_delivered = 0;
 	
@@ -92,7 +108,10 @@ function sortList(attributeID) {
 };
 $(document).ready(function() {
 	
-	var listID = $("#listId").val();
+	//list ID needs to be set before the first thing is returned. possibly grabbed from URL
+	listID = 0; //hardcoded for now
+	
+	//var listID = $("#listId").val();
 	var listName = $("#listTitle").text();
 	
 	$(".spinner").removeClass("hidden");
@@ -121,7 +140,10 @@ $(document).ready(function() {
 		window.location.href = "/";
 	});
 	
-	last_delivered = requestItems(listID, attributeWanted, (number_to_fetch + last_delivered), "initialLoad", last_delivered);
+	sortedList = requestInitial(listID, attributeWanted);
+	
+	last_delivered = requestItems(listID, attributeWanted, sortedList.slice(0,number_to_fetch));
+	
 	
 })
 
