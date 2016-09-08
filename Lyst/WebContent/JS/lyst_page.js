@@ -1,59 +1,13 @@
+ function createCookie(name, value, days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                var expires = "; expires=" + date.toGMTString();
+            }
+            else var expires = "";               
 
-
-//function buildItem (picppath, itemname, itemid, scores) {
-//		//check that scores and attributes are same length
-//		
-//		if (scores.length != attributes.length) {
-//			return false;
-//		}
-//		
-//		var topLevel = $('<div class = "itemInList" id = "item'+itemid+'">');
-//		var nameBox = $('<div class ="nameBox">');
-//		nameBox.html(itemname);
-//		topLevel.append(nameBox);
-//		for (var i = 0; i < scores.length; i++) {
-//			att = attributes[i];
-//			score = scores[i];
-//			
-//			var itemBox = $('<div class = "itemBox">');
-//			var attributeName = $('<div class = "attributeName">');
-//			attributeName.html(att);
-//			var pointCircle = $('<div class = "pointCircle">');
-//			pointCircle.html(score);
-//			itemBox.append(attributeName);
-//			itemBox.append(pointCircle);
-//			topLevel.append(itemBox);
-//		}
-//		$('#itemList').append(topLevel);
-////		
-////		var picDiv = $("<div class = picDiv>");
-////		var pic = $("<img src = "+picpath+">");
-////		picDiv.append(pic);
-//	};
-//
-//function buildSortBar() {
-//	if (!topbarBuilt) {
-//		topbarBuilt = true;
-//		numOfIcons = attributes.length;
-//		if (attributes[0] != "Overall") {
-//			console.log("Overall is not first attribute");
-//			return false;
-//		};
-//		
-//		for (var i = 0; i < numOfIcons; i++) {
-//			var itemDiv = $("<div class = itemBox>");
-//			var iconHTML = "<span id = \"sort"+i+"\" class=\"glyphicon glyphicon-sort-by-attributes-alt sortButton\"></span>"
-//			itemDiv.html(iconHTML);
-//			$('#topbar').append(itemDiv);
-//		};
-//		
-//		$(".sortButton").click(function() {
-//			var idString = $(this).attr("id");
-//			var id = idString.split('sort')[1];
-//			sortList(id);
-//		});
-//	}
-//};
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
 
 function requestItems(listID, attributeNumber, nextRankingNeeded, action, lastSent) {
 	
@@ -138,9 +92,8 @@ function sortList(attributeID) {
 };
 $(document).ready(function() {
 	
-	//hardcoded shiii
-	listID = 0;
-	//----------------
+	var listID = $("#listId").val();
+	var listName = $("#listTitle").text();
 	
 	$(".spinner").removeClass("hidden");
 	
@@ -160,6 +113,13 @@ $(document).ready(function() {
 	number_to_fetch = 10;
 	// END global variables
 	
+	$("#newShowdownButton").click(function(){
+		createCookie("listId", listID, 2);
+		createCookie("currentCategory", listID, 2);
+		createCookie("categoryName", listName, 2);
+		createCookie("isList", "true", 2);
+		window.location.href = "/";
+	});
 	
 	last_delivered = requestItems(listID, attributeWanted, (number_to_fetch + last_delivered), "initialLoad", last_delivered);
 	

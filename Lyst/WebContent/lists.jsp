@@ -59,7 +59,7 @@
 	</div>
 	<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<button id="clicker" type="button"
-						class="btn btn-circle btn-xl center-block">
+						class="btn btn-circle btn-xl listButtonMarg center-block">
 						<span class="glyphicon glyphicon-th"></span></button>
 				</div>
 				<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">

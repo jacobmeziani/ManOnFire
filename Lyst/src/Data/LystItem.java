@@ -19,6 +19,8 @@ public class LystItem implements Serializable  {
 	public ArrayList<Attribute> attributes;
 
 	public String belongingList;
+	
+	public int currentlySortedAttributeNumber = 0;
 
 	public LystItem(String name, String belongingList, String picPath, int overallRating, int listId, int itemId) {
 		this.name = name;
@@ -33,13 +35,14 @@ public class LystItem implements Serializable  {
 		this.listId = listId;
 	}
 	
-	public LystItem(String name, String picPath) {
+	public LystItem(String name, String belongingList, String picPath) {
 		this.name = name;
 		if (picPath != null) {
 			this.picPath = picPath;
 		} else {
 			this.picPath = "empty";
 		}
+		this.belongingList = belongingList;
 	}
 
 	public String getName() {
@@ -59,9 +62,9 @@ public class LystItem implements Serializable  {
 		return nameUrl;
 	}
 	
-	public int getSelectedAttributeRanking(int attributeNumber){
+	public int getSelectedAttributeRanking(){
 		for(int i=0; i< attributes.size(); i++){
-			if(attributes.get(i).getAttributeNumber() == attributeNumber){
+			if(attributes.get(i).getAttributeNumber() == currentlySortedAttributeNumber){
 				return attributes.get(i).getRanking(); 
 			}
 		}

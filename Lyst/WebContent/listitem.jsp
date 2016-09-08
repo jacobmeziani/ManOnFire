@@ -70,10 +70,10 @@
 					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.currentItem.picPath}"/>">
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-				<button type="button" id="fullList"
+				<a href="/bro/<c:out value="${requestScope.currentItem.getListUrl()}"/>" id="newShowdownButton" type="button" id="fullList"
 					class="btn btn-circle btn-xl center-block">
-					<span class="glyphicon glyphicon-list-alt"></span>
-				</button>
+					<span class="glyphicon glyphicon-list-alt aTag"></span>
+				</a>
 				<h4 class="centerAlign">View List</h4>
 			</div>
 		</div>

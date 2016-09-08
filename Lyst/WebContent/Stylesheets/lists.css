@@ -12,24 +12,9 @@
 	position: absolute;
 }
 
-/* .imager{ */
-/* 	width: 400px; */
-/* 	height:300px; */
-/* } */
-
-
-/* #filterbutton { */
-/* 	border: none; */
-/* 	border-left: 2px solid; */
-/* 	border-color: #C20021; */
-/* 	height: 34px; */
-/* 	background-color: #FF5A5F; */
-	
-/* } */
-
-/* #filterbutton:hover { */
-/* 	background-color: #C20021; */
-/* } */
+.listButtonMarg{
+	margin-top: 20px;
+}
 
 .show-info {
 	color: #333333;

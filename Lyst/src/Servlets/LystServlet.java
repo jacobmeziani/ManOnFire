@@ -86,6 +86,9 @@ public class LystServlet extends HttpServlet {
 					if (listString.equals("true")) {
 						list = true;
 					}
+					else{
+						list = false;
+					}
 				} 
 				Object[] items = d.getNextCombatants(currentCategory, list);
 				Cookie storeListIdCookie = new Cookie("listId", Integer.valueOf(((Lyst)items[0]).getListIndex()).toString());
@@ -379,7 +382,10 @@ public class LystServlet extends HttpServlet {
 				System.out.println("Oh hell yea");
 				request.getRequestDispatcher("/listitem.jsp").forward(request, response);
 			} else {
-				// navigate to the list page
+				request.setAttribute("listName", identifier);
+				int listId = d.getListId(identifier);
+				request.setAttribute("listId", listId);
+				request.getRequestDispatcher("/thelist.jsp").forward(request, response);
 			}
 		}
 	}
@@ -440,7 +446,6 @@ protected void serveLists(String action, HttpServletRequest request, HttpServlet
 			
 			String tempattributenumber = request.getParameter("Attribute");
 			final int attributenumber = Integer.parseInt(tempattributenumber);
-			
 			String tempnextranking = request.getParameter("NextRanking");
 			int nextranking = Integer.parseInt(tempnextranking);
 			
@@ -485,9 +490,10 @@ protected void serveLists(String action, HttpServletRequest request, HttpServlet
 				int itemID = (Integer) tempItemMap.get("ItemID");
 				rankingAttributeWanted = rankingAttributeWanted - smallestRankNeeded;  //finding out where to put it inside array
 				
-				LystItem tmpItem = db.getItemName(itemID); 
-				String itemname = tmpItem.name;  //TODO: must return picpath as well 
+				LystItem tmpItem = db.getItem(itemID); 
+				String itemname = tmpItem.name; 
 				String picpath = tmpItem.picPath;
+				String belongingList = tmpItem.belongingList;
 				ArrayList<Map<String, Object>> attributeList = db.getAttributeItem(itemID, listid);
 				
 				itemAttributes = new JSONArray();
@@ -513,8 +519,9 @@ protected void serveLists(String action, HttpServletRequest request, HttpServlet
 				
 				LystItem item;
 				try {
-					item = new LystItem(itemname, "", picpath, 0,listid,itemID);
+					item = new LystItem(itemname, belongingList, picpath, 0,listid,itemID);
 					item.attributes = attributeArrayList;
+					item.currentlySortedAttributeNumber = attributenumber;
 					lystItems.add(item);
 					tempitem.put("ItemName", itemname);
 					tempitem.put("ItemID", itemID);
@@ -611,9 +618,10 @@ protected void serveLists(String action, HttpServletRequest request, HttpServlet
 				int itemID = (Integer) tempItemMap.get("ItemID");
 				rankingAttributeWanted = rankingAttributeWanted - smallestRankNeeded;  //finding out where to put it inside array
 				
-				LystItem tmpItem = db.getItemName(itemID); 
+				LystItem tmpItem = db.getItem(itemID); 
 				String itemname = tmpItem.name;  //TODO: must return picpath as well 
 				String picpath = tmpItem.picPath;
+				String belongingList = tmpItem.belongingList;
 				ArrayList<Map<String, Object>> attributeList = db.getAttributeItem(itemID, listid);
 				
 				itemAttributes = new JSONArray();
@@ -638,8 +646,9 @@ protected void serveLists(String action, HttpServletRequest request, HttpServlet
 				//now to build the temp item to later add to array
 				LystItem item;
 				try {
-					item = new LystItem(itemname, "", picpath, 0,listid,itemID);
+					item = new LystItem(itemname, belongingList, picpath, 0,listid,itemID);
 					item.attributes = attributeArrayList;
+					item.currentlySortedAttributeNumber = attributenumber;
 					lystItems.add(item);
 					tempitem.put("ItemName", itemname);
 					tempitem.put("ItemID", itemID);

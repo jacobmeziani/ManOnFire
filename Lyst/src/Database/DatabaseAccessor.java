@@ -144,7 +144,7 @@ public class DatabaseAccessor {
 		return categories.scan();
 	}
 	
-	public LystItem getItemName(int itemid) {  //TODO: must return pic path as well sorry
+	public LystItem getItem(int itemid) {  //TODO: must return pic path as well sorry
 		//
 		Table items = dynamoDB.getTable("ListItems");
 		ScanSpec spec = new ScanSpec()
@@ -158,7 +158,8 @@ public class DatabaseAccessor {
 		
 		String itemname = item.getString("ItemName");
 		String picPath = item.getString("PicPath");
-		return new LystItem(itemname, picPath);
+		String belongingList = item.getString("BelongingList");
+		return new LystItem(itemname, belongingList, picPath);
 		
 	}
 	
@@ -729,6 +730,18 @@ public class DatabaseAccessor {
 		LystItem lystItem = new LystItem(itemName, belongingList, picPath, overall, listId, itemId);
 		return lystItem;
 		
+	}
+	
+	public int getListId (String listName){
+		Table lists = dynamoDB.getTable("Lists");
+		Index index = lists.getIndex("ListName-index");
+		QuerySpec spec = new QuerySpec().withKeyConditionExpression("ListName = :v_name")
+				.withValueMap(new ValueMap().withString(":v_name", listName));
+		ItemCollection<QueryOutcome> items = index.query(spec);
+		Iterator<Item> iter = items.iterator();
+		Item theList = iter.next();
+		int id = theList.getInt("Id");
+		return id;
 	}
 
 }

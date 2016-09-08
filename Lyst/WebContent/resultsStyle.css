@@ -79,9 +79,9 @@
 	background: #cf000f;
 }
 
-.tile.red:hover {
-	background: #d24d57;
-}
+/* .tile.red:hover { */
+/* 	background: #d24d57; */
+/* } */
 
 .tile.green {
 	background: #26a65b;

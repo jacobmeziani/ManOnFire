@@ -22,13 +22,13 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-<script src="JS/lyst_page.js"></script>
+<script src="/JS/lyst_page.js"></script>
 <link
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"
 	rel="stylesheet">
-<link href="testCss.css" rel="stylesheet">
-<link href="vsStyle.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="style.css">
+<link href="/testCss.css" rel="stylesheet">
+<link href="/vsStyle.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
@@ -60,19 +60,19 @@
 	<div class="container-fluid">
 		<div class="row rowBuffs">
 			<div class="col-xs-4 col-sm-4 col-md-4">
-				<a href="/" id="newShowdownButton" type="button"
+				<button id="newShowdownButton" type="button"
 					class="btn btn-circle btn-xl center-block"> <span
-					class="glyphicon glyphicon-eye-close aTag"></span>
-				</a>
+					class="glyphicon glyphicon-eye-close"></span>
+				</button>
 				<h4 class="centerAlign">Rate Items</h4>
 			</div>
 			<div class="col-xs-6 col-sm-4 col-md-4">
-				<p class="listTitle centerAlign">Villains</p>
+				<p class="listTitle centerAlign"><c:out value="${requestScope.listName}" /></p>
 			</div>
 			<div class="col-xs-2 col-sm-4 col-md-4"></div>
 		</div>
-		<input type="hidden" id="attributeSortNumber"
-			value="${requestScope.attributeSortNumber}">
+		<input type="hidden" id="listId"
+			value="${requestScope.listId}">
 		
 		
 		
@@ -81,10 +81,10 @@
 		<div class="row rowPadding itemInList">
 			<div class="col-xs-12 col-sm-2 col-md-2 itemBox">
 				<div class="col-xs-2 col-sm-2 col-md-1">
-					<p class="numberText"><c:out value="${i.getSelectedAttributeRanking(0)}" /></p>
+					<p class="numberText"><c:out value="${i.getSelectedAttributeRanking()}" /></p>
 				</div>
 				<div class="col-xs-10 col-sm-10 col-md-11">
-					<a href="/<c:out value="${i.getNameUrl()}" />"><img
+					<a href="/bro/<c:out value="${i.getListUrl()}" />/<c:out value="${i.getNameUrl()}" />"><img
 						class="img-circle center-block listItemImage"
 						src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${i.picPath}" />">
 					</a>
@@ -92,7 +92,7 @@
 			</div>
 			<div class="col-xs-2 hidden-sm hidden-md hidden-lg"></div>
 			<div class="col-xs-10 col-sm-2 col-md-2 itemBox">
-				<a href="www.espn.com">
+				<a href="/bro/<c:out value="${i.getListUrl()}" />/<c:out value="${i.getNameUrl()}" />">
 					<h3 class="itemName"><c:out value="${i.name}" /></h3>
 				</a>
 			</div>
