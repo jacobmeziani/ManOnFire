@@ -21,7 +21,7 @@ public class ListRater {
 			int numberOfAttributes = currentLyst.getAttributes().size()+1;
 			//Goes through each attribute in the list
 			for(int j=0; j<numberOfAttributes; j++){
-				if (listNumber==0){
+				if (listNumber==1){
 				ArrayList<Attribute> currentAttributes = db.getAttributes(listNumber,j);
 				Collections.sort(currentAttributes);
 				int rank =1;

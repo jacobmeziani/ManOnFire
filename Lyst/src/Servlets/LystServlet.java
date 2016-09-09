@@ -454,9 +454,12 @@ public class LystServlet extends HttpServlet {
 			JSONArray jsonIDs = new JSONArray(items);
 			
 			JSONObject jsonO = new JSONObject();
-			
+			try{
 			jsonO.put("sortedItemIDs", jsonIDs);
-			
+			}
+			catch (JSONException e) {
+				e.printStackTrace();
+			}
 			response.getWriter().write(jsonO.toString());
 			return;
 		
@@ -510,14 +513,10 @@ public class LystServlet extends HttpServlet {
 				}
 				// now to build the temp item Lystitem type
 				LystItem item;
-				try {
 					item = new LystItem(itemname, belongingList, picpath, 0, listid, itemID);
 					item.attributes = attributeArrayList;
 					item.currentlySortedAttributeNumber = attributenumber;
 					lystItems.add(item);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
 
 			}
 			

@@ -220,6 +220,28 @@ function getCurrentListOfPhrases(leftItem, rightItem, attribute, packageNumber) 
 				rightItem + " has so much more " + attribute + " than "
 						+ leftItem + ", its not even funny.", ];
 	}
+	else if (packageNumber == 3) {
+		phrases = [
+				leftItem + " has so much better " + attribute + " than "
+						+ rightItem + ", its not even funny.",
+				leftItem + " has tons better " + attribute + " than "
+						+ rightItem,
+				leftItem + " has much better " + attribute + " than "
+						+ rightItem,
+				leftItem + " has better " + attribute + " than " + rightItem,
+				leftItem + " has slightly better " + attribute + " than "
+						+ rightItem,
+				leftItem + " has exactly the same quality " + attribute + " as " + rightItem,
+				rightItem + " has slightly better " + attribute + " than "
+						+ leftItem,
+				rightItem + " has better " + attribute + " than " + leftItem,
+				rightItem + " has much better " + attribute + " than "
+						+ leftItem,
+				rightItem + " has tons better " + attribute + " than "
+						+ leftItem,
+				rightItem + " has so much better " + attribute + " than "
+						+ leftItem + ", its not even funny.", ];
+	}
 	else {
 		phrases = [ "Lebron is the best", "Lebron is amazing",
 				"Lebron is great", "Lebron is good", "Lebron is kinda good",

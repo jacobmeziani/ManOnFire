@@ -22,13 +22,13 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-<script src="/JS/lyst_page.js"></script>
+<script src="/Lyst/JS/lyst_page.js"></script>
 <link
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"
 	rel="stylesheet">
-<link href="/testCss.css" rel="stylesheet">
-<link href="/vsStyle.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/style.css">
+<link href="/Lyst/testCss.css" rel="stylesheet">
+<link href="/Lyst/vsStyle.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/Lyst/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>

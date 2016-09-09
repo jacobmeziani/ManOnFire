@@ -9,11 +9,16 @@
 	opacity: 0.8;
 	text-align: center;
 	font-variant: small-caps;
+	margin-left: -16px;
 	position: absolute;
 }
 
 .listButtonMarg{
 	margin-top: 20px;
+}
+
+.imager{
+	width: 800px;
 }
 
 .show-info {
@@ -45,16 +50,12 @@
 	}
 }
 
-button {
-	color: white;
-}
-
-.main-body {
-	background-color: white;
-	margin-left: 20px;
-	margin-right: 20px;
-	padding-top: 80px;
-}
+/* .main-body { */
+/* 	background-color: white; */
+/* 	margin-left: 20px; */
+/* 	margin-right: 20px; */
+/* 	padding-top: 80px; */
+/* } */
 
 .navbar-default {
 	background-color: #cccccc;
@@ -121,5 +122,41 @@ button {
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
   }
+}
+
+/* Large desktops and laptops */
+@media ( min-width : 1200px) {
+
+	.imager{
+	height: 350px;
+}
+}
+
+/* Landscape tablets and medium desktops */
+@media ( min-width : 992px) and (max-width: 1199px) {
+	.imager{
+	height: 400px;
+}
+}
+
+/* Portrait tablets and small desktops */
+@media ( min-width : 768px) and (max-width: 991px) {
+	.imager{
+	height: 400px;
+}
+}
+
+/* Landscape phones and portrait tablets */
+@media ( max-width : 767px) {
+	.imager{
+	height: 300px;
+}
+}
+
+/* Portrait phones and smaller */
+@media ( max-width : 480px) {
+	.imager{
+	height: 200px;
+}
 }
 
