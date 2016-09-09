@@ -2,11 +2,12 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
+//import java.util.ArrayList;
+//import java.util.Comparator;
+//import java.util.Enumeration;
+//import java.util.List;
+//import java.util.Map;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -68,16 +69,16 @@ public class LystServlet extends HttpServlet {
 				Boolean list = false;
 				String currentCategory = "Everything";
 				Cookie currentCategoryCookie = getCookie(freshBatch, "currentCategory");
-				if(currentCategoryCookie != null){
+				if (currentCategoryCookie != null) {
 					currentCategory = currentCategoryCookie.getValue();
 					Cookie isListCookie = getCookie(freshBatch, "isList");
-					if(isListCookie != null){
-					String listBool = getCookie(freshBatch, "isList").getValue();
-					if (listBool.equals("true")) {
-						list = true;
-					} else {
-						list = false;
-					}
+					if (isListCookie != null) {
+						String listBool = getCookie(freshBatch, "isList").getValue();
+						if (listBool.equals("true")) {
+							list = true;
+						} else {
+							list = false;
+						}
 					}
 				}
 				if (requestAction.equals("newRandom")) {
@@ -85,13 +86,13 @@ public class LystServlet extends HttpServlet {
 					String listString = request.getParameter("isList");
 					if (listString.equals("true")) {
 						list = true;
-					}
-					else{
+					} else {
 						list = false;
 					}
-				} 
+				}
 				Object[] items = d.getNextCombatants(currentCategory, list);
-				Cookie storeListIdCookie = new Cookie("listId", Integer.valueOf(((Lyst)items[0]).getListIndex()).toString());
+				Cookie storeListIdCookie = new Cookie("listId",
+						Integer.valueOf(((Lyst) items[0]).getListIndex()).toString());
 				request.setAttribute("currentList", items[0]);
 				request.setAttribute("leftItem", items[1]);
 				request.setAttribute("rightItem", items[2]);
@@ -113,18 +114,18 @@ public class LystServlet extends HttpServlet {
 				response.addCookie(storeIsListCookie);
 				if (requestAction.equals("initial")) {
 					request.getRequestDispatcher("/home.jsp").forward(request, response);
-				}else {
+				} else {
 					request.getRequestDispatcher("/newmatchup.jsp").forward(request, response);
 				}
 
 			} else if (requestAction.equals("vs")) {
-				Cookie listIdCookie = getCookie(freshBatch,"listId");
+				Cookie listIdCookie = getCookie(freshBatch, "listId");
 				String leftItemName = request.getParameter("leftItemName");
-				String rightItemName =  request.getParameter("rightItemName");
+				String rightItemName = request.getParameter("rightItemName");
 				String listName = request.getParameter("listName");
 				Cookie listCookie = new Cookie("listName", listName);
 				response.addCookie(listCookie);
-				
+
 				LystItem leftItem = d.getListItem(listName, leftItemName);
 				LystItem rightItem = d.getListItem(listName, rightItemName);
 				// return attributes, from DB to load up the js
@@ -141,10 +142,10 @@ public class LystServlet extends HttpServlet {
 				}
 				request.setAttribute("attributes", attributes);
 				ArrayList<Integer> stringPackages = (ArrayList<Integer>) data[1];
-				Object[] leftItemProps = new Object[]{leftItem.name, leftItem.belongingList,
-						leftItem.picPath,leftItem.overallRating, leftItem.listId, leftItem.itemId};
-				Object[] rightItemProps = new Object[]{rightItem.name, rightItem.belongingList,
-						rightItem.picPath,rightItem.overallRating, rightItem.listId, rightItem.itemId};
+				Object[] leftItemProps = new Object[] { leftItem.name, leftItem.belongingList, leftItem.picPath,
+						leftItem.overallRating, leftItem.listId, leftItem.itemId };
+				Object[] rightItemProps = new Object[] { rightItem.name, rightItem.belongingList, rightItem.picPath,
+						rightItem.overallRating, rightItem.listId, rightItem.itemId };
 				JSONObject json = new JSONObject();
 				try {
 					json.put("attributes", attributes);
@@ -161,181 +162,183 @@ public class LystServlet extends HttpServlet {
 			} else if (requestAction.equals("sliderDisplay")) {
 				request.getRequestDispatcher("/slider.jsp").forward(request, response);
 			} else if (requestAction.equals("results")) {
-				Cookie listNameCookie = getCookie(freshBatch,"listName");
+				Cookie listNameCookie = getCookie(freshBatch, "listName");
 				String[] leftItemProps = request.getParameterValues("leftItemProps[]");
 				String[] rightItemProps = request.getParameterValues("rightItemProps[]");
-				LystItem leftItem = new LystItem(leftItemProps[0],leftItemProps[1],leftItemProps[2],
-						Integer.parseInt(leftItemProps[3]),Integer.parseInt(leftItemProps[4]),
+				LystItem leftItem = new LystItem(leftItemProps[0], leftItemProps[1], leftItemProps[2],
+						Integer.parseInt(leftItemProps[3]), Integer.parseInt(leftItemProps[4]),
 						Integer.parseInt(leftItemProps[5]));
-				LystItem rightItem = new LystItem(rightItemProps[0],rightItemProps[1],rightItemProps[2],
-						Integer.parseInt(rightItemProps[3]),Integer.parseInt(rightItemProps[4]),
+				LystItem rightItem = new LystItem(rightItemProps[0], rightItemProps[1], rightItemProps[2],
+						Integer.parseInt(rightItemProps[3]), Integer.parseInt(rightItemProps[4]),
 						Integer.parseInt(rightItemProps[5]));
-				Cookie listIdCookie = getCookie(freshBatch,"listId");
-				if(listNameCookie != null){
-				String[] requestScores = request.getParameterValues("scores[]");
-				int[] scores = new int[requestScores.length];
+				Cookie listIdCookie = getCookie(freshBatch, "listId");
+				if (listNameCookie != null) {
+					String[] requestScores = request.getParameterValues("scores[]");
+					int[] scores = new int[requestScores.length];
 
-				// Convert string items to ints and also compute the winner
-				int winCounter = 0;
-				for (int i = 0; i < requestScores.length; i++) {
-					int currentScore = Integer.parseInt(requestScores[i]);
-					winCounter += (currentScore - 5);
-					scores[i] = currentScore;
-				}
-				if (winCounter < 0) {
-					// Left item wins
-					request.setAttribute("winningSide", "left");
-				} else if (winCounter > 0) {
-					// Right item wins
-					request.setAttribute("winningSide", "right");
-				} else {
-					// Tie
-					request.setAttribute("winningSide", "tie");
-				}
-
-				request.setAttribute("leftItem", leftItem);
-				request.setAttribute("rightItem", rightItem);
-				
-				
-				ArrayList<Attribute> leftWorldAttributes = d.getItemAttributes(leftItem);
-				ArrayList<Attribute> rightWorldAttributes = d.getItemAttributes(rightItem);
-				Object[] data = d.getAttributesAndStringPackages(Integer.parseInt(listIdCookie.getValue()));
-				ArrayList<String> attributeNames = (ArrayList<String>) data[0];
-				ArrayList<ResultAttributes> attributes = new ArrayList<ResultAttributes>();
-
-				// add overall because it is not included in the rating game
-				// part
-				for (int i = 0; i < attributeNames.size(); i++) {
-					ResultAttributes attr = new ResultAttributes();
-					attr.setName(attributeNames.get(i));
-					attributes.add(attr);
-				}
-
-				// Add overall to the attributes and scores
-				ResultAttributes attr = new ResultAttributes();
-				attr.setName("Overall");
-				attributes.add(0, attr);
-				int[] resultScores = new int[scores.length + 1];
-				resultScores[0] = winCounter;
-				for (int i = 0; i < scores.length; i++) {
-					resultScores[i + 1] = scores[i];
-				}
-
-				// figure this bs out
-				for (int i = 0; i < attributes.size(); i++) {
-					attributes.get(i).setLeftItemWorldScore(leftWorldAttributes.get(i).rating);
-					attributes.get(i).setRightItemWorldScore(rightWorldAttributes.get(i).rating);
-
-					// Normalize the overall rating
-					if (i == 0) {
-						if (winCounter >= 10) {
-							resultScores[i] = 10;
-						} else if (winCounter >= 8) {
-							resultScores[i] = 9;
-						} else if (winCounter >= 6) {
-							resultScores[i] = 8;
-						} else if (winCounter >= 4) {
-							resultScores[i] = 7;
-						} else if (winCounter >= 1) {
-							resultScores[i] = 6;
-						} else if (winCounter >= 0) {
-							resultScores[i] = 5;
-						} else if (winCounter >= -2) {
-							resultScores[i] = 4;
-						} else if (winCounter >= -4) {
-							resultScores[i] = 3;
-						} else if (winCounter >= -6) {
-							resultScores[i] = 2;
-						} else if (winCounter >= -8) {
-							resultScores[i] = 1;
-						} else {
-							resultScores[i] = 0;
-						}
-
+					// Convert string items to ints and also compute the winner
+					int winCounter = 0;
+					for (int i = 0; i < requestScores.length; i++) {
+						int currentScore = Integer.parseInt(requestScores[i]);
+						winCounter += (currentScore - 5);
+						scores[i] = currentScore;
 					}
-					int userScore = resultScores[i] - 5;
-					if (userScore < 0) {
-						attributes.get(i).setLeftItemUserScore(-userScore);
-						attributes.get(i).setRightItemUserScore(0);
+					if (winCounter < 0) {
+						// Left item wins
+						request.setAttribute("winningSide", "left");
+					} else if (winCounter > 0) {
+						// Right item wins
+						request.setAttribute("winningSide", "right");
 					} else {
-						attributes.get(i).setRightItemUserScore(userScore);
-						attributes.get(i).setLeftItemUserScore(0);
+						// Tie
+						request.setAttribute("winningSide", "tie");
 					}
-				}
 
-				request.setAttribute("attributes", attributes);
-				request.getRequestDispatcher("/results.jsp").forward(request, response);
-				String currentList = listNameCookie.getValue();
-				RatingsProcessor p = new RatingsProcessor(currentList, resultScores, leftWorldAttributes,
-						rightWorldAttributes);
-				p.start();
+					request.setAttribute("leftItem", leftItem);
+					request.setAttribute("rightItem", rightItem);
+
+					ArrayList<Attribute> leftWorldAttributes = d.getItemAttributes(leftItem);
+					ArrayList<Attribute> rightWorldAttributes = d.getItemAttributes(rightItem);
+					Object[] data = d.getAttributesAndStringPackages(Integer.parseInt(listIdCookie.getValue()));
+					ArrayList<String> attributeNames = (ArrayList<String>) data[0];
+					ArrayList<ResultAttributes> attributes = new ArrayList<ResultAttributes>();
+
+					// add overall because it is not included in the rating game
+					// part
+					for (int i = 0; i < attributeNames.size(); i++) {
+						ResultAttributes attr = new ResultAttributes();
+						attr.setName(attributeNames.get(i));
+						attributes.add(attr);
+					}
+
+					// Add overall to the attributes and scores
+					ResultAttributes attr = new ResultAttributes();
+					attr.setName("Overall");
+					attributes.add(0, attr);
+					int[] resultScores = new int[scores.length + 1];
+					resultScores[0] = winCounter;
+					for (int i = 0; i < scores.length; i++) {
+						resultScores[i + 1] = scores[i];
+					}
+
+					// figure this bs out
+					for (int i = 0; i < attributes.size(); i++) {
+						attributes.get(i).setLeftItemWorldScore(leftWorldAttributes.get(i).rating);
+						attributes.get(i).setRightItemWorldScore(rightWorldAttributes.get(i).rating);
+
+						// Normalize the overall rating
+						if (i == 0) {
+							if (winCounter >= 10) {
+								resultScores[i] = 10;
+							} else if (winCounter >= 8) {
+								resultScores[i] = 9;
+							} else if (winCounter >= 6) {
+								resultScores[i] = 8;
+							} else if (winCounter >= 4) {
+								resultScores[i] = 7;
+							} else if (winCounter >= 1) {
+								resultScores[i] = 6;
+							} else if (winCounter >= 0) {
+								resultScores[i] = 5;
+							} else if (winCounter >= -2) {
+								resultScores[i] = 4;
+							} else if (winCounter >= -4) {
+								resultScores[i] = 3;
+							} else if (winCounter >= -6) {
+								resultScores[i] = 2;
+							} else if (winCounter >= -8) {
+								resultScores[i] = 1;
+							} else {
+								resultScores[i] = 0;
+							}
+
+						}
+						int userScore = resultScores[i] - 5;
+						if (userScore < 0) {
+							attributes.get(i).setLeftItemUserScore(-userScore);
+							attributes.get(i).setRightItemUserScore(0);
+						} else {
+							attributes.get(i).setRightItemUserScore(userScore);
+							attributes.get(i).setLeftItemUserScore(0);
+						}
+					}
+
+					request.setAttribute("attributes", attributes);
+					request.getRequestDispatcher("/results.jsp").forward(request, response);
+					String currentList = listNameCookie.getValue();
+					RatingsProcessor p = new RatingsProcessor(currentList, resultScores, leftWorldAttributes,
+							rightWorldAttributes);
+					p.start();
 				}
-			}
-			else if(requestAction.equals("viewLists")){
+			} else if (requestAction.equals("viewLists")) {
 				if (categoryHtml == null) {
 					categoryHtml = d.getMenu();
 				}
 				request.setAttribute("CategoryHTML", categoryHtml);
-				
+
 				JSONObject json = new JSONObject();
-				JSONArray return_lists = new JSONArray() ;
+				JSONArray return_lists = new JSONArray();
 				JSONObject single_list;
-				
+
 				String category = (String) request.getParameter("category");
-				if (category== null){
+				if (category == null) {
 					category = "Everything";
 				}
 				String[] deliveredAsStrings = request.getParameterValues("delivered[]");
 				ArrayList<Integer> delivered = new ArrayList<Integer>();
-				if (deliveredAsStrings!=null) {
-					for (String string:deliveredAsStrings) {
-					delivered.add(Integer.parseInt(string));
+				if (deliveredAsStrings != null) {
+					for (String string : deliveredAsStrings) {
+						delivered.add(Integer.parseInt(string));
 					}
 				}
 				ArrayList<Integer> result = null;
 				boolean is_final = true;
 				Integer ids_to_get[];
 				List<Item> items;
-				try{
+				try {
 					int listId = Integer.parseInt(category);
-					ids_to_get = new Integer[]{listId};
-					items =  d.getListIDsFromCategoryTable(ids_to_get);
-				}
-				catch(Exception e){
-					result = d.getRandomListNumbers(category,delivered,n_lists);
+					ids_to_get = new Integer[] { listId };
+					items = d.getListIDsFromCategoryTable(ids_to_get);
+				} catch (Exception e) {
+					result = d.getRandomListNumbers(category, delivered, n_lists);
 					is_final = checkLastReturn(result);
 					if (is_final) {
-						try{
+						try {
 							result.remove((int) n_lists);
-						} catch(Exception ex) {}
+						} catch (Exception ex) {
+						}
 					}
-					response.addIntHeader("isFinal", (is_final?1:0));
-					
+					response.addIntHeader("isFinal", (is_final ? 1 : 0));
+
 					ids_to_get = new Integer[result.size()];
 					ids_to_get = result.toArray(ids_to_get);
-					items =  d.getListIDsFromCategoryTable(ids_to_get);
+					items = d.getListIDsFromCategoryTable(ids_to_get);
 				}
-				
+
 				try {
-				for (Item item:items) {
-					single_list = new JSONObject();
-					single_list.put("ListName", item.getString("ListName"));
-					single_list.put("PicPath", item.getString("PicPath"));
-					single_list.put("Category", "Current");//work here
-					single_list.put("CurrentLeader", "Lebron James"); //work here too
-					single_list.put("ListID", item.getInt("Id"));
-					return_lists.put(single_list);
+					for (Item item : items) {
+						single_list = new JSONObject();
+						single_list.put("ListName", item.getString("ListName"));
+						single_list.put("PicPath", item.getString("PicPath"));
+						single_list.put("Category", "Current");// work here
+						single_list.put("CurrentLeader", "Lebron James"); // work
+																			// here
+																			// too
+						single_list.put("ListID", item.getInt("Id"));
+						return_lists.put(single_list);
+					}
+
+					json.put("lists", return_lists);
+
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				
-				json.put("lists", return_lists);
-				
-				} catch (Exception e) {e.printStackTrace();}
-				
+
 				response.setContentType("application/json");
-				//response.getWriter().append("Served at: ").append(request.getContextPath());
+				// response.getWriter().append("Served at:
+				// ").append(request.getContextPath());
 				response.getWriter().write(json.toString());
-			}
-			else if(requestAction.equals("initialLoad") || requestAction.equals("load")){
+			} else if (requestAction.equals("initialLoad") || requestAction.equals("load")) {
 				serveLists(requestAction, request, response, d);
 			}
 		}
@@ -356,14 +359,13 @@ public class LystServlet extends HttpServlet {
 					}
 				}
 			}
-			if(identifier.equals("lists")){
+			if (identifier.equals("lists")) {
 				if (categoryHtml == null) {
 					categoryHtml = d.getMenu();
 				}
 				request.setAttribute("CategoryHTML", categoryHtml);
 				request.getRequestDispatcher("/lists.jsp").forward(request, response);
-			}
-			else if (!listItem.equals("")) {
+			} else if (!listItem.equals("")) {
 				// navigate to the item page
 				String[] splitItem = listItem.split("_");
 				String itemName = splitItem[0];
@@ -428,169 +430,147 @@ public class LystServlet extends HttpServlet {
 		}
 		return null;
 	}
-	
+
 	private static boolean checkLastReturn(ArrayList<Integer> input) {
-		if (input.size()==n_lists) {
+		if (input.size() == n_lists) {
 			return false;
 		}
 		return true;
 	}
-	
-protected void serveLists(String action, HttpServletRequest request, HttpServletResponse response, DatabaseAccessor db) throws ServletException, IOException {
-		
+
+	protected void serveLists(String action, HttpServletRequest request, HttpServletResponse response,
+			DatabaseAccessor db) throws ServletException, IOException {
+
 		if (action.equals("initialLoad")) {
 			response.setContentType("application/json");
 			String templistid = request.getParameter("ListID");
 			int listid = Integer.parseInt(templistid);
-			
+
 			String tempattributenumber = request.getParameter("Attribute");
 			int attributenumber = Integer.parseInt(tempattributenumber);
 			
+			ArrayList<Integer> items = db.getRankedIDsOnlyIDs(listid, attributenumber);
 			
+			JSONArray jsonIDs = new JSONArray(items);
+			
+			JSONObject jsonO = new JSONObject();
+			
+			jsonO.put("sortedItemIDs", jsonIDs);
+			
+			response.getWriter().write(jsonO.toString());
+			return;
+		
 		} else if (action.equals("load")) {
-			
+
 			response.setContentType("html");
-			//first step -- getting the attributes for that particular list
+			// first step -- getting the attributes for that particular list
 			String templistid = request.getParameter("ListID");
 			int listid = Integer.parseInt(templistid);
-			
+
 			String tempattributenumber = request.getParameter("Attribute");
 			final int attributenumber = Integer.parseInt(tempattributenumber);
 			
-			String tempnextranking = request.getParameter("NextRanking");
-			int nextranking = Integer.parseInt(tempnextranking);
+			String [] tempItems = request.getParameterValues("ItemsToGet");
+
+			int lengthReturned = tempItems.length;
 			
-			String templastrank = request.getParameter("LastRankDelivered");
-			int lastrankdelivered = Integer.parseInt(templastrank);
-			
-			int smallestRankNeeded = lastrankdelivered + 1;
-			List<String> attributes = db.getAttributes(listid);
-			
-			ArrayList<Map<String, Object>> items = db.getRankedIDs(listid, attributenumber, smallestRankNeeded, nextranking);
-			
-			int lengthReturned = items.size();
-			JSONObject[] tempjsonitems = new JSONObject[lengthReturned];
-//			for (int ii = 0; ii < lengthReturned; ii++) {
-//				tempjsonitems.add(null);  //otherwise it breaks elsewhere
-//			}
-//			
-			//check for completed return. this is used by client side to stop fetching more results
-			int testLength = nextranking - lastrankdelivered;
-			System.out.print("test length: ");
-			System.out.println(testLength);
-			System.out.println(lengthReturned);
-			boolean is_final;
-			if (testLength <= lengthReturned) {
-				//soooo this can break quite easily if the rankings change while hte list is being fetched.
-				//so i put in the greater than or equal to to basically cut our chances of it breaking in half
-				is_final = false;
-			}
-			else {
-				is_final = true;
-			}
-			
-			response.addIntHeader("isFinal", (is_final?1:0));
-			
-			
+			//most likely this will be unused; server at this point has no idea what's final and what isnt. front end does
+			boolean is_final = false;
+			response.addIntHeader("isFinal", (is_final ? 1 : 0));
+
 			Map<String, Object> tempItemMap;
 			JSONArray itemAttributes = null;
 
 			ArrayList<LystItem> lystItems = new ArrayList<LystItem>();
 			for (int i = 0; i < lengthReturned; i++) {
-				tempItemMap = items.get(i);
-				JSONObject tempitem = new JSONObject();
-				int rankingAttributeWanted = (Integer) tempItemMap.get("Ranking");
-				int itemID = (Integer) tempItemMap.get("ItemID");
-				rankingAttributeWanted = rankingAttributeWanted - smallestRankNeeded;  //finding out where to put it inside array
+				int itemID = Integer.parseInt(tempItems[i]);
 				
-				LystItem tmpItem = db.getItem(itemID); 
-				String itemname = tmpItem.name;  //TODO: must return picpath as well 
+				LystItem tmpItem = db.getItem(itemID);
+				String itemname = tmpItem.name;
 				String picpath = tmpItem.picPath;
 				String belongingList = tmpItem.belongingList;
-				ArrayList<Map<String, Object>> attributeList = db.getAttributeItem(itemID, listid);
 				
-				itemAttributes = new JSONArray();
+				ArrayList<Map<String, Object>> attributeList = db.getAttributeItem(itemID, listid);
+
 				int num_attributes = attributeList.size();
 				Map<String, Object> tempAttMap;
-				
+
 				ArrayList<Attribute> attributeArrayList = new ArrayList<Attribute>();
 				for (int j = 0; j < num_attributes; j++) {
 					tempAttMap = attributeList.get(j);
-					int attributeNumber = (Integer)tempAttMap.get("AttributeNumber");
-					int ranking = (Integer)tempAttMap.get("Ranking");
-					int rating = (Integer)tempAttMap.get("Rating");
-					String attributeName = (String)tempAttMap.get("AttributeName");
-					if (attributeNumber != j)  {
+					int attributeNumber = (Integer) tempAttMap.get("AttributeNumber");
+					int ranking = (Integer) tempAttMap.get("Ranking");
+					int rating = (Integer) tempAttMap.get("Rating");
+					String attributeName = (String) tempAttMap.get("AttributeName");
+					if (attributeNumber != j) {
 						System.out.println("Something might be wrongo");
 					}
-					
 					Attribute attToAdd = new Attribute(attributeName, attributeNumber, rating, ranking);
 					attributeArrayList.add(attToAdd);
-					itemAttributes.put(rating);
 				}
-				//now to build the temp item to later add to array
+				// now to build the temp item Lystitem type
 				LystItem item;
 				try {
-					item = new LystItem(itemname, belongingList, picpath, 0,listid,itemID);
+					item = new LystItem(itemname, belongingList, picpath, 0, listid, itemID);
 					item.attributes = attributeArrayList;
 					item.currentlySortedAttributeNumber = attributenumber;
 					lystItems.add(item);
-					tempitem.put("ItemName", itemname);
-					tempitem.put("ItemID", itemID);
-					tempitem.put("PicPath", picpath);
-					tempitem.put("Ratings", itemAttributes);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+
+			}
+			
+			Comparator<LystItem> attributeComparator = new Comparator<LystItem>() {
+				//i dont think this guy is necessary since the items are coming back sorted already
+				//the list that resides at the front end is already sorted
+				//we get back an array of IDs and the "load" just sends back items in that order
 				
-				tempjsonitems = fixrankingbullshit(rankingAttributeWanted, tempjsonitems, tempitem);
-			}
-			Comparator<LystItem> attributeComparator = new Comparator<LystItem>() {         
+				public int compare(LystItem i1, LystItem i2) {
+					Attribute a1 = null;
+					Attribute a2 = null;
+					for (int i = 0; i < i1.attributes.size(); i++) {
+						if (i1.attributes.get(i).getAttributeNumber() == attributenumber) {
+							a1 = i1.attributes.get(i);
+						}
+					}
+					for (int i = 0; i < i1.attributes.size(); i++) {
+						if (i2.attributes.get(i).getAttributeNumber() == attributenumber) {
+							a2 = i2.attributes.get(i);
+						}
+					}
 
-			    public int compare(LystItem i1, LystItem i2) {             
-			    	Attribute a1 = null;
-			    	Attribute a2= null;
-			    	for(int i = 0; i< i1.attributes.size(); i++){
-			    		if(i1.attributes.get(i).getAttributeNumber() == attributenumber){
-			    			a1 = i1.attributes.get(i);
-			    		}
-			    	}
-			    	for(int i = 0; i< i1.attributes.size(); i++){
-			    		if(i2.attributes.get(i).getAttributeNumber() == attributenumber){
-			    			a2 = i2.attributes.get(i);
-			    		}
-			    	}
-			    	
-			    	return a1.getRanking() - a2.getRanking();       
+					return a1.getRanking() - a2.getRanking();
 
-			    }     
+				}
 
-			  };
-		
-		lystItems.sort(attributeComparator);
+			};
+
+			lystItems.sort(attributeComparator);
 			request.setAttribute("lystItems", lystItems);
-			
+
 			request.getRequestDispatcher("/thelist.jsp").forward(request, response);
-			
+
 		}
-}
-		private JSONObject[] fixrankingbullshit(int index, JSONObject[] inputArray, JSONObject item) {
-			
-			int total = inputArray.length;
-			
-			JSONObject current = null;
-			try {
-				current = inputArray[index];
-			} catch (Exception e) {
-				return fixrankingbullshit(0, inputArray, item);
-			}
-			if (current == null) {
-				inputArray[index] = item;
-				return inputArray;
-			} else {
-				return fixrankingbullshit(index + 1, inputArray, item);
-			}
-			
-		}
-		
 	}
+
+	private JSONObject[] fixrankingbullshit(int index, JSONObject[] inputArray, JSONObject item) {
+
+		int total = inputArray.length;
+
+		JSONObject current = null;
+		try {
+			current = inputArray[index];
+		} catch (Exception e) {
+			return fixrankingbullshit(0, inputArray, item);
+		}
+		if (current == null) {
+			inputArray[index] = item;
+			return inputArray;
+		} else {
+			return fixrankingbullshit(index + 1, inputArray, item);
+		}
+
+	}
+
+}

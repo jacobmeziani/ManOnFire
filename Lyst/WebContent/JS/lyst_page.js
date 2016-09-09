@@ -9,13 +9,23 @@
             document.cookie = name + "=" + value + expires + "; path=/";
         }
 
-function requestItems(listID, attributeNumber, itemsToGet) {
+function requestItems(listID, attributeNumber, completeList, startingIndex, endingIndex) {
 	//TODO: HURR
 	//
 	
 	//items to get will just be a string of 10 or whatever many item ids
 	
-	
+	while (true) {
+		try {
+			itemsToGet = completeList.slice(startingIndex, endingIndex);
+			break;
+		}
+		catch (e) {
+			endingIndex = endingIndex - 1;
+			continue;
+		}
+	}
+		
 	working =true;
 	
 	var xhr = $.ajax({
@@ -36,17 +46,21 @@ function requestItems(listID, attributeNumber, itemsToGet) {
 		$(".spinner").addClass("hidden");
 		$(".attributeBox").click(function() {
 			if (!working) {
-			var attributeId = $(this).attr('id');
-			var split = attributeId.split("attributeNumber");
-			attributeWanted = split[1];
-			$("#thatList").empty();
-			$(".spinner").removeClass("hidden");
-			isFinal = 0;
-			last_delivered = 0;
-	    		$(".spinner").removeClass("hidden");
-		    	working = true;
-		    	last_delivered = requestItems(listID, attributeWanted, (number_to_fetch + last_delivered), "initialLoad", last_delivered);
-	    	}			
+				//housekeeping
+				$(".spinner").removeClass("hidden");
+			    working = true;
+			    //code
+				var attributeId = $(this).attr('id');
+				var split = attributeId.split("attributeNumber");
+				attributeWanted = split[1];
+				$("#thatList").empty();
+				isFinal = 0;
+				last_delivered = 0;
+				sortedList = requestInitial(listID, attributeWanted);
+				itemListSize = sortedList.length;
+				last_delivered = requestItems(listID, attributeWanted, sortedList, 0, number_to_fetch);
+				
+	    	}
 		});
 		$(window).scroll(function() {
 		    if($(window).scrollTop() + $(window).height() == $(document).height()) {	    	
@@ -54,18 +68,24 @@ function requestItems(listID, attributeNumber, itemsToGet) {
 			    	if (!working) {
 			    		$(".spinner").removeClass("hidden");
 				    	working = true;
-				    	last_delivered = requestItems(listID, attributeWanted, (number_to_fetch + last_delivered), "load", last_delivered);
+				    	last_delivered = requestItems(listID, attributeWanted, sortedList, lastDelivered, (lastDelivered + number_to_fetch));
 			    	}
 		    	} else {
 		    		console.log("out of items");
 		    	}
 		    }
 		});
+		//set isFinal manually just in case as well
+		if ((last_delivered + endingIndex) >= itemListSize) {
+			isFinal = 1;
+		}
+
 		working = false;
+			
+		return (last_delivered + endingIndex);
+
 	});
 	
-	
-	return nextRankingNeeded;
 };
 
 
@@ -82,36 +102,18 @@ function requestInitial(listID, attributeNumber) {
 		dataType: "application/json",
 	})
 	.done(function(json, textStatus, xhr) {
-		var returnedList = json.sortedItemeIDs;
+		var returnList = json.sortedItemIDs;
 		working = false;
 	});
 	
-	return returnedList;
+	return returnList;
 }
 
-
-function sortList(attributeID) {
-	if (attributeID == attributeWanted) {
-		alert("Already sorting by this attribute");
-		return;
-	}
-	$(".spinner").removeClass("hidden");
-	$("#itemList").empty();
-	
-	attributeWanted = attributeID;
-	
-	isFinal = 0;
-	last_delivered = 0;
-	
-	last_delivered = requestItems(listID, attributeWanted, (number_to_fetch + last_delivered), "initialLoad", last_delivered);
-	
-};
 $(document).ready(function() {
 	
 	//list ID needs to be set before the first thing is returned. possibly grabbed from URL
-	listID = 0; //hardcoded for now
 	
-	//var listID = $("#listId").val();
+	var listID = $("#listId").val();
 	var listName = $("#listTitle").text();
 	
 	$(".spinner").removeClass("hidden");
@@ -128,7 +130,6 @@ $(document).ready(function() {
 	isFinal = 0;
 	working = false;
 	last_delivered = 0;
-	
 	number_to_fetch = 10;
 	// END global variables
 	
@@ -141,7 +142,7 @@ $(document).ready(function() {
 	});
 	
 	sortedList = requestInitial(listID, attributeWanted);
-	
+	itemListSize = sortedList.length;
 	last_delivered = requestItems(listID, attributeWanted, sortedList.slice(0,number_to_fetch));
 	
 	

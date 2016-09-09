@@ -62,8 +62,8 @@ public class LystItem implements Serializable  {
 		return nameUrl;
 	}
 	
-	public int getSelectedAttributeRanking(){
-		for(int i=0; i< attributes.size(); i++){
+	public int getSelectedAttributeRanking() {
+		for(int i=0; i< attributes.size(); i++) {
 			if(attributes.get(i).getAttributeNumber() == currentlySortedAttributeNumber){
 				return attributes.get(i).getRanking(); 
 			}

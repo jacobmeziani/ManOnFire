@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -163,26 +164,17 @@ public class DatabaseAccessor {
 		
 	}
 	
-
-	public ArrayList<Map<String,Object>> getRankedIDs(int listid, int attributeNeeded, int lastRankingDelivered, int nextRankingUp) {
+	public ArrayList<Integer> getRankedIDsOnlyIDs(int listid, int attributeNeeded) {
 		Table attributes = dynamoDB.getTable("Attributes");
-		
-//		Map<String,String> expressionAttributeNames = new HashMap<String, String>();
-//		expressionAttributeNames.put("#ranking", "Ranking");
-//		expressionAttributeNames.put("#rating", "Rating");
-//		
-		
 		String listidsubstring = Integer.toString(listid) + "-" + Integer.toString(attributeNeeded);
 		Map<String,Object>expressionAttributeValues = new HashMap<String,Object>();
-		expressionAttributeValues.put(":r0", lastRankingDelivered);
-		expressionAttributeValues.put(":r1", nextRankingUp);
 		expressionAttributeValues.put(":lid", listidsubstring);
-		
 		ScanSpec spec = new ScanSpec()
-				.withFilterExpression("begins_with(ListAttribute, :lid) and Ranking BETWEEN :r0 AND :r1")
+				.withFilterExpression("begins_with(ListAttribute, :lid)")
 				.withValueMap(expressionAttributeValues);
 		
-		ArrayList <Map<String,Object>> returnSauce = new ArrayList <Map<String,Object>> (); //TODO: rename plz
+		ArrayList <Map<String,Object>> infoMapList = new ArrayList <Map<String,Object>> ();
+		
 		
 		try {
 			ItemCollection<ScanOutcome> items = attributes.scan(spec);
@@ -197,6 +189,65 @@ public class DatabaseAccessor {
 				tempMap.put("ItemID", item.getInt("ItemID"));
 				tempMap.put("Ranking", item.getInt("Ranking"));
 				
+				infoMapList.add(tempMap);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("shit went down sorry papo");
+			e.printStackTrace();
+		}
+		
+
+		Comparator<Map<String,Object>> attributeComparator = new Comparator<Map<String,Object>>() {
+
+			public int compare(Map<String,Object> map1, Map<String,Object> map2) {
+				return ((Integer)map1.get("Ranking") - (Integer) map2.get("Ranking"));
+			}
+
+		};
+		
+		infoMapList.sort(attributeComparator);
+		
+		ArrayList<Integer> returnSauce = new ArrayList<Integer> ();
+		for (int i = 0; i < infoMapList.size(); i++) {
+			Map<String, Object> tempMap = infoMapList.get(i);
+			returnSauce.add((Integer) tempMap.get("ItemID"));
+		}
+		return returnSauce;
+	}
+	
+	
+	public ArrayList<Map<String,Object>> getRankedIDs(int listid, int attributeNeeded) {
+		Table attributes = dynamoDB.getTable("Attributes");
+		
+//		Map<String,String> expressionAttributeNames = new HashMap<String, String>();
+//		expressionAttributeNames.put("#ranking", "Ranking");
+//		expressionAttributeNames.put("#rating", "Rating");
+//		
+		
+		String listidsubstring = Integer.toString(listid) + "-" + Integer.toString(attributeNeeded);
+		Map<String,Object>expressionAttributeValues = new HashMap<String,Object>();
+		expressionAttributeValues.put(":lid", listidsubstring);
+		
+		ScanSpec spec = new ScanSpec()
+				.withFilterExpression("begins_with(ListAttribute, :lid)")
+				.withValueMap(expressionAttributeValues);
+		
+		ArrayList <Map<String,Object>> returnSauce = new ArrayList <Map<String,Object>> (); //TODO: rename plz
+		
+		
+		try {
+			ItemCollection<ScanOutcome> items = attributes.scan(spec);
+			int count = items.getTotalScannedCount();
+			System.out.println(count);
+			Iterator<Item> iter = items.iterator();
+			Map<String,Object> tempMap;
+			while (iter.hasNext()) {
+				Item item = iter.next();
+				tempMap = new HashMap<String,Object>();
+				tempMap.put("Rating",item.getInt("Rating"));
+				tempMap.put("ItemID", item.getInt("ItemID"));
+				tempMap.put("Ranking", item.getInt("Ranking"));
 				
 				returnSauce.add(tempMap);
 			}
@@ -205,7 +256,18 @@ public class DatabaseAccessor {
 			System.out.println("shit went down sorry papo");
 			e.printStackTrace();
 		}
-		System.out.println(returnSauce.toString());
+		
+
+		Comparator<Map<String,Object>> attributeComparator = new Comparator<Map<String,Object>>() {
+
+			public int compare(Map<String,Object> map1, Map<String,Object> map2) {
+				return ((Integer)map1.get("Ranking") - (Integer) map2.get("Ranking"));
+			}
+
+		};
+		
+		returnSauce.sort(attributeComparator);
+		
 		return returnSauce;
 	}
 	
