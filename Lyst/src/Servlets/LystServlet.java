@@ -384,8 +384,13 @@ public class LystServlet extends HttpServlet {
 				System.out.println("Oh hell yea");
 				request.getRequestDispatcher("/listitem.jsp").forward(request, response);
 			} else {
-				request.setAttribute("listName", identifier);
-				int listId = d.getListId(identifier);
+				String[] splitList = identifier.split("_");
+				String listName = splitList[0];
+				for (int i = 1; i < splitList.length; i++) {
+					listName += " " + splitList[i];
+				}
+				request.setAttribute("listName", listName);
+				int listId = d.getListId(listName);
 				request.setAttribute("listId", listId);
 				request.getRequestDispatcher("/thelist.jsp").forward(request, response);
 			}

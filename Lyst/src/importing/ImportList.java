@@ -117,7 +117,7 @@ public class ImportList {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		readFile("C://Users//Jacob//Documents//Lists//actors.csv");
+		readFile("C://Users//Jacob//Documents//Lists//nbaPlayers.csv");
 		FullReader.writeConflicts();
 
 	}

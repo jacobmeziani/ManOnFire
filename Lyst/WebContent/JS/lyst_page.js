@@ -91,6 +91,7 @@ function requestItems(listID, attributeNumber, completeList, startingIndex, endi
 
 function requestInitial(listID, attributeNumber) {
 	//initial data load that brings up the sorted list of the item IDs neeeded
+	var returnList;
 	var xhr = $.ajax({
 		url:"bro",
 		data: {
@@ -102,7 +103,7 @@ function requestInitial(listID, attributeNumber) {
 		dataType: "application/json",
 	})
 	.done(function(json, textStatus, xhr) {
-		var returnList = json.sortedItemIDs;
+		returnList = json.sortedItemIDs;
 		working = false;
 	});
 	
@@ -141,8 +142,9 @@ $(document).ready(function() {
 		window.location.href = "/";
 	});
 	
+	var sortedList = new Array();
 	sortedList = requestInitial(listID, attributeWanted);
-	itemListSize = sortedList.length;
+	var itemListSize = sortedList.length;
 	last_delivered = requestItems(listID, attributeWanted, sortedList.slice(0,number_to_fetch));
 	
 	

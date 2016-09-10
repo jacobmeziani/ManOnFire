@@ -581,8 +581,8 @@ public class DatabaseAccessor {
 	            for(int j=1; j < returnAttributes.size()-i; j++){
 	                if(returnAttributes.get(j-1).getAttributeNumber() > returnAttributes.get(j).getAttributeNumber()){
 	                    temp=returnAttributes.get(j-1);
-	                    returnAttributes.add(j-1, returnAttributes.get(j));
-	                    returnAttributes.add(j,temp);
+	                    returnAttributes.set(j-1, returnAttributes.get(j));
+	                    returnAttributes.set(j,temp);
 	                }
 	            }
 	        }
