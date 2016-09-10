@@ -1,4 +1,4 @@
- function createCookie(name, value, days) {
+function createCookie(name, value, days) {
             if (days) {
                 var date = new Date();
                 date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -14,10 +14,12 @@ function requestItems(listID, attributeNumber, completeList, startingIndex, endi
 	//
 	
 	//items to get will just be a string of 10 or whatever many item ids
-	
+	working =true;
+
 	while (true) {
 		try {
 			itemsToGet = completeList.slice(startingIndex, endingIndex);
+			console.log('indexed down');
 			break;
 		}
 		catch (e) {
@@ -25,11 +27,11 @@ function requestItems(listID, attributeNumber, completeList, startingIndex, endi
 			continue;
 		}
 	}
-		
-	working =true;
+	
+	console.log(itemsToGet);
 	
 	var xhr = $.ajax({
-		url:"bro",
+		url:"/Lyst/bro",
 		data: {
 			"action": "load",
 			"ListID" : listID,
@@ -68,7 +70,10 @@ function requestItems(listID, attributeNumber, completeList, startingIndex, endi
 			    	if (!working) {
 			    		$(".spinner").removeClass("hidden");
 				    	working = true;
-				    	last_delivered = requestItems(listID, attributeWanted, sortedList, lastDelivered, (lastDelivered + number_to_fetch));
+				    	console.log('window scrolled');
+				    	console.log('last delivered:');
+				    	console.log(last_delivered);
+				    	last_delivered = requestItems(listID, attributeWanted, sortedList, last_delivered, (last_delivered + number_to_fetch));
 			    	}
 		    	} else {
 		    		console.log("out of items");
@@ -76,42 +81,55 @@ function requestItems(listID, attributeNumber, completeList, startingIndex, endi
 		    }
 		});
 		//set isFinal manually just in case as well
-		if ((last_delivered + endingIndex) >= itemListSize) {
+		if (endingIndex >= itemListSize) {
 			isFinal = 1;
+		} else {
+			isFinal = 0;
 		}
 
 		working = false;
-			
-		return (last_delivered + endingIndex);
-
+		
+		
 	});
 	
+	return (last_delivered + endingIndex);
+
+
 };
 
 
-function requestInitial(listID, attributeNumber) {
+function requestInitial(listID, attributeNumber, returnList) {
+	working = true;
 	//initial data load that brings up the sorted list of the item IDs neeeded
-	var returnList;
 	var xhr = $.ajax({
-		url:"bro",
+		url:"/Lyst/bro",
 		data: {
 			"action": "initialLoad",
 			"ListID" : listID,
 			"Attribute":attributeNumber
 		},
 		type: "GET",
-		dataType: "application/json",
+		dataType: "json",
 	})
 	.done(function(json, textStatus, xhr) {
-		returnList = json.sortedItemIDs;
-		working = false;
+		sortedList = json.sortedItemIDs;
+
+		itemListSize = sortedList.length;
+    	last_delivered = requestItems(listID, attributeWanted, sortedList, 0, number_to_fetch);
+		
+		working = false;		
 	});
-	
-	return returnList;
-}
+//	
+//	while (working) {
+//		$(window).delay(800); 
+//	}
+//	console.log(returnList);
+//	return returnList;
+
+};
 
 $(document).ready(function() {
-	
+	returnList = null;
 	//list ID needs to be set before the first thing is returned. possibly grabbed from URL
 	
 	var listID = $("#listId").val();
@@ -142,11 +160,5 @@ $(document).ready(function() {
 		window.location.href = "/";
 	});
 	
-	var sortedList = new Array();
-	sortedList = requestInitial(listID, attributeWanted);
-	var itemListSize = sortedList.length;
-	last_delivered = requestItems(listID, attributeWanted, sortedList.slice(0,number_to_fetch));
-	
-	
+	sortedList = requestInitial(listID, attributeWanted, returnList);	
 })
-

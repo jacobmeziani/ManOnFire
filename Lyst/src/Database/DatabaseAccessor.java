@@ -266,7 +266,7 @@ public class DatabaseAccessor {
 
 		};
 		
-		returnSauce.sort(attributeComparator);
+		//returnSauce.sort(attributeComparator);
 		
 		return returnSauce;
 	}

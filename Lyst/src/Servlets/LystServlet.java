@@ -338,7 +338,7 @@ public class LystServlet extends HttpServlet {
 				// response.getWriter().append("Served at:
 				// ").append(request.getContextPath());
 				response.getWriter().write(json.toString());
-			} else if (requestAction.equals("initialLoad") || requestAction.equals("load")) {
+			} else if ((requestAction.equals("initialLoad")) || (requestAction.equals("load"))) {
 				serveLists(requestAction, request, response, d);
 			}
 		}
@@ -445,8 +445,9 @@ public class LystServlet extends HttpServlet {
 
 	protected void serveLists(String action, HttpServletRequest request, HttpServletResponse response,
 			DatabaseAccessor db) throws ServletException, IOException {
-
+		
 		if (action.equals("initialLoad")) {
+			System.out.println("Made it here");
 			response.setContentType("application/json");
 			String templistid = request.getParameter("ListID");
 			int listid = Integer.parseInt(templistid);
@@ -466,20 +467,18 @@ public class LystServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			response.getWriter().write(jsonO.toString());
-			return;
 		
 		} else if (action.equals("load")) {
-
-			response.setContentType("html");
+			
 			// first step -- getting the attributes for that particular list
 			String templistid = request.getParameter("ListID");
 			int listid = Integer.parseInt(templistid);
-
 			String tempattributenumber = request.getParameter("Attribute");
 			final int attributenumber = Integer.parseInt(tempattributenumber);
 			
-			String [] tempItems = request.getParameterValues("ItemsToGet");
-
+			
+			String[] tempItems = request.getParameterValues("ItemsToGet[]");
+			
 			int lengthReturned = tempItems.length;
 			
 			//most likely this will be unused; server at this point has no idea what's final and what isnt. front end does
@@ -525,32 +524,33 @@ public class LystServlet extends HttpServlet {
 
 			}
 			
-			Comparator<LystItem> attributeComparator = new Comparator<LystItem>() {
-				//i dont think this guy is necessary since the items are coming back sorted already
-				//the list that resides at the front end is already sorted
-				//we get back an array of IDs and the "load" just sends back items in that order
-				
-				public int compare(LystItem i1, LystItem i2) {
-					Attribute a1 = null;
-					Attribute a2 = null;
-					for (int i = 0; i < i1.attributes.size(); i++) {
-						if (i1.attributes.get(i).getAttributeNumber() == attributenumber) {
-							a1 = i1.attributes.get(i);
-						}
-					}
-					for (int i = 0; i < i1.attributes.size(); i++) {
-						if (i2.attributes.get(i).getAttributeNumber() == attributenumber) {
-							a2 = i2.attributes.get(i);
-						}
-					}
+//			Comparator<LystItem> attributeComparator = new Comparator<LystItem>() {
+//				//i dont think this guy is necessary since the items are coming back sorted already
+//				//the list that resides at the front end is already sorted
+//				//we get back an array of IDs and the "load" just sends back items in that order
+//				
+//				public int compare(LystItem i1, LystItem i2) {
+//					Attribute a1 = null;
+//					Attribute a2 = null;
+//					for (int i = 0; i < i1.attributes.size(); i++) {
+//						if (i1.attributes.get(i).getAttributeNumber() == attributenumber) {
+//							a1 = i1.attributes.get(i);
+//						}
+//					}
+//					for (int i = 0; i < i1.attributes.size(); i++) {
+//						if (i2.attributes.get(i).getAttributeNumber() == attributenumber) {
+//							a2 = i2.attributes.get(i);
+//						}
+//					}
+//
+//					return a1.getRanking() - a2.getRanking();
+//
+//				}
+//
+//			};
 
-					return a1.getRanking() - a2.getRanking();
-
-				}
-
-			};
-
-			lystItems.sort(attributeComparator);
+			//lystItems.sort(attributeComparator);
+			
 			request.setAttribute("lystItems", lystItems);
 
 			request.getRequestDispatcher("/thelist.jsp").forward(request, response);
