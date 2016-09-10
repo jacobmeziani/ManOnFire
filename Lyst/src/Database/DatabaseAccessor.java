@@ -198,15 +198,15 @@ public class DatabaseAccessor {
 		}
 		
 
-		Comparator<Map<String,Object>> attributeComparator = new Comparator<Map<String,Object>>() {
-
-			public int compare(Map<String,Object> map1, Map<String,Object> map2) {
-				return ((Integer)map1.get("Ranking") - (Integer) map2.get("Ranking"));
-			}
-
-		};
+//		Comparator<Map<String,Object>> attributeComparator = new Comparator<Map<String,Object>>() {
+//
+//			public int compare(Map<String,Object> map1, Map<String,Object> map2) {
+//				return ((Integer)map1.get("Ranking") - (Integer) map2.get("Ranking"));
+//			}
+//
+//		};
 		
-		infoMapList.sort(attributeComparator);
+		//infoMapList.sort(attributeComparator);
 		
 		ArrayList<Integer> returnSauce = new ArrayList<Integer> ();
 		for (int i = 0; i < infoMapList.size(); i++) {
@@ -266,7 +266,7 @@ public class DatabaseAccessor {
 
 		};
 		
-		returnSauce.sort(attributeComparator);
+		//returnSauce.sort(attributeComparator);
 		
 		return returnSauce;
 	}
