@@ -95,8 +95,8 @@ h2 {
 		font-size: 20px;
 	}
 	.vsImage {
-		height: 300px;
-		width: 300px;
+		height: 250px;
+		width: 250px;
 		opacity:0;
 	}
 }
@@ -111,15 +111,15 @@ h2 {
 		font-size: 23px;
 	}
 	h3 {
-		font-size: 15px;
+		font-size: 12px;
 	}
 	.imageDoBoys {
 		height: 50px;
 		width: 50px;
 	}
 	.vsImage {
-		height: 200px;
-		width: 200px;
+		height: 150px;
+		width: 150px;
 		opacity:0;
 	}
 	.imageDoBoys2 {

@@ -452,9 +452,9 @@ public class LystServlet extends HttpServlet {
 			String templistid = request.getParameter("ListID");
 			int listid = Integer.parseInt(templistid);
 
+
 			String tempattributenumber = request.getParameter("Attribute");
 			int attributenumber = Integer.parseInt(tempattributenumber);
-			
 			ArrayList<Integer> items = db.getRankedIDsOnlyIDs(listid, attributenumber);
 			
 			JSONArray jsonIDs = new JSONArray(items);
@@ -475,7 +475,8 @@ public class LystServlet extends HttpServlet {
 			int listid = Integer.parseInt(templistid);
 			String tempattributenumber = request.getParameter("Attribute");
 			final int attributenumber = Integer.parseInt(tempattributenumber);
-			
+			String toggled = request.getParameter("Toggled");
+			request.setAttribute("toggled", toggled);
 			
 			String[] tempItems = request.getParameterValues("ItemsToGet[]");
 			

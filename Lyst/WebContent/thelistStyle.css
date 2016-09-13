@@ -4,6 +4,12 @@
 	display: inline-block;
 }
 
+.attributeBoxMini {
+	text-align: center;
+	font-size: 20px;
+	display: inline-block;
+}
+
 .positionRelativeContainer {
 	position: relative;
 	text-align: center;
@@ -51,6 +57,10 @@ span.redRating {
 	-moz-box-shadow: 5px 5px 5px 0px rgba(50, 50, 50, 0.75);
 	box-shadow: 5px 5px 5px 0px rgba(50, 50, 50, 0.75);
 	-webkit-box-shadow: 5px 5px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+span.redRating:hover {
+	background: #990303;
 }
 
 .itemBox {
@@ -144,6 +154,10 @@ span.redRating {
 .numberText{
 	font-size: 18px;
 }
+.btn-arrow-right,
+.btn-arrow-left {
+   margin-top:100px;
+}
 }
 
 /* Landscape tablets and medium desktops */
@@ -176,6 +190,10 @@ span.redRating {
 .attributeName{
 	font-size: 16px;
 }
+.btn-arrow-right,
+.btn-arrow-left {
+   margin-top:100px;
+}
 }
 
 /* Portrait tablets and small desktops */
@@ -203,13 +221,18 @@ span.redRating {
 	margin-left: 30px;
 }
 .itemName{
-	font-size: 18px;
+	font-size: 16px;
+	margin-left:3px;
 }
 .attributeName{
 	font-size: 12px;
 }
 .numberText{
 	font-size: 20px;
+}
+.btn-arrow-right,
+.btn-arrow-left {
+   margin-top:100px;
 }
 }
 
@@ -228,7 +251,7 @@ max-width
 	.ratingNumber {
 	margin-top: 0px;
 }
-.attributeBox{
+.attributeBoxMini{
 		margin-top: 10px;
 		cursor: pointer;
 }
@@ -237,7 +260,7 @@ max-width
 	color: black;
 }
 .attributeName{
-	font-size: 16px;
+	font-size: 12px;
 }
 .listItemImage {
 	height: 200px;
@@ -245,6 +268,10 @@ max-width
 }
 .numberText{
 	font-size: 32px;
+}
+.btn-arrow-right,
+.btn-arrow-left {
+   margin-top:20px;
 }
 }
 
@@ -261,7 +288,7 @@ max-width
 .attributeName{
 	font-size: 8px;
 }
-.attributeBox{
+.attributeBoxMini{
 		margin-top: 5px;
 		cursor: pointer;
 }
@@ -276,4 +303,109 @@ max-width
 .numberText{
 	font-size: 32px;
 }
+.btn-arrow-right,
+.btn-arrow-left {
+   margin-top:20px;
+}
+}
+
+.btn-arrow-right,
+.btn-arrow-left {
+   position: relative;
+   padding-left: 18px;
+   padding-right: 18px;
+}
+
+.btn-arrow-right {
+   padding-left: 36px;
+}
+
+.btn-arrow-left {
+   padding-right: 36px;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-right:after,
+.btn-arrow-left:before,
+.btn-arrow-left:after {
+   /* make two squares (before and after), looking similar to the button */
+   
+   content: "";
+   position: absolute;
+   top: 5px;
+   /* move it down because of rounded corners */
+   
+   width: 22px;
+   /* same as height */
+   
+   height: 22px;
+   /* button_outer_height / sqrt(2) */
+   
+   background: inherit;
+   /* use parent background */
+   
+   border: inherit;
+   /* use parent border */
+   
+   border-left-color: transparent;
+   /* hide left border */
+   
+   border-bottom-color: transparent;
+   /* hide bottom border */
+   
+   border-radius: 0px 4px 0px 0px;
+   /* round arrow corner, the shorthand property doesn't accept "inherit" so it is set to 4px */
+   
+   -webkit-border-radius: 0px 4px 0px 0px;
+   -moz-border-radius: 0px 4px 0px 0px;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-right:after {
+   transform: rotate(45deg);
+   /* rotate right arrow squares 45 deg to point right */
+   
+   -webkit-transform: rotate(45deg);
+   -moz-transform: rotate(45deg);
+   -o-transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+}
+
+.btn-arrow-left:before,
+.btn-arrow-left:after {
+   transform: rotate(225deg);
+   /* rotate left arrow squares 225 deg to point left */
+   
+   -webkit-transform: rotate(225deg);
+   -moz-transform: rotate(225deg);
+   -o-transform: rotate(225deg);
+   -ms-transform: rotate(225deg);
+}
+
+.btn-arrow-right:before,
+.btn-arrow-left:before {
+   /* align the "before" square to the left */
+   
+   left: -11px;
+}
+
+.btn-arrow-right:after,
+.btn-arrow-left:after {
+   /* align the "after" square to the right */
+   
+   right: -11px;
+}
+
+.btn-arrow-right:after,
+.btn-arrow-left:before {
+   /* bring arrow pointers to front */
+   
+   z-index: 1;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-left:after {
+   /* hide arrow tails background */
+   
+   background-color: white;
 }

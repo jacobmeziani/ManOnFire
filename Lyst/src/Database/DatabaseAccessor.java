@@ -170,7 +170,7 @@ public class DatabaseAccessor {
 		Map<String,Object>expressionAttributeValues = new HashMap<String,Object>();
 		expressionAttributeValues.put(":lid", listidsubstring);
 		ScanSpec spec = new ScanSpec()
-				.withFilterExpression("begins_with(ListAttribute, :lid)")
+				.withFilterExpression("ListAttribute = :lid")
 				.withValueMap(expressionAttributeValues);
 		
 		ArrayList <Map<String,Object>> infoMapList = new ArrayList <Map<String,Object>> ();
@@ -188,7 +188,6 @@ public class DatabaseAccessor {
 				tempMap.put("Rating",item.getInt("Rating"));
 				tempMap.put("ItemID", item.getInt("ItemID"));
 				tempMap.put("Ranking", item.getInt("Ranking"));
-				
 				infoMapList.add(tempMap);
 			}
 			
@@ -288,9 +287,9 @@ public class DatabaseAccessor {
 						.withString(":v_listId", listidstring));
 		
 		ItemCollection<QueryOutcome> returnedattributes = attributes.query(spec);
-		int count = returnedattributes.getTotalCount();
+		
 
-		ArrayList<Map<String, Object>> returnSauce = new ArrayList<Map<String, Object>> (count);
+		HashMap<Integer,Map<String, Object>> tempMap = new HashMap<Integer,Map<String, Object>>(); 
 		
 		Map<String, Object> itemMap;
 		
@@ -309,7 +308,15 @@ public class DatabaseAccessor {
 			itemMap.put("Ranking", item.getInt("Ranking"));
 			itemMap.put("AttributeName", item.getString("AttributeName"));
 			
-			returnSauce.add(attributeNumber, itemMap);
+			tempMap.put(attributeNumber, itemMap);
+		}
+		ArrayList<Map<String, Object>> returnSauce = new ArrayList<Map<String, Object>> (tempMap.size());
+		Iterator it = tempMap.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry pair = (Map.Entry)it.next();
+			int index = (Integer)pair.getKey();
+			Map<String, Object> theMap = (Map<String, Object>) pair.getValue();
+			returnSauce.add(index,theMap);
 		}
 		return returnSauce;
 	}

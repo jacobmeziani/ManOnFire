@@ -26,7 +26,7 @@
 <link
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"
 	rel="stylesheet">
-<link href="/Lyst/testCss.css" rel="stylesheet">
+<link href="/Lyst/thelistStyle.css" rel="stylesheet">
 <link href="/Lyst/vsStyle.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/Lyst/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,49 +61,146 @@
 		<div class="row rowBuffs">
 			<div class="col-xs-4 col-sm-4 col-md-4">
 				<button id="newShowdownButton" type="button"
-					class="btn btn-circle btn-xl center-block"> <span
-					class="glyphicon glyphicon-eye-close"></span>
+					class="btn btn-circle btn-xl center-block">
+					<span class="glyphicon glyphicon-eye-close"></span>
 				</button>
-				<h4 class="centerAlign">Rate Items</h4>
+				<h4 class="centerAlign">
+					Rate
+					<c:out value="${requestScope.listName}" />
+				</h4>
 			</div>
 			<div class="col-xs-6 col-sm-4 col-md-4">
-				<p class="listTitle centerAlign"><c:out value="${requestScope.listName}" /></p>
+				<p class="listTitle centerAlign">
+					<c:out value="${requestScope.listName}" />
+				</p>
+				<p id="listDescriptor" class="centerAlign"></p>
 			</div>
 			<div class="col-xs-2 col-sm-4 col-md-4"></div>
 		</div>
-		<input type="hidden" id="listId"
-			value="${requestScope.listId}">
-		
-		
-		
-	<div id="thatList">	
-		<c:forEach var="i" items="${requestScope.lystItems}">
-		<div class="row rowPadding itemInList">
-			<div class="col-xs-12 col-sm-2 col-md-2 itemBox">
-				<div class="col-xs-2 col-sm-2 col-md-1">
-					<p class="numberText"><c:out value="${i.getSelectedAttributeRanking()}" /></p>
+		<input type="hidden" id="listId" value="${requestScope.listId}">
+
+
+
+		<div id="thatList">
+			<c:forEach var="i" items="${requestScope.lystItems}">
+				<div class="row rowPadding itemInList">
+					<div class="col-xs-12 col-sm-2 col-md-2 itemBox">
+						<div class="col-xs-2 col-sm-2 col-md-1">
+							<p class="numberText">
+								<c:out value="${i.getSelectedAttributeRanking()}" />
+							</p>
+						</div>
+						<div class="col-xs-10 col-sm-10 col-md-11">
+							<a
+								href="/bro/<c:out value="${i.getListUrl()}" />/<c:out value="${i.getNameUrl()}" />"><img
+								class="img-circle center-block listItemImage"
+								src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${i.picPath}" />">
+							</a>
+						</div>
+					</div>
+					<div class="col-xs-2 hidden-sm hidden-md hidden-lg"></div>
+					<div class="col-xs-10 col-sm-2 col-md-2 itemBox">
+						<a
+							href="/bro/<c:out value="${i.getListUrl()}" />/<c:out value="${i.getNameUrl()}" />">
+							<h3 class="itemName">
+								<c:out value="${i.name}" />
+							</h3>
+						</a>
+					</div>
+					<c:choose>
+						<c:when test="${requestScope.toggled eq 'false'}">
+							<c:forEach var="j" items="${i.attributes}">
+								<c:if test="${j.attributeNumber == 6}">
+									<div class="hidden-xs col-sm-1 col-md-1">
+										<button type="button"
+											class="btn btn-danger btn-arrow-right toggleAttButton center-block">+</button>
+									</div>
+								</c:if>
+								<c:choose>
+									<c:when test="${j.attributeNumber < 6}">
+										<div
+											id="attributeNumber<c:out value="${j.attributeNumber}" />"
+											class="hidden-xs col-sm-1 col-md-1 attributeBox">
+											<div id="attributeNameText" class="attributeName">
+												<c:out value="${j.name}" />
+											</div>
+											<span class="redRating center-block"><p
+													class="ratingNumber">
+													<c:out value="${j.rating}" />
+												</p></span>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div
+											id="attributeNumber<c:out value="${j.attributeNumber}" />"
+											class="hidden-xs col-sm-1 col-md-1 attributeBox hidden">
+											<div id="attributeNameText" class="attributeName">
+												<c:out value="${j.name}" />
+											</div>
+											<span class="redRating center-block"><p
+													class="ratingNumber">
+													<c:out value="${j.rating}" />
+												</p></span>
+										</div>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</c:when>
+
+						<c:otherwise>
+							<c:forEach var="j" items="${i.attributes}">
+								<c:if test="${j.attributeNumber == 6}">
+									<div class="hidden-xs col-sm-1 col-md-1">
+										<button type="button"
+											class="btn btn-danger btn-arrow-left toggleAttButton center-block">+</button>
+									</div>
+								</c:if>
+								<c:choose>
+									<c:when test="${j.attributeNumber < 6}">
+										<div
+											id="attributeNumber<c:out value="${j.attributeNumber}" />"
+											class="hidden-xs col-sm-1 col-md-1 attributeBox hidden">
+											<div id="attributeNameText" class="attributeName">
+												<c:out value="${j.name}" />
+											</div>
+											<span class="redRating center-block"><p
+													class="ratingNumber">
+													<c:out value="${j.rating}" />
+												</p></span>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div
+											id="attributeNumber<c:out value="${j.attributeNumber}" />"
+											class="hidden-xs col-sm-1 col-md-1 attributeBox">
+											<div id="attributeNameText" class="attributeName">
+												<c:out value="${j.name}" />
+											</div>
+											<span class="redRating center-block"><p
+													class="ratingNumber">
+													<c:out value="${j.rating}" />
+												</p></span>
+										</div>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</c:otherwise>
+
+					</c:choose>
+					<c:forEach var="j" items="${i.attributes}">
+					<div id="attributeNumber<c:out value="${j.attributeNumber}" />"
+						class="col-xs-2 hidden-sm hidden-md hidden-lg attributeBoxMini">
+						<div id="attributeNameText" class="attributeName">
+							<c:out value="${j.name}" />
+						</div>
+						<span class="redRating center-block"><p
+								class="ratingNumber">
+								<c:out value="${j.rating}" />
+							</p></span>
+					</div>
+					</c:forEach>
 				</div>
-				<div class="col-xs-10 col-sm-10 col-md-11">
-					<a href="/bro/<c:out value="${i.getListUrl()}" />/<c:out value="${i.getNameUrl()}" />"><img
-						class="img-circle center-block listItemImage"
-						src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${i.picPath}" />">
-					</a>
-				</div>
-			</div>
-			<div class="col-xs-2 hidden-sm hidden-md hidden-lg"></div>
-			<div class="col-xs-10 col-sm-2 col-md-2 itemBox">
-				<a href="/bro/<c:out value="${i.getListUrl()}" />/<c:out value="${i.getNameUrl()}" />">
-					<h3 class="itemName"><c:out value="${i.name}" /></h3>
-				</a>
-			</div>
-			<c:forEach var="j" items="${i.attributes}">
-			<div id="attributeNumber<c:out value="${j.attributeNumber}" />" class="col-xs-2 col-sm-1 col-md-1 attributeBox">
-				<div class="attributeName"><c:out value="${j.name}" /></div>
-				<span class="redRating center-block"><p class="ratingNumber"><c:out value="${j.rating}" /></p></span>
-			</div>
 			</c:forEach>
-		</div>
-		</c:forEach>
 		</div>
 
 		<div id="spinnerbody" class="container-fluid main-body">
