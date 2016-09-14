@@ -12,7 +12,7 @@
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="vsStyle.css">
+<link rel="stylesheet" type="text/css" href="vsStylePurple.css">
 <link rel="stylesheet" type="text/css" href="sliderStyle.css">
 <script src="testScripts.js"></script>
 <script src="testScripts2.js"></script>
@@ -48,12 +48,12 @@
 		<div class="row row-buffer">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<h4 id="quitText" class="centerAlign">Quit</h4>
-				<h4 id="backText" class="hidden centerAlign">Back</h4>
+				<h4 id="backText" class="hidden centerAlign">Previous Attribute</h4>
 
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
-				<h4 id="accurateText" class="centerAlign">Next</h4>
+				<h4 id="accurateText" class="centerAlign">Next Attribute</h4>
 				<h4 id="submitText" class="hidden centerAlign">Submit!</h4>
 			</div>
 		</div>

@@ -22,13 +22,13 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-<script src="/Lyst/JS/lyst_page.js"></script>
+<script src="/JS/lyst_page.js"></script>
 <link
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"
 	rel="stylesheet">
-<link href="/Lyst/thelistStyle.css" rel="stylesheet">
-<link href="/Lyst/vsStyle.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/Lyst/style.css">
+<link href="/thelistStyle.css" rel="stylesheet">
+<link href="/vsStylePurple.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
@@ -62,7 +62,7 @@
 			<div class="col-xs-4 col-sm-4 col-md-4">
 				<button id="newShowdownButton" type="button"
 					class="btn btn-circle btn-xl center-block">
-					<span class="glyphicon glyphicon-eye-close"></span>
+					<span class="glyphicon glyphicon-tasks"></span>
 				</button>
 				<h4 class="centerAlign">
 					Rate
@@ -82,8 +82,15 @@
 
 
 		<div id="thatList">
-			<c:forEach var="i" items="${requestScope.lystItems}">
-				<div class="row rowPadding itemInList">
+			<c:forEach var="i" items="${requestScope.lystItems}" varStatus="loop">
+			<c:choose>
+			<c:when test="${loop.index%2==0}">
+			<div class="row rowPadding itemInList">
+			</c:when>
+			<c:otherwise>
+			<div class="row rowPadding itemInList grayBackground">
+			</c:otherwise>
+			</c:choose>
 					<div class="col-xs-12 col-sm-2 col-md-2 itemBox">
 						<div class="col-xs-2 col-sm-2 col-md-1">
 							<p class="numberText">
@@ -112,8 +119,10 @@
 							<c:forEach var="j" items="${i.attributes}">
 								<c:if test="${j.attributeNumber == 6}">
 									<div class="hidden-xs col-sm-1 col-md-1">
-										<button type="button"
-											class="btn btn-danger btn-arrow-right toggleAttButton center-block">+</button>
+										<button type="button" id="vsButton"
+					class="btn btn-circle btn-xl toggleAttButton center-block" onclick="this.blur();">
+					<span class="glyphicon glyphicon-menu-right"></span>
+				</button>
 									</div>
 								</c:if>
 								<c:choose>
@@ -151,8 +160,10 @@
 							<c:forEach var="j" items="${i.attributes}">
 								<c:if test="${j.attributeNumber == 6}">
 									<div class="hidden-xs col-sm-1 col-md-1">
-										<button type="button"
-											class="btn btn-danger btn-arrow-left toggleAttButton center-block">+</button>
+										<button type="button" id="vsButton"
+					class="btn btn-circle btn-xl toggleAttButton center-block" onclick="this.blur();">
+					<span class="glyphicon glyphicon-menu-left"></span>
+				</button>
 									</div>
 								</c:if>
 								<c:choose>

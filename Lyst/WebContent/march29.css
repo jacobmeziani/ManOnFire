@@ -33,11 +33,11 @@
 	font-size: 16px;}
 
 .selected {
-	background: #C20021 !important;
+	background: #913D88 !important;
 	}
 
 #top-nav.desk li a:hover {
-	background: #C20021;
+	background: #913D88;
 	cursor: pointer;
 }
  

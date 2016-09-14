@@ -21,7 +21,7 @@
 	border-radius: 50%;
 	behavior: url(PIE.htc); /* remove if you don't care about IE8 */
 	color: white;
-	background: #C20021;
+	background: #5133AB;
 	text-align: center;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .barTitle {
-	color: black;
+	color: red;
 }
 
 .tile.purple, .tile.blue, .tile.red, .tile.orange, .tile.green {
@@ -76,7 +76,7 @@
 }
 
 .tile.red {
-	background: #cf000f;
+	background: #5133AB;
 }
 
 /* .tile.red:hover { */
@@ -118,8 +118,13 @@
 	background: rgba(115, 102, 255, 1);
 }
 
+.lilRowMarg{
+	margin-top: 10px;
+}
+
 .progress-bar {
 	background-color: #1a1a1a;
+		border: 1px solid white;
 	height: 25px;
 	width: 100%;
 	padding: 5px;

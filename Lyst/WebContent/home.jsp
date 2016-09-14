@@ -19,13 +19,14 @@
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="style.css">
 <link href='https://fonts.googleapis.com/css?family=Black+Ops+One'
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="vsStyle.css">
+<link rel="stylesheet" type="text/css" href="vsStylePurple.css">
 <link rel="stylesheet" type="text/css" href="Stylesheets/MenuStyle.css">
 <link rel="stylesheet" type="text/css" href="sliderStyle.css">
 <script src="april3.js"></script>
@@ -35,7 +36,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid topNav">
 		<div class="row rowPadding well well-sm">
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
 				<a href="/bro/lists" data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
@@ -58,10 +59,10 @@
 
 		</div>
 	</div>
-	<div class="container-fluid extraRowPadding" id="main-body">
+	<div class="container-fluid" id="main-body">
 		<div id="contextButtons" class="row">
 			<div id="topLeftButton"
-				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+				class=" col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<button id="clicker" type="button"
 					class="btn btn-circle btn-xl center-block">
 					<span class="glyphicon glyphicon-th"></span>
@@ -71,28 +72,46 @@
 										${requestScope.CategoryHTML}
 										</div>
 			</div>
-			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
-			<div id="topRightButton"
-				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+			<div id="middleButton"
+				class=" col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<button type="button" id="randomButton"
 					class="btn btn-circle btn-xl center-block" onclick="this.blur();">
 					<span class="glyphicon glyphicon-repeat"></span>
 				</button>
 			</div>
+			<div id="topRightButton"
+				class=" col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
+				<button type="button" id="vsButton"
+					class="btn btn-circle btn-xl center-block" onclick="this.blur();">
+					<span class="glyphicon glyphicon-sunglasses"></span>
+				</button>
+			</div>
 		</div>
 		<div id="labels" class="row row-buffer">
-			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+			<div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<span><h4 id="showCategory" class="centerAlign">${requestScope.categoryName}</h4></span>
 				<input type="hidden" id="currentCategory"
 					value="${requestScope.currentCategory}"> <input
 					type="hidden" id="isCategoryList" value="${requestScope.isList}">
 
 			</div>
-			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
-			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
+			<div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<h4 class="centerAlign">Random</h4>
 			</div>
+			<div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4 nopadding">
+				<h4 class="centerAlign">Start!</h4>
+			</div>
 		</div>
+		<div class="row">
+			<div id="listNameContent"
+				class="col-xs-12 col-sm-12 col-md-12 col-lg-12 centerAlign">
+				<div id="list">
+					<h3 id="listNameH3">
+						<c:out value="${requestScope.leftItem.belongingList}"></c:out>
+					</h3>
+				</div>
+			</div>
+			</div>
 		<div class="row">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<div id="leftPic" class="testing">
@@ -103,15 +122,8 @@
 			</div>
 			<div id="centerContent"
 				class="hidden-xs hidden-sm col-md-2 col-lg-2 centerAlign">
-				<div id="list" class="row">
-					<h3 id="listNameH3">
-						<c:out value="${requestScope.leftItem.belongingList}"></c:out>
-					</h3>
-				</div>
 				<div class="row">
-					<button id="vsButton" class="btn btn-lg btn-danger btn-red">
 						<h1>VS</h1>
-					</button>
 				</div>
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
@@ -134,10 +146,8 @@
 					<c:out value="${requestScope.leftItem.name}"></c:out>
 				</h3>
 			</div>
-			<div class="col-xs-4 col-sm-4 hidden-md hidden-lg centerAlign">
-				<button id="vsButtonMobile" class="btn btn-lg btn-danger btn-red">
+			<div id="miniVs" class="col-xs-4 col-sm-4 hidden-md hidden-lg centerAlign">
 					<h1>VS</h1>
-				</button>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
 			<div id="rightName"

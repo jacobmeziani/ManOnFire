@@ -26,7 +26,7 @@
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="/vsStyle.css">
+<link rel="stylesheet" type="text/css" href="/vsStylePurple.css">
 <link rel="stylesheet" type="text/css" href="/listitemStyle.css">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>

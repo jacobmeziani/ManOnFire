@@ -1,7 +1,7 @@
 body {
 	background-color: #FF5A5F;
 /* 	soft red : #FF5A5F;
-	selected : #C20021;
+	selected : #913D88;
 	other red: #ff6666 */
 }
 
@@ -38,8 +38,8 @@ body {
 }
 
 .item-desktop:hover {
-	background-color: #C20021;
-	border-color: #C20021;
+	background-color: #913D88;
+	border-color: #913D88;
 	cursor: pointer;
 	
 }

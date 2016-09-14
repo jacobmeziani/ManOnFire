@@ -31,7 +31,7 @@ function requestItems(listID, attributeNumber, completeList, startingIndex,
 	console.log(itemsToGet);
 
 	var xhr = $.ajax({
-		url : "/Lyst/bro",
+		url : "bro",
 		data : {
 			"action" : "load",
 			"ListID" : listID,
@@ -65,7 +65,7 @@ function requestInitial(listID, attributeNumber, attributeName) {
 	working = true;
 	// initial data load that brings up the sorted list of the item IDs neeeded
 	var xhr = $.ajax({
-		url : "/Lyst/bro",
+		url : "bro",
 		data : {
 			"action" : "initialLoad",
 			"ListID" : listID,
@@ -168,12 +168,12 @@ $(document)
 							}
 						});
 						$(".toggleAttButton").each(function(index) {
-							if ($(this).hasClass("btn-arrow-right")) {
-								$(this).removeClass("btn-arrow-right");
-								$(this).addClass("btn-arrow-left");
+							if ($("span", this).hasClass("glyphicon-menu-right")) {
+								$("span", this).removeClass("glyphicon-menu-right");
+								$("span", this).addClass("glyphicon-menu-left");
 							} else {
-								$(this).removeClass("btn-arrow-left");
-								$(this).addClass("btn-arrow-right");
+								$("span", this).removeClass("glyphicon-menu-left");
+								$("span", this).addClass("glyphicon-menu-right");
 							}
 						});
 						toggled = !toggled;

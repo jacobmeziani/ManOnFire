@@ -23,7 +23,7 @@
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="/style.css">
-<link rel="stylesheet" type="text/css" href="/vsStyle.css">
+<link rel="stylesheet" type="text/css" href="/vsStylePurple.css">
 <script src="/JS/lists.js"></script>
 <link rel="stylesheet" href="/Stylesheets/lists.css">
 <link rel="stylesheet" href="/Stylesheets/MenuStyle.css">

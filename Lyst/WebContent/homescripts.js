@@ -8,18 +8,22 @@ var currentSelection = 5;
 var sliderInit;
 var leftItemProps;
 var rightItemProps;
+var homeWorking = false;
 
 $(document).ready(function() {
 
 	$("#randomButton").click(function() {
+		if(!homeWorking){
+			homeWorking = true;
 	newMatchup();
+		}
 	})
 
 	$("#vsButton").click(function() {
+		if(!homeWorking){
+			homeWorking = true;
 		goToVsScreen();
-	})
-	$("#vsButtonMobile").click(function() {
-		goToVsScreen();
+		}
 	})
 
 });
@@ -28,7 +32,6 @@ function goToVsScreen() {
 	var listName = $.trim($("#listNameH3").text());
 	var leftItemName = $.trim($("#leftNameH3").text());
 	var rightItemName = $.trim($("#rightNameH3").text());
-	
 	$.get("bro", {
 		"action" : "vs",
 		"listName" : listName,
@@ -49,6 +52,7 @@ function goToVsScreen() {
 		$.get("bro", {
 			"action" : "sliderDisplay"
 		}, function(html) {
+			$("#listNameH3").empty();
 			var parsed = $('<div/>').append(html);
 
 			$("#bottomRow").html(parsed.find("#sliderRow"));
@@ -80,6 +84,8 @@ function goToVsScreen() {
 					newDoc.close();
 				});
 			});
+			window.scrollTo(0,document.body.scrollHeight);
+			homeWorking = false;
 		});
 	});
 }
@@ -306,7 +312,7 @@ function newMatchup(){
 	$("#rightName").fadeOut("slow");
 	$("#rightName2").fadeOut("slow");
 	$("#leftName2").fadeOut("slow");
-	$("#vsButtonMobile").fadeOut("slow");
+	$("#miniVs").fadeOut("slow");
 	$("#leftPic").fadeOut("slow",function(){
 	var category = $("#currentCategory").attr("value");
 	var list = $("#isCategoryList").attr("value");
@@ -329,7 +335,8 @@ function newMatchup(){
 		$("#leftName2").html(parsed.find("#leftName2"));
 		$("#rightName2").fadeIn("slow");
 		$("#leftName2").fadeIn("slow");
-		$("#vsButtonMobile").fadeIn("slow");
+		$("#miniVs").fadeIn("slow");
+		homeWorking = false;
 	});
 	});
 }

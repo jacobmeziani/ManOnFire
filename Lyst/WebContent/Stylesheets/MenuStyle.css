@@ -16,7 +16,7 @@
  }
 #top-nav.desk li a {
 	padding: 5px 5px;
-	background: #FF3D3D;
+	background: #913D88;
 	text-align: center;
 	border: 1px solid white;
 	color: white;
@@ -25,12 +25,12 @@
 	font-size: 16px;}
 
 .selected{
-	background: #CC3333 !important;
+	background: #C470BB !important;
 	font-weight: bold;
 	}
 
 #top-nav.desk li a:hover {
-	background: #ffb3b3 !important;
+	background: #C470BB !important;
 	color: black !important;
 	cursor: pointer;
 	text-decoration: none;
@@ -64,7 +64,7 @@
 	top: 0;
 	left: 0;
 	z-index: 100;
-	background-color: #FF3D3D;
+	background-color: #913D88;
 	padding: 0;	
 	margin: 0;
 }
@@ -77,7 +77,7 @@
 	top: 0;
 	left: 0;
 	z-index: 100;
-	background-color: #FF3D3D;
+	background-color: #913D88;
 	margin: 0;
 	padding: 0;
 	
@@ -85,7 +85,7 @@
 #top-nav.mobile li {
 	text-align: center;
 	padding: 10px;
-	background-color: #FF3D3D;
+	background-color: #913D88;
 	border-top: 1px solid #eee;
 }
 
@@ -106,7 +106,7 @@
 }
 
 .finalNode:hover {
-	background: #ffb3b3 !important;
+	background: #913D88 !important;
 	color: black !important;
 	cursor: pointer;
 }

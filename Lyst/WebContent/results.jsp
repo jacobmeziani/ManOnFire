@@ -24,7 +24,7 @@
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="vsStyle.css">
+<link rel="stylesheet" type="text/css" href="vsStylePurple.css">
 <link rel="stylesheet" type="text/css" href="resultsStyle.css">
 <script src="resultScripts.js"></script>
 <script src="menuScript.js"></script>
@@ -61,7 +61,7 @@
 				class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<a href="/" id="newShowdownButton" type="button"
 					class="btn btn-circle btn-xl center-block"> <span
-					class="glyphicon glyphicon-eye-close aTag"></span>
+					class="glyphicon glyphicon-tasks aTag"></span>
 					</a>
 			</div>
 			<div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
@@ -240,7 +240,7 @@
 										</c:otherwise>
 									</c:choose>
 								</div>
-								<div class="row">
+								<div class="row lilRowMarg">
 									<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 nopadding"></div>
 									<c:choose>
 										<c:when test="${!i.leftUserWins}">

@@ -41,11 +41,11 @@
 
 .itemInList {
 /* 	margin-top: 10px; */
-	border-bottom: solid #c0c0c0;
+/* 	border-bottom: solid #c0c0c0; */
 }
 
 span.redRating {
-	background: #C20021;
+	background: #5133AB;
 	border-radius: 50%;
 	color: #ffffff;
 	display: inline-block;
@@ -60,7 +60,21 @@ span.redRating {
 }
 
 span.redRating:hover {
-	background: #990303;
+	background: #913D88;
+}
+
+.btn-more{
+	background: #913D88;
+	color: white;
+}
+
+.grayBackground{
+	background: lightgray;
+}
+
+.btn-more:hover{
+	background: #5133AB;
+	color: white;
 }
 
 .itemBox {
@@ -408,4 +422,8 @@ max-width
    /* hide arrow tails background */
    
    background-color: white;
+}
+
+.toggleAttButton{
+	margin-top:70px;
 }
