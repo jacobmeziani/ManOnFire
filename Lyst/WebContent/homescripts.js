@@ -11,7 +11,6 @@ var rightItemProps;
 var homeWorking = false;
 
 $(document).ready(function() {
-
 	$("#randomButton").click(function() {
 		if(!homeWorking){
 			homeWorking = true;
@@ -118,6 +117,12 @@ function sliderFunc(leftItem, rightItem, attributes) {
 	// and whenever the slider changes, lets echo out the month
 	.on("slidechange", function(e, ui) {
 		currentSelection = ui.value;
+		$("#descriptor").html(descriptors[currentSelection]);
+		$("#descriptorMobile").html(descriptors[currentSelection]);
+	});
+	
+	$('.ui-slider-label').on('touchstart', function(e) { 
+		currentSelection = parseInt($(this).attr("data-value"));
 		$("#descriptor").html(descriptors[currentSelection]);
 		$("#descriptorMobile").html(descriptors[currentSelection]);
 	});

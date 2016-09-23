@@ -21,7 +21,7 @@ public class ListRater {
 			int numberOfAttributes = currentLyst.getAttributes().size()+1;
 			//Goes through each attribute in the list
 			for(int j=0; j<numberOfAttributes; j++){
-				if (listNumber==2){
+//				if (listNumber==9){
 				ArrayList<Attribute> currentAttributes = db.getAttributes(listNumber,j);
 				Collections.sort(currentAttributes);
 				int rank =1;
@@ -50,14 +50,18 @@ public class ListRater {
 				if(j==0){
 					db.updateOverallRatings(currentAttributes, listName);
 				}
-				}
+//				}
 			}
 		}
-
+System.out.println("Done");
 	}
 	
 	private static int generateRating(double averageScore, double lowestScore, double range){
-		int rating = (int)Math.ceil(((averageScore - lowestScore)*100)/range);		
+		double difference = averageScore - lowestScore;
+		int rating = (int)Math.ceil(((difference)*100)/range);
+		if(rating>100){
+			rating= 100;
+		}
 		return rating;
 	}
 

@@ -35,6 +35,7 @@ public class HTMLCategory {
 		Category temp = cdb.findCategory(name);
 		this.name = name;
 		this.level = level;
+		if(temp !=null){
 		if (temp.subCats!=null) {
 			this.leaf = false; 
 			LinkedHashSet<String> subCats = temp.subCats;
@@ -79,6 +80,7 @@ public class HTMLCategory {
 				}
 				this.subLysts = templist;
 			}
+		}
 		}
 
 		//		else if (temp.subLysts!=null) {//must delete if later.

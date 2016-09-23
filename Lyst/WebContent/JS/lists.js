@@ -202,7 +202,9 @@ $(document).ready(function() {
 	};
 	
 	$(window).scroll(function() {
-	    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+	    if($(window).scrollTop()
+				+ $(window).height() > $(
+						document).height()-50) {
 	    	console.log("scrolltop: "+ $(window).scrollTop());
 	    	console.log ("window height: " + $(window).height());
 	    	console.log ("div height: " + $("#spinnerbody").offset().top);

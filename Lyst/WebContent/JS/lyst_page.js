@@ -183,8 +183,8 @@ $(document)
 							.scroll(
 									function() {
 										if ($(window).scrollTop()
-												+ $(window).height() == $(
-												document).height()) {
+												+ $(window).height() > $(
+												document).height()-50) {
 											if (isFinal == 0) {
 												if (!working) {
 													$(".spinner").removeClass(

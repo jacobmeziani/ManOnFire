@@ -32,14 +32,23 @@
 <script src="april3.js"></script>
 <script src="sliderScript.js"></script>
 <script src="menuScript.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+  ga('create', 'UA-83915306-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
 	<div class="container-fluid topNav">
 		<div class="row rowPadding well well-sm">
 			<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-				<a href="/bro/lists" data-toggle="tooltip" data-placement="bottom" title="View Lists"><img
+				<a href="/bro/lists" data-toggle="tooltip" data-placement="bottom" title="View Lysts"><img
 					class="img-responsive topButton"
 					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/listLogo.png"></a>
 			</div>

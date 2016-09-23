@@ -28,6 +28,7 @@ public class Element {
 		double val_add = (this.getScore()+ (opp_score*(10+(opponent_sens*rating)*mult_loc))/10)/2;
 		this.addScore(val_add);
 		//System.out.println(mult_loc);
+		//System.out.println(this.name);
 		//System.out.print(" -<VAL_ADD: ");
 		//System.out.println(val_add);
 	}

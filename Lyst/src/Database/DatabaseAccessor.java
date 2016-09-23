@@ -644,7 +644,8 @@ public class DatabaseAccessor {
             	   attributes.remove(0);
                }
             } else {
-                System.out.println("Retrieving the unprocessed items");
+                System.out.println("Sleeping fo yo bitch ahh");
+                Thread.sleep(20000);
                 outcome = dynamoDB.batchWriteItemUnprocessed(unprocessedItems);
             }
 

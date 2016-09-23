@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Lyst</title>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<title><c:out value="${requestScope.currentItem.name}"></c:out></title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -28,8 +29,16 @@
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="/vsStylePurple.css">
 <link rel="stylesheet" type="text/css" href="/listitemStyle.css">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+  ga('create', 'UA-83915306-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
 	<div class="container-fluid">

@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-<title>Insert title here</title>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<title><c:out value="${requestScope.listName}" /></title>
 
 
 <link
@@ -30,7 +31,16 @@
 <link href="/vsStylePurple.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83915306-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 
 <body>
@@ -91,6 +101,9 @@
 			<div class="row rowPadding itemInList grayBackground">
 			</c:otherwise>
 			</c:choose>
+			<c:if test="${i.attributes.size() <= 5 }"><div class="hidden-xs col-sm-1 col-md-1"></div></c:if>
+			<c:if test="${i.attributes.size() <= 4 }"><div class="hidden-xs col-sm-1 col-md-1"></div></c:if>
+			<c:if test="${i.attributes.size() <= 3 }"><div class="hidden-xs col-sm-1 col-md-1"></div></c:if>
 					<div class="col-xs-12 col-sm-2 col-md-2 itemBox">
 						<div class="col-xs-2 col-sm-2 col-md-1">
 							<p class="numberText">
@@ -117,16 +130,16 @@
 					<c:choose>
 						<c:when test="${requestScope.toggled eq 'false'}">
 							<c:forEach var="j" items="${i.attributes}">
-								<c:if test="${j.attributeNumber == 6}">
+								<c:if test="${j.attributeNumber == 6 && i.attributes.size() !=7}">
 									<div class="hidden-xs col-sm-1 col-md-1">
-										<button type="button" id="vsButton"
+										<button type="button"
 					class="btn btn-circle btn-xl toggleAttButton center-block" onclick="this.blur();">
 					<span class="glyphicon glyphicon-menu-right"></span>
 				</button>
 									</div>
 								</c:if>
 								<c:choose>
-									<c:when test="${j.attributeNumber < 6}">
+									<c:when test="${j.attributeNumber < 6 || i.attributes.size() ==7}">
 										<div
 											id="attributeNumber<c:out value="${j.attributeNumber}" />"
 											class="hidden-xs col-sm-1 col-md-1 attributeBox">
@@ -198,6 +211,8 @@
 						</c:otherwise>
 
 					</c:choose>
+						<c:if test="${i.attributes.size() <= 4 }"><div class="col-xs-2 hidden-sm hidden-md hidden-lg"></div></c:if>
+			<c:if test="${i.attributes.size() <= 3 }"><div class="col-xs-2 hidden-sm hidden-md hidden-lg"></div></c:if>
 					<c:forEach var="j" items="${i.attributes}">
 					<div id="attributeNumber<c:out value="${j.attributeNumber}" />"
 						class="col-xs-2 hidden-sm hidden-md hidden-lg attributeBoxMini">

@@ -12,14 +12,18 @@ public class Test1 {
 	
 	public Test1 () {
 		
-		this.lebron = new Element ("Lebz",500.0,10);
-		this.curry = new Element ("Currsauce",990.0,10);
+		this.lebron = new Element ("Lebz",30.0,1);
+		this.curry = new Element ("Currsauce",40.0,1);
 	}
 	
 	public void run (int number) {
 		for (int i = 1;i<number;i++) {
 			System.out.println(i);
-			Matchup.run(lebron,curry,5);
+			Matchup.run(lebron,curry,1);
+		}
+		for (int i = 1;i<number;i++) {
+			System.out.println(i);
+			Matchup.run(curry,lebron,1);
 		}
 	}
 }
