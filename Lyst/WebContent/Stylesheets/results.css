@@ -14,8 +14,6 @@
 	position: absolute;
 	left: 62%;
 	top: 8%;
-	/*     width: 12%; */
-	/*     height: 15%; */
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
@@ -41,8 +39,6 @@
 	height: 250px;
 	max-width: 400px;
 	padding-top: 5px;
-	/*   display: inline-block; */
-	/*   box-sizing: border-box; */
 	background: #fff;
 	text-align: center;
 	margin-bottom: 30px;
@@ -59,52 +55,12 @@
 	font-size: 20px;
 }
 
-.barTitle {
-	color: red;
-}
-
-.tile.purple, .tile.blue, .tile.red, .tile.orange, .tile.green {
+.tile.purple {
 	color: #fff;
 }
 
 .tile.purple {
 	background: #5133AB;
-}
-
-.tile.purple:hover {
-	background: #3e2784;
-}
-
-.tile.red {
-	background: #5133AB;
-}
-
-/* .tile.red:hover { */
-/* 	background: #d24d57; */
-/* } */
-
-.tile.green {
-	background: #26a65b;
-}
-
-.tile.green:hover {
-	background: #2ecc71;
-}
-
-.tile.blue {
-	background: #2672EC;
-}
-
-.tile.blue:hover {
-	background: #125acd;
-}
-
-.tile.orange {
-	background: #DC572E;
-}
-
-.tile.orange:hover {
-	background: #b8431f;
 }
 
 .progress {

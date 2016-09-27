@@ -14,24 +14,23 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="homescripts.js"></script>
+<script src="JS/home.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="Stylesheets/navbar.css">
 <link href='https://fonts.googleapis.com/css?family=Black+Ops+One'
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="vsStylePurple.css">
-<link rel="stylesheet" type="text/css" href="Stylesheets/MenuStyle.css">
-<link rel="stylesheet" type="text/css" href="sliderStyle.css">
-<script src="april3.js"></script>
-<script src="sliderScript.js"></script>
-<script src="menuScript.js"></script>
+<link rel="stylesheet" type="text/css" href="Stylesheets/theme.css">
+<link rel="stylesheet" type="text/css" href="Stylesheets/categorymenu.css">
+<link rel="stylesheet" type="text/css" href="Stylesheets/slider.css">
+<script src="JS/menu-builder.js"></script>
+<script src="JS/slider.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -23,13 +23,14 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-<script src="/JS/lyst_page.js"></script>
+<script src="/JS/thelist.js"></script>
 <link
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"
 	rel="stylesheet">
-<link href="/thelistStyle.css" rel="stylesheet">
-<link href="/vsStylePurple.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/style.css">
+<link href="/Stylesheets/thelist.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/Stylesheets/spinner.css">
+<link href="/Stylesheets/theme.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/Stylesheets/navbar.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -146,7 +147,7 @@
 											<div id="attributeNameText" class="attributeName">
 												<c:out value="${j.name}" />
 											</div>
-											<span class="redRating center-block"><p
+											<span class="purpleRating center-block"><p
 													class="ratingNumber">
 													<c:out value="${j.rating}" />
 												</p></span>
@@ -159,7 +160,7 @@
 											<div id="attributeNameText" class="attributeName">
 												<c:out value="${j.name}" />
 											</div>
-											<span class="redRating center-block"><p
+											<span class="purpleRating center-block"><p
 													class="ratingNumber">
 													<c:out value="${j.rating}" />
 												</p></span>
@@ -187,7 +188,7 @@
 											<div id="attributeNameText" class="attributeName">
 												<c:out value="${j.name}" />
 											</div>
-											<span class="redRating center-block"><p
+											<span class="purpleRating center-block"><p
 													class="ratingNumber">
 													<c:out value="${j.rating}" />
 												</p></span>
@@ -200,7 +201,7 @@
 											<div id="attributeNameText" class="attributeName">
 												<c:out value="${j.name}" />
 											</div>
-											<span class="redRating center-block"><p
+											<span class="purpleRating center-block"><p
 													class="ratingNumber">
 													<c:out value="${j.rating}" />
 												</p></span>
@@ -219,7 +220,7 @@
 						<div id="attributeNameText" class="attributeName">
 							<c:out value="${j.name}" />
 						</div>
-						<span class="redRating center-block"><p
+						<span class="purpleRating center-block"><p
 								class="ratingNumber">
 								<c:out value="${j.rating}" />
 							</p></span>

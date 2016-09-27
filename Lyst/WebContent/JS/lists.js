@@ -9,7 +9,7 @@ $(document).ready(function() {
 	
 	var window_width = $(window).width();
 	//////set mobile size
-	var mobile_size = 700;
+	var mobile_size = 768;
 	//-----------------------------
 	if (window_width<mobile_size) {
 		$("#top-nav").addClass("mobile");

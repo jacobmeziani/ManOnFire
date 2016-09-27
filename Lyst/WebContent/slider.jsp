@@ -7,15 +7,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="testCss.css">
 <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="vsStylePurple.css">
-<link rel="stylesheet" type="text/css" href="sliderStyle.css">
-<script src="testScripts.js"></script>
-<script src="testScripts2.js"></script>
+<link rel="stylesheet" type="text/css" href="Stylesheets/theme.css">
+<link rel="stylesheet" type="text/css" href="Stylesheets/slider.css">
 </head>
 <body>
 	<div id="sliderTopButtons" class="row">

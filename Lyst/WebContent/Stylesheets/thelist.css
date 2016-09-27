@@ -21,25 +21,8 @@
 	postion: absolute;
 }
 
-.positionRelativeContainer {
-	position: relative;
-	text-align: center;
-}
-
-.centerStuff {
-	display: inline-block;
-}
-
 .listTitle{
 	font-size: 48px;
-}
-
-.ratingsPanel {
-/* 	margin-top: 75px; */
-}
-
-.sortButton {
-	cursor: pointer;
 }
 
 .rowPadding {
@@ -50,12 +33,7 @@
 	margin-bottom: 36px;
 }
 
-.itemInList {
-/* 	margin-top: 10px; */
-/* 	border-bottom: solid #c0c0c0; */
-}
-
-span.redRating {
+span.purpleRating {
 	position: absolute;
 	background: #5133AB;
 	border-radius: 50%;
@@ -71,22 +49,12 @@ span.redRating {
 	-webkit-box-shadow: 5px 5px 5px 0px rgba(50, 50, 50, 0.75);
 }
 
-span.redRating:hover {
+span.purpleRating:hover {
 	background: #913D88;
-}
-
-.btn-more{
-	background: #913D88;
-	color: white;
 }
 
 .grayBackground{
 	background: lightgray;
-}
-
-.btn-more:hover{
-	background: #5133AB;
-	color: white;
 }
 
 .itemBox {
@@ -100,63 +68,10 @@ span.redRating:hover {
 	visibility: hidden !important;
 }
 
-.spinner {
-  margin: 100px auto;
-  margin-top: 20px;
-  width: 50px;
-  height: 40px;
-  text-align: center;
-  font-size: 10px;
-}
-
-.spinner > div {
-  background-color: #333;
-  height: 100%;
-  width: 6px;
-  display: inline-block;
-  
-  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-  animation: sk-stretchdelay 1.2s infinite ease-in-out;
-}
-
-.spinner .rect2 {
-  -webkit-animation-delay: -1.1s;
-  animation-delay: -1.1s;
-}
-
-.spinner .rect3 {
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
-}
-
-.spinner .rect4 {
-  -webkit-animation-delay: -0.9s;
-  animation-delay: -0.9s;
-}
-
-.spinner .rect5 {
-  -webkit-animation-delay: -0.8s;
-  animation-delay: -0.8s;
-}
-
-@-webkit-keyframes sk-stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
-  20% { -webkit-transform: scaleY(1.0) }
-}
-
-@keyframes sk-stretchdelay {
-  0%, 40%, 100% { 
-    transform: scaleY(0.4);
-    -webkit-transform: scaleY(0.4);
-  }  20% { 
-    transform: scaleY(1.0);
-    -webkit-transform: scaleY(1.0);
-  }
-}
 
 /* Large desktops and laptops */
 @media ( min-width : 1200px) {
-	span.redRating {
+	span.purpleRating {
 		width: 65px;
 		height: 65px;
 		font-size: 32px;
@@ -193,7 +108,7 @@ span.redRating:hover {
 }
 /* Landscape tablets and medium desktops */
 @media ( min-width : 992px) and (max-width: 1199px) {
-	span.redRating {
+	span.purpleRating {
 		width: 55px;
 		height: 55px;
 		font-size: 28px;
@@ -232,7 +147,7 @@ span.redRating:hover {
 
 /* Portrait tablets and small desktops */
 @media ( min-width : 768px) and (max-width: 991px) {
-	span.redRating {
+	span.purpleRating {
 		width: 45px;
 		height: 45px;
 		font-size: 24px;
@@ -278,7 +193,7 @@ max-width
 :
 767px)
 {
-	span.redRating {
+	span.purpleRating {
 		width: 50px;
 		height: 50px;
 		font-size: 24px;
@@ -319,7 +234,7 @@ max-width
 :
 677px)
 {
-	span.redRating {
+	span.purpleRating {
 		width: 45px;
 		height: 45px;
 		font-size: 24px;
@@ -359,7 +274,7 @@ max-width
 :
 607px)
 {
-	span.redRating {
+	span.purpleRating {
 		width: 45px;
 		height: 45px;
 		font-size: 24px;
@@ -399,7 +314,7 @@ max-width
 :
 520px)
 {
-	span.redRating {
+	span.purpleRating {
 		width: 45px;
 		height: 45px;
 		font-size: 24px;
@@ -436,7 +351,7 @@ max-width
 
 /* Portrait phones and smaller */
 @media ( max-width : 480px) {
-	span.redRating {
+	span.purpleRating {
 		width: 35px;
 		height: 35px;
 		font-size:18px;
@@ -474,7 +389,7 @@ max-width
 }
 /* Portrait phones and smaller */
 @media ( max-width : 410px) {
-	span.redRating {
+	span.purpleRating {
 		width: 30px;
 		height: 30px;
 		font-size:16px;
@@ -512,7 +427,7 @@ max-width
 }
 /* Portrait phones and smaller */
 @media ( max-width : 360px) {
-	span.redRating {
+	span.purpleRating {
 		width: 26px;
 		height: 26px;
 		font-size:14px;
@@ -560,108 +475,6 @@ max-width
 }
 	
 }
-
-.btn-arrow-right,
-.btn-arrow-left {
-   position: relative;
-   padding-left: 18px;
-   padding-right: 18px;
-}
-
-.btn-arrow-right {
-   padding-left: 36px;
-}
-
-.btn-arrow-left {
-   padding-right: 36px;
-}
-
-.btn-arrow-right:before,
-.btn-arrow-right:after,
-.btn-arrow-left:before,
-.btn-arrow-left:after {
-   /* make two squares (before and after), looking similar to the button */
-   
-   content: "";
-   position: absolute;
-   top: 5px;
-   /* move it down because of rounded corners */
-   
-   width: 22px;
-   /* same as height */
-   
-   height: 22px;
-   /* button_outer_height / sqrt(2) */
-   
-   background: inherit;
-   /* use parent background */
-   
-   border: inherit;
-   /* use parent border */
-   
-   border-left-color: transparent;
-   /* hide left border */
-   
-   border-bottom-color: transparent;
-   /* hide bottom border */
-   
-   border-radius: 0px 4px 0px 0px;
-   /* round arrow corner, the shorthand property doesn't accept "inherit" so it is set to 4px */
-   
-   -webkit-border-radius: 0px 4px 0px 0px;
-   -moz-border-radius: 0px 4px 0px 0px;
-}
-
-.btn-arrow-right:before,
-.btn-arrow-right:after {
-   transform: rotate(45deg);
-   /* rotate right arrow squares 45 deg to point right */
-   
-   -webkit-transform: rotate(45deg);
-   -moz-transform: rotate(45deg);
-   -o-transform: rotate(45deg);
-   -ms-transform: rotate(45deg);
-}
-
-.btn-arrow-left:before,
-.btn-arrow-left:after {
-   transform: rotate(225deg);
-   /* rotate left arrow squares 225 deg to point left */
-   
-   -webkit-transform: rotate(225deg);
-   -moz-transform: rotate(225deg);
-   -o-transform: rotate(225deg);
-   -ms-transform: rotate(225deg);
-}
-
-.btn-arrow-right:before,
-.btn-arrow-left:before {
-   /* align the "before" square to the left */
-   
-   left: -11px;
-}
-
-.btn-arrow-right:after,
-.btn-arrow-left:after {
-   /* align the "after" square to the right */
-   
-   right: -11px;
-}
-
-.btn-arrow-right:after,
-.btn-arrow-left:before {
-   /* bring arrow pointers to front */
-   
-   z-index: 1;
-}
-
-.btn-arrow-right:before,
-.btn-arrow-left:after {
-   /* hide arrow tails background */
-   
-   background-color: white;
-}
-
 .toggleAttButton{
 	margin-top:100px;
 }

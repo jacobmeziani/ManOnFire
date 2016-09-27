@@ -19,15 +19,13 @@
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="Stylesheets/navbar.css">
 <link href='https://fonts.googleapis.com/css?family=Black+Ops+One'
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="vsStylePurple.css">
-<link rel="stylesheet" type="text/css" href="resultsStyle.css">
-<script src="resultScripts.js"></script>
-<script src="menuScript.js"></script>
+<link rel="stylesheet" type="text/css" href="Stylesheets/theme.css">
+<link rel="stylesheet" type="text/css" href="Stylesheets/results.css">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
@@ -179,7 +177,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="tile red center-block">
+							<div class="tile purple center-block">
 								<div class="row nopadding centerAlign">
 									<h3 class="nopadding">
 										<c:out value="${i.name}" />

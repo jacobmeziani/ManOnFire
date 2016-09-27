@@ -7,8 +7,6 @@
 <title>Lysts</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-
 <!-- jQuery library -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -17,16 +15,15 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
-
-
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="/style.css">
-<link rel="stylesheet" type="text/css" href="/vsStylePurple.css">
+<link rel="stylesheet" type="text/css" href="/Stylesheets/navbar.css">
+<link rel="stylesheet" type="text/css" href="/Stylesheets/theme.css">
+<link rel="stylesheet" type="text/css" href="/Stylesheets/spinner.css">
 <script src="/JS/lists.js"></script>
 <link rel="stylesheet" href="/Stylesheets/lists.css">
-<link rel="stylesheet" href="/Stylesheets/MenuStyle.css">
+<link rel="stylesheet" href="/Stylesheets/categorymenu.css">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -54,7 +51,6 @@
 					src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/Icons/vsLogo.png">
 				</a>
 			</div>
-
 		</div>
 	</div>
 	<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">

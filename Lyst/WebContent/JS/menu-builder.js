@@ -1,12 +1,11 @@
 $(document).ready(function() {
 
 	var window_width = $(window).width();
-	// ////set mobile size
-	var mobile_size = 700;
-	// -----------------------------
+	//set mobile size
+	var mobile_size = 768;
 	if (window_width < mobile_size) {
+		//build mobile menu
 		$("#top-nav").addClass("mobile");
-
 		$("#top-nav").removeClass("showmethemoney");
 		$("#top-nav").addClass("hidden");
 		$("#top-nav").find("ul").removeClass("showmethemoney");
@@ -44,6 +43,7 @@ $(document).ready(function() {
 						$("#isCategoryList").val("false");
 					}
 				}
+				//start a new matchup, this code is in homescripts.js
 				newMatchup();
 			} else if ($(this).hasClass("children")) {
 				// $("#top-nav").find("ul").removeClass("showmethemoney");
@@ -68,7 +68,7 @@ $(document).ready(function() {
 			$(this).parent().addClass("hidden");
 		});
 	} else {
-		// shows for not mobile
+		//build desktop menu
 		$("#top-nav").addClass("desk");
 		$("#top-nav").addClass("center-block");
 		$(".closemenu").addClass("hide");
@@ -128,7 +128,8 @@ $(document).ready(function() {
 						$("#isCategoryList").val("false");
 					}
 				}
-
+				
+				//start a new matchup, this code is in homescripts.js
 				newMatchup();
 				$("#top-nav").find("ul").removeClass("showmethemoney");
 				$("#top-nav").find("ul").addClass("hidden");

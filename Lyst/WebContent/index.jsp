@@ -7,8 +7,8 @@
 <title>LystHub</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="scripts.js"></script>
-<link rel="stylesheet" type="text/css" href="Stylesheets/initial.css">
+<script src="JS/initial.js"></script>
+<link rel="stylesheet" type="text/css" href="Stylesheets/folding-cube.css">
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

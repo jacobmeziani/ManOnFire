@@ -15,20 +15,19 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="/jquery.validate.min.js"></script>
-<script src="/homescripts.js"></script>
+<script src="JS/home.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="stylesheet" type="text/css" href="/Stylesheets/navbar.css">
 <link href='https://fonts.googleapis.com/css?family=Black+Ops+One'
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:700'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="/vsStylePurple.css">
-<link rel="stylesheet" type="text/css" href="/listitemStyle.css">
+<link rel="stylesheet" type="text/css" href="/Stylesheets/theme.css">
+<link rel="stylesheet" type="text/css" href="/Stylesheets/listitem.css">
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

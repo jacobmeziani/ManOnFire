@@ -159,16 +159,8 @@ max-width
 	float: left;
 }
 
-.blue span {
-	background-color: #34c2e3;
-}
-
 .green span {
 	background-color: #00B16A;
-}
-
-.pink span {
-	background-color: #D24D57;
 }
 
 .rowPadding{

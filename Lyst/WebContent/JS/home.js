@@ -345,17 +345,3 @@ function newMatchup(){
 	});
 	});
 }
-
-// not used right now. mebe never
-function LystItem(name,belongingList,picPath,overallRating,listId,itemId){
-	this.name = name;
-	this.belongingList = belongingList;
-	if (picPath != null) {
-		this.picPath = picPath;
-	} else {
-		this.picPath = "empty";
-	}
-	this.overallRating = overallRating;
-	this.itemId = itemId;
-	this.listId = listId;
-}

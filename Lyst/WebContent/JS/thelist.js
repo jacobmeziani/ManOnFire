@@ -141,7 +141,6 @@ $(document)
 							'.attributeBoxMini',
 							function() {
 								if (!working) {
-									// housekeeping
 									$(".spinner").removeClass("hidden");
 									working = true;
 									// code
