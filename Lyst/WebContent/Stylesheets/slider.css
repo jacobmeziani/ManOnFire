@@ -7,6 +7,10 @@
   margin-bottom: 1.4em;
 }
 
+#circles-slider{
+	width:250px;
+}
+
 /* default hide the labels and pips that arnt visible */
 /* we just use css to hide incase we want to show certain */
 /* labels/pips individually later */
@@ -439,5 +443,35 @@
 
 .slider-btn-circle:hover {
 	color: black;
+}
+.ui-slider-pip-0 .ui-slider-label img{
+	height:60px;
+}
+.ui-slider-pip-1 .ui-slider-label img{
+	height:50px;
+}
+.ui-slider-pip-2 .ui-slider-label img{
+	height:40px;
+}
+.ui-slider-pip-3 .ui-slider-label img{
+	height:30px;
+}
+.ui-slider-pip-4 .ui-slider-label img{
+	height:20px;
+}
+.ui-slider-pip-6 .ui-slider-label img{
+	height:20px;
+}
+.ui-slider-pip-7 .ui-slider-label img{
+	height:30px;
+}
+.ui-slider-pip-8 .ui-slider-label img{
+	height:40px;
+}
+.ui-slider-pip-9 .ui-slider-label img{
+	height:50px;
+}
+.ui-slider-pip-10 .ui-slider-label img{
+	height:60px;
 }
     

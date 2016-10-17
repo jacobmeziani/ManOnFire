@@ -33,7 +33,7 @@ h2 {
 @media ( min-width : 1200px) {
 	h1 {
 		font-size: 100px;
-		margin-top:180px;
+		margin-top:120px;
 	}
 	h3 {
 		font-size: 30px;
@@ -41,7 +41,6 @@ h2 {
 	.vsImage {
 		height: 400px;
 		width: 400px;
-		opacity: 0;
 	}
 }
 
@@ -49,7 +48,7 @@ h2 {
 @media ( min-width : 992px) and (max-width: 1199px) {
 	h1 {
 		font-size: 100px;
-		margin-top:180px;
+		margin-top:120px;
 	}
 	h3 {
 		font-size: 30px;
@@ -57,7 +56,6 @@ h2 {
 	.vsImage {
 		height: 400px;
 		width: 400px;
-		opacity: 0;
 	}
 }
 
@@ -72,7 +70,6 @@ h2 {
 	.vsImage {
 		height: 300px;
 		width: 300px;
-		opacity: 0;
 	}
 }
 
@@ -87,7 +84,6 @@ h2 {
 	.vsImage {
 		height: 250px;
 		width: 250px;
-		opacity: 0;
 	}
 }
 
@@ -102,11 +98,14 @@ h2 {
 	.vsImage {
 		height: 150px;
 		width: 150px;
-		opacity: 0;
 	}
 	.glyphicon {
 	font-size: 20px;
 }
+}
+
+.glyphicon-ok{
+	font-size: 60px;
 }
 
 .nopadding {
@@ -143,6 +142,21 @@ h2 {
 	position: relative;
 /* 	box-shadow: 0px 3px 8px green, inset 0px 2px 3px red; */
 	outline: none;
+}
+
+.btn-circle.btn-xl-submit {
+	width: 100px;
+	height: 100px;
+	/* 	padding: 30px 36px; */
+	font-size: 24px;
+	line-height: 1.33;
+	border-radius: 70px;
+	text-align: center;
+	diplay: block;
+	position: relative;
+/* 	box-shadow: 0px 3px 8px green, inset 0px 2px 3px red; */
+	outline: none;
+	margin-bottom:100px;
 }
 
 .row-buffer {

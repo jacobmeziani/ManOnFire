@@ -92,8 +92,8 @@ function goToVsScreen() {
 function sliderFunc(leftItem, rightItem, attributes) {
 
 	// set up an array to hold the months
-	var numbers = [ "+5", "+4", "+3", "+2", "+1", "0", "+1", "+2", "+3", "+4",
-			"+5" ];
+	var emoji =twemoji.parse(twemoji.convert.fromCodePoint('1f4aa'));
+	var numbers = [emoji, emoji,emoji,emoji,emoji,"0",emoji,emoji,emoji,emoji,emoji];
 	descriptors = getCurrentListOfPhrases(leftItem, rightItem,
 			attributes[currentAttributeIndex].name,
 			stringPackage[currentAttributeIndex]);

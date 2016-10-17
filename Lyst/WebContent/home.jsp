@@ -17,6 +17,7 @@
 <script src="JS/home.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<script src="//twemoji.maxcdn.com/2/twemoji.min.js?2.2"></script>
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
@@ -123,7 +124,7 @@
 		<div class="row">
 			<div class=" col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<div id="leftPic" class="testing">
-					<img class="img-responsive img-circle center-block vsImage "
+					<img class="img-responsive img-circle center-block vsImage vsImageLeft "
 						src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.leftItem.picPath}"/>"
 						onload="imgLoaded(this)">
 				</div>
@@ -136,7 +137,7 @@
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 nopadding">
 				<div id="rightPic" class="testing">
-					<img class="img-responsive img-circle center-block vsImage"
+					<img class="img-responsive img-circle center-block vsImage vsImageRight"
 						src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-119295481920/Images/<c:out value="${requestScope.rightItem.picPath}"/>"
 						onload="imgLoaded(this)">
 				</div>
